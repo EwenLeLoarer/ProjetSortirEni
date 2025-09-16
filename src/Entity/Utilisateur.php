@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -42,30 +40,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column]
-    private ?bool $isActif = null;
-
-    #[ORM\ManyToOne(inversedBy: 'Utilisateurs')]
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Site $site = null;
 
-    /**
-     * @var Collection<int, Sortie>
-     */
-    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'organisateur', orphanRemoval: true)]
-    private Collection $sortiesOrganisees;
+    #[ORM\Column]
+    private ?bool $isActif = null;
 
-    /**
-     * @var Collection<int, Sortie>
-     */
-    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
-    private Collection $sortiesPrevues;
-
-    public function __construct()
-    {
-        $this->sortiesOrganisees = new ArrayCollection();
-        $this->sortiesPrevues = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?Ville $Ville = null;
 
     public function getId(): ?int
     {
@@ -131,17 +114,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
-     */
-    public function __serialize(): array
-    {
-        $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
-
-        return $data;
-    }
-
     #[\Deprecated]
     public function eraseCredentials(): void
     {
@@ -184,18 +156,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isActif(): ?bool
-    {
-        return $this->isActif;
-    }
-
-    public function setIsActif(bool $isActif): static
-    {
-        $this->isActif = $isActif;
-
-        return $this;
-    }
-
     public function getSite(): ?Site
     {
         return $this->site;
@@ -208,32 +168,26 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Sortie>
-     */
-    public function getSortiesOrganisees(): Collection
+    public function isActif(): ?bool
     {
-        return $this->sortiesOrganisees;
+        return $this->isActif;
     }
 
-    public function addSortieOrganisee(Sortie $sortie): static
+    public function setIsActif(bool $isActif): static
     {
-        if (!$this->sortiesOrganisees->contains($sortie)) {
-            $this->sortiesOrganisees->add($sortie);
-            $sortie->setOrganisateur($this);
-        }
+        $this->isActif = $isActif;
 
         return $this;
     }
 
-    public function removeSortieOrganisee(Sortie $sortie): static
+    public function getVille(): ?Ville
     {
-        if ($this->sortiesOrganisees->removeElement($sortie)) {
-            // set the owning side to null (unless already changed)
-            if ($sortie->getOrganisateur() === $this) {
-                $sortie->setOrganisateur(null);
-            }
-        }
+        return $this->Ville;
+    }
+
+    public function setVille(?Ville $Ville): static
+    {
+        $this->Ville = $Ville;
 
         return $this;
     }
