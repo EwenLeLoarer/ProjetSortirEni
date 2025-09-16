@@ -166,6 +166,8 @@ fabric.properties
 .history
 .ionide
 
+.env
+.env.local
 # End of https://www.toptal.com/developers/gitignore/api/symfony,phpstorm+all,visualstudiocode
 
 ###> symfony/webpack-encore-bundle ###

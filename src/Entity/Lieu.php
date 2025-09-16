@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\SiteRepository;
+use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SiteRepository::class)]
-class Site
+#[ORM\Entity(repositoryClass: LieuRepository::class)]
+class Lieu
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,21 +18,27 @@ class Site
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    /**
-     * @var Collection<int, Utilisateur>
-     */
-    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'site', orphanRemoval: true)]
-    private Collection $utilisateurs;
+    #[ORM\Column(length: 255)]
+    private ?string $rue = null;
+
+    #[ORM\Column]
+    private ?float $latitude = null;
+
+    #[ORM\Column]
+    private ?float $longitude = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Lieus')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Ville $ville = null;
 
     /**
      * @var Collection<int, Sortie>
      */
-    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'site', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'lieu')]
     private Collection $sorties;
 
     public function __construct()
     {
-        $this->utilisateurs = new ArrayCollection();
         $this->sorties = new ArrayCollection();
     }
 
@@ -53,32 +59,50 @@ class Site
         return $this;
     }
 
-    /**
-     * @return Collection<int, Utilisateur>
-     */
-    public function getUtilisateurs(): Collection
+    public function getRue(): ?string
     {
-        return $this->utilisateurs;
+        return $this->rue;
     }
 
-    public function addUtilisateur(Utilisateur $utilisateur): static
+    public function setRue(string $rue): static
     {
-        if (!$this->utilisateurs->contains($utilisateur)) {
-            $this->utilisateurs->add($utilisateur);
-            $utilisateur->setSite($this);
-        }
+        $this->rue = $rue;
 
         return $this;
     }
 
-    public function removeUtilisateur(Utilisateur $utilisateur): static
+    public function getLatitude(): ?float
     {
-        if ($this->utilisateurs->removeElement($utilisateur)) {
-            // set the owning side to null (unless already changed)
-            if ($utilisateur->getSite() === $this) {
-                $utilisateur->setSite(null);
-            }
-        }
+        return $this->latitude;
+    }
+
+    public function setLatitude(float $latitude): static
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): static
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): static
+    {
+        $this->ville = $ville;
 
         return $this;
     }
@@ -95,7 +119,7 @@ class Site
     {
         if (!$this->sorties->contains($sortie)) {
             $this->sorties->add($sortie);
-            $sortie->setSite($this);
+            $sortie->setLieu($this);
         }
 
         return $this;
@@ -105,8 +129,8 @@ class Site
     {
         if ($this->sorties->removeElement($sortie)) {
             // set the owning side to null (unless already changed)
-            if ($sortie->getSite() === $this) {
-                $sortie->setSite(null);
+            if ($sortie->getLieu() === $this) {
+                $sortie->setLieu(null);
             }
         }
 
