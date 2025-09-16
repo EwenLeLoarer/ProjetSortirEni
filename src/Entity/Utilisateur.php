@@ -40,14 +40,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $mail = null;
-
     #[ORM\Column]
-    private ?bool $administrateur = null;
-
-    #[ORM\Column]
-    private ?bool $actif = null;
+    private ?bool $isActif = null;
 
     #[ORM\ManyToOne(inversedBy: 'Utilisateurs')]
     #[ORM\JoinColumn(nullable: false)]
@@ -170,38 +164,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): static
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function isAdministrateur(): ?bool
-    {
-        return $this->administrateur;
-    }
-
-    public function setAdministrateur(bool $administrateur): static
-    {
-        $this->administrateur = $administrateur;
-
-        return $this;
-    }
-
     public function isActif(): ?bool
     {
-        return $this->actif;
+        return $this->isActif;
     }
 
-    public function setActif(bool $actif): static
+    public function setIsActif(bool $isActif): static
     {
-        $this->actif = $actif;
+        $this->isActif = $isActif;
 
         return $this;
     }
