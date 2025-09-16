@@ -42,12 +42,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column]
-    private ?bool $isActif = null;
-
-    #[ORM\ManyToOne(inversedBy: 'Utilisateurs')]
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Site $site = null;
+
+    #[ORM\Column]
+    private ?bool $isActif = null;
 
     /**
      * @var Collection<int, Sortie>
@@ -60,6 +60,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
     private Collection $sortiesPrevues;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pseudo = null;
 
     public function __construct()
     {
@@ -131,17 +134,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
-     */
-    public function __serialize(): array
-    {
-        $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
-
-        return $data;
-    }
-
     #[\Deprecated]
     public function eraseCredentials(): void
     {
@@ -184,18 +176,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isActif(): ?bool
-    {
-        return $this->isActif;
-    }
-
-    public function setIsActif(bool $isActif): static
-    {
-        $this->isActif = $isActif;
-
-        return $this;
-    }
-
     public function getSite(): ?Site
     {
         return $this->site;
@@ -234,6 +214,31 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
                 $sortie->setOrganisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+
+    public function isActif(): ?bool
+    {
+        return $this->isActif;
+    }
+
+    public function setIsActif(bool $isActif): static
+    {
+        $this->isActif = $isActif;
 
         return $this;
     }
