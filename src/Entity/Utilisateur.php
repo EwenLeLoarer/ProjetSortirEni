@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,8 +49,26 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isActif = null;
 
-    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
-    private ?Ville $Ville = null;
+    /**
+     * @var Collection<int, Sortie>
+     */
+    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'organisateur', orphanRemoval: true)]
+    private Collection $sortiesOrganisees;
+
+    /**
+     * @var Collection<int, Sortie>
+     */
+    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
+    private Collection $sortiesPrevues;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pseudo = null;
+
+    public function __construct()
+    {
+        $this->sortiesOrganisees = new ArrayCollection();
+        $this->sortiesPrevues = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -168,6 +188,49 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getSortiesOrganisees(): Collection
+    {
+        return $this->sortiesOrganisees;
+    }
+
+    public function addSortieOrganisee(Sortie $sortie): static
+    {
+        if (!$this->sortiesOrganisees->contains($sortie)) {
+            $this->sortiesOrganisees->add($sortie);
+            $sortie->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortieOrganisee(Sortie $sortie): static
+    {
+        if ($this->sortiesOrganisees->removeElement($sortie)) {
+            // set the owning side to null (unless already changed)
+            if ($sortie->getOrganisateur() === $this) {
+                $sortie->setOrganisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+
     public function isActif(): ?bool
     {
         return $this->isActif;
@@ -176,18 +239,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActif(bool $isActif): static
     {
         $this->isActif = $isActif;
-
-        return $this;
-    }
-
-    public function getVille(): ?Ville
-    {
-        return $this->Ville;
-    }
-
-    public function setVille(?Ville $Ville): static
-    {
-        $this->Ville = $Ville;
 
         return $this;
     }
