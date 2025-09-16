@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+    <form action="{{ path('app_login') }}" method="post" class="h-full">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                Vous etes connecter en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            </div>
+        {% endif %}
+        <div class="flex items-center justify-center h-screen">
+
+            <div class="flex flex-col items-center space-y-6">
+                <!-- Centered title -->
+                <h1 class="text-2xl font-bold">connecter vous</h1>
+
+                <!-- Form fields, left-aligned only -->
+                <div class="flex flex-col space-y-4 self-start">
+                    <div>
+                        <label for="username" class="block">Email</label>
+                        <input
+                            type="email"
+                            value="{{ last_username }}"
+                            name="_username"
+                            id="username"
+                            class="form-control rounded-xl w-64"
+                            autocomplete="email"
+                            required
+                            autofocus
+                        >
+                    </div>
+
+                    <div>
+                        <label for="password" class="block">mot de passe</label>
+                        <input
+                            type="password"
+                            name="_password"
+                            id="password"
+                            class="form-control rounded-xl w-64"
+                            autocomplete="current-password"
+                            required
+                        >
+                        <input
+                            type="hidden"
+                            name="_csrf_token"
+                            data-controller="csrf-protection"
+                            value="{{ csrf_token('authenticate') }}"
+                        >
+                        <input type="hidden" name="app_acceuil" value="/account">
+                    </div>
+                </div>
+
+                <!-- Centered submit button -->
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
+                    Se connecter
+                </button>
+            </div>
+
+        </div>
+
+
+    </form>
+{% endblock %}
