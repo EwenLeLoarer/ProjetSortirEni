@@ -42,14 +42,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $mail = null;
-
     #[ORM\Column]
-    private ?bool $administrateur = null;
-
-    #[ORM\Column]
-    private ?bool $actif = null;
+    private ?bool $isActif = null;
 
     #[ORM\ManyToOne(inversedBy: 'Utilisateurs')]
     #[ORM\JoinColumn(nullable: false)]
@@ -59,18 +53,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Sortie>
      */
     #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'organisateur', orphanRemoval: true)]
-    private Collection $Sorties;
+    private Collection $sortiesOrganisees;
 
     /**
      * @var Collection<int, Sortie>
      */
     #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
-    private Collection $sorties;
+    private Collection $sortiesPrevues;
 
     public function __construct()
     {
-        $this->Sorties = new ArrayCollection();
-        $this->sorties = new ArrayCollection();
+        $this->sortiesOrganisees = new ArrayCollection();
+        $this->sortiesPrevues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,38 +184,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): static
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function isAdministrateur(): ?bool
-    {
-        return $this->administrateur;
-    }
-
-    public function setAdministrateur(bool $administrateur): static
-    {
-        $this->administrateur = $administrateur;
-
-        return $this;
-    }
-
     public function isActif(): ?bool
     {
-        return $this->actif;
+        return $this->isActif;
     }
 
-    public function setActif(bool $actif): static
+    public function setIsActif(bool $isActif): static
     {
-        $this->actif = $actif;
+        $this->isActif = $isActif;
 
         return $this;
     }
@@ -241,27 +211,27 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Sortie>
      */
-    public function getSorties(): Collection
+    public function getSortiesOrganisees(): Collection
     {
-        return $this->Sorties;
+        return $this->sortiesOrganisees;
     }
 
-    public function addSorty(Sortie $sorty): static
+    public function addSortieOrganisee(Sortie $sortie): static
     {
-        if (!$this->Sorties->contains($sorty)) {
-            $this->Sorties->add($sorty);
-            $sorty->setOrganisateur($this);
+        if (!$this->sortiesOrganisees->contains($sortie)) {
+            $this->sortiesOrganisees->add($sortie);
+            $sortie->setOrganisateur($this);
         }
 
         return $this;
     }
 
-    public function removeSorty(Sortie $sorty): static
+    public function removeSortieOrganisee(Sortie $sortie): static
     {
-        if ($this->Sorties->removeElement($sorty)) {
+        if ($this->sortiesOrganisees->removeElement($sortie)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getOrganisateur() === $this) {
-                $sorty->setOrganisateur(null);
+            if ($sortie->getOrganisateur() === $this) {
+                $sortie->setOrganisateur(null);
             }
         }
 

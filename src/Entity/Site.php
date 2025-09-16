@@ -22,11 +22,11 @@ class Site
      * @var Collection<int, Utilisateur>
      */
     #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'site', orphanRemoval: true)]
-    private Collection $Utilisateurs;
+    private Collection $utilisateurs;
 
     public function __construct()
     {
-        $this->Utilisateurs = new ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,13 +51,13 @@ class Site
      */
     public function getUtilisateurs(): Collection
     {
-        return $this->Utilisateurs;
+        return $this->utilisateurs;
     }
 
     public function addUtilisateur(Utilisateur $utilisateur): static
     {
-        if (!$this->Utilisateurs->contains($utilisateur)) {
-            $this->Utilisateurs->add($utilisateur);
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs->add($utilisateur);
             $utilisateur->setSite($this);
         }
 
@@ -66,7 +66,7 @@ class Site
 
     public function removeUtilisateur(Utilisateur $utilisateur): static
     {
-        if ($this->Utilisateurs->removeElement($utilisateur)) {
+        if ($this->utilisateurs->removeElement($utilisateur)) {
             // set the owning side to null (unless already changed)
             if ($utilisateur->getSite() === $this) {
                 $utilisateur->setSite(null);

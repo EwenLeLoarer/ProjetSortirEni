@@ -22,11 +22,11 @@ class Etat
      * @var Collection<int, Sortie>
      */
     #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'etat')]
-    private Collection $Sorties;
+    private Collection $sorties;
 
     public function __construct()
     {
-        $this->Sorties = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,25 +51,25 @@ class Etat
      */
     public function getSorties(): Collection
     {
-        return $this->Sorties;
+        return $this->sorties;
     }
 
-    public function addSorty(Sortie $sorty): static
+    public function addSortie(Sortie $sortie): static
     {
-        if (!$this->Sorties->contains($sorty)) {
-            $this->Sorties->add($sorty);
-            $sorty->setEtat($this);
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties->add($sortie);
+            $sortie->setEtat($this);
         }
 
         return $this;
     }
 
-    public function removeSorty(Sortie $sorty): static
+    public function removeSortie(Sortie $sortie): static
     {
-        if ($this->Sorties->removeElement($sorty)) {
+        if ($this->sorties->removeElement($sortie)) {
             // set the owning side to null (unless already changed)
-            if ($sorty->getEtat() === $this) {
-                $sorty->setEtat(null);
+            if ($sortie->getEtat() === $this) {
+                $sortie->setEtat(null);
             }
         }
 
