@@ -24,9 +24,16 @@ class Site
     #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'site', orphanRemoval: true)]
     private Collection $utilisateurs;
 
+    /**
+     * @var Collection<int, Sortie>
+     */
+    #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'site', orphanRemoval: true)]
+    private Collection $sorties;
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,6 +77,36 @@ class Site
             // set the owning side to null (unless already changed)
             if ($utilisateur->getSite() === $this) {
                 $utilisateur->setSite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
+
+    public function addSortie(Sortie $sortie): static
+    {
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties->add($sortie);
+            $sortie->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortie(Sortie $sortie): static
+    {
+        if ($this->sorties->removeElement($sortie)) {
+            // set the owning side to null (unless already changed)
+            if ($sortie->getSite() === $this) {
+                $sortie->setSite(null);
             }
         }
 
