@@ -2,8 +2,9 @@
 <html class="bg-white">
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>Sortir.com{% block title %}{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    {{ importmap('app') }}
 </head>
 <body>
 {% include "_partials/header.html.twig" %}

@@ -1,20 +1,105 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <form method="get" id="filters">
+        <h2 class="filtre_title">Filtrer les sorties</h2>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <div class="form_filters">
+            <label class="filtre_label">
+                Site :
+                <select name="site" onchange="this.form.submit()">
+                    <option value="">Tous les sites</option>
+                    {% for site in sites %}
+                        <option value="{{ site.id }}" {{ filters.site == site.id ? 'selected' : '' }}>
+                            {{ site.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/wamp64/www/projetSortirEni/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/projetSortirEni/templates/home/index.html.twig</code></li>
-    </ul>
-</div>
+            <label class="filtre_label">
+                Filtrer :
+                <input type="text" name="query" value="{{ filters.query }}" placeholder="search">
+            </label>
+
+            <label class="filtre_label">
+                Entre :
+                <input type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
+            </label>
+
+            <label class="filtre_label">
+                Et :
+                <input type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
+            </label>
+        </div>
+
+        <div class="form_filters">
+            {% if app.user %}
+                <label class="filtre_label_right">
+                    <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
+                    Sorties que j'organise
+                </label>
+
+                <fieldset>
+                    <label class="filtre_label_right">
+                        <input type="radio" name="prevues" onchange="this.form.submit()" value="" {% if filters.prevues is not defined or filters.prevues is same as('') %}checked{% endif %}>
+                        Toutes les sorties
+                    </label>
+
+                    <label class="filtre_label_right">
+                        <input type="radio" name="prevues" onchange="this.form.submit()" value="1" {% if filters.prevues is defined and filters.prevues =='1' %}checked{% endif %}>
+                        Sorties auxquelles je participe
+                    </label>
+
+                    <label class="filtre_label_right">
+                        <input type="radio" name="prevues" onchange="this.form.submit()" value="0" {% if filters.prevues is defined and filters.prevues == '0' %}checked{% endif %}>
+                        Sorties auxquelles je ne participe pas
+                    </label>
+                </fieldset>
+            {% endif %}
+
+            <label class="filtre_label_right">
+                <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
+                Sorties passées
+            </label>
+        </div>
+
+        <a href="/">Réinitialiser</a>
+    </form>
+
+    <table class="border-2 border-black">
+        <thead class="">
+            <tr class="bg-amber-500">
+                <th class="border border-black border-b-2">Nom de la sortie</th>
+                <th class="border border-black border-b-2">Date de la sortie</th>
+                <th class="border border-black border-b-2">Clôture</th>
+                <th class="border border-black border-b-2">Inscrits/places</th>
+                <th class="border border-black border-b-2">Etat</th>
+                <th class="border border-black border-b-2">Inscrit</th>
+                <th class="border border-black border-b-2">Organisateur</th>
+                <th class="border border-black border-b-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sortie in sorties %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+                    <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+                    <td>{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etat.libelle }}</td>
+                    <td>{% if app.user and sortie.isInscrit(app.user) %}
+                            x
+                        {% endif %}
+                    </td>
+                    <td>{{ sortie.organisateur.prenomEtInitiale }}</td>
+                    <td>A faire</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">Aucune donnée fournie</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
