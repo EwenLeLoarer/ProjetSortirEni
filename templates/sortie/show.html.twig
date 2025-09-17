@@ -45,13 +45,17 @@
                 {% endfor %}
               </tbody>
           </table>
-          {% if date(sortie.dateLimiteInscription) > date() and sortie.etat.id == 2 and sortie.nbInscriptionsMax > sortie.participants|length %}
+          {% if app.user in sortie.participants %}
+            <a href="{{ path('app_sortie_unregister', {id: sortie.id}) }}">se desisté</a>
+          {% elseif date(sortie.dateLimiteInscription) > date() and sortie.etat.id == 2 and sortie.nbInscriptionsMax > sortie.participants|length %}
             <a href="{{ path('app_sortie_register', {id: sortie.id}) }}">
                 participer a cette sortie
             </a>
           {% else %}
               <button disabled class="inline-block px-4 py-2 bg-gray-400 text-gray-700 rounded cursor-not-allowed" title="Sortie has started">Inscription fermé</button>
           {% endif %}
+
+
       </ul>
 </div>
 {% endblock %}

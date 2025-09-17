@@ -90,9 +90,47 @@ final class SortieController extends AbstractController
             $sortie->addParticipant($user);
             $em->persist($sortie);
             $em->flush();
+        } else {
+            $this->addFlash('error', "utilisateur participe deja la sortie");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+    }
+
+    #[Route('/sortie/{id}/unregister', name: 'app_sortie_unregister', requirements: ['id'=>'\d+'], methods: ['GET', 'POST'])]
+    public function unregister(Sortie $sortie, EntityManagerInterface $em): Response
+    {
+        $userConnected = $this->getUser();
+
+        if(!$userConnected){
+            throw $this->createAccessDeniedException('You must be logged in to unregister.');
+        }
+
+        if($sortie->getDateHeureDebut() < new \DateTime()){
+            $this->addFlash('error', "la sortie est commencé");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        if($sortie->getEtat()->getId() > 2)
+        {
+            $this->addFlash('error', "l'inscription n'est plus ouverte ou en cours de creation");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
+
+        if($sortie->getParticipants()->contains($user)){
+            $sortie->removeParticipant($user);
+            $em->persist($sortie);
+            $em->flush();
+        } else {
+            $this->addFlash('error', "utilisateur ne participe pas a la sortie");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+
     }
 
 
