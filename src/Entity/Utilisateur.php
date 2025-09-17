@@ -164,6 +164,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPrenomEtInitiale(): ?string
+    {
+        $initiale = strtoupper($this->nom[0]);
+        return $this->prenom . ' ' . $initiale;
+    }
+
     public function getTelephone(): ?string
     {
         return $this->telephone;
@@ -239,7 +245,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActif(bool $isActif): static
     {
         $this->isActif = $isActif;
-
         return $this;
     }
 
