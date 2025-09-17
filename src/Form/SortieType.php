@@ -33,6 +33,9 @@ class SortieType extends AbstractType
                 'choice_label' => function(Utilisateur $utilisateur) {
                     return $utilisateur->getPrenom() . ' ' . $utilisateur->getNom();
                 },
+                'mapped' => false,
+                'disabled' => true,
+                'data' => $options['organisateur'],
             ])
             ->add('participants', EntityType::class, [
                 'class' => Utilisateur::class,
@@ -58,6 +61,7 @@ class SortieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Sortie::class,
+            'organisateur' => null,
         ]);
     }
 }

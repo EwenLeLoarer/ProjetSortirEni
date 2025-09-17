@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use Doctrine\DBAL\Types\DateType;
@@ -16,17 +17,26 @@ use Doctrine\ORM\EntityManagerInterface;
 final class SortieController extends AbstractController
 {
     #[Route('/sortie', name: 'app_sortie')]
-    public function new(Request $Request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();
+        $user = $this->getUser();
+        $form = $this->createForm(SortieType::class, $sortie, [
+            'organisateur' => $user,
+        ]);
 
-        $form = $this->createForm(SortieType::class, $sortie);
+        if ($request->query->has('newLieuId')){
+            $lieu = $em->getRepository(Lieu::Class)->find($request->query->get('newLieuId'));
+            if($lieu){
+                $sortie->setLieu($lieu);
+            }
+        }
 
-        $form->handleRequest($Request);
+        $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $sortie->setOrganisateur($user);
             //$sortie = $form->getData();
-
             $em->persist($sortie);
             $em->flush();
 
