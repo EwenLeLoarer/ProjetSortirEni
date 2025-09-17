@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\Utilisateur;
 use App\Form\SortieType;
 use Doctrine\DBAL\Types\DateType;
 use Doctrine\DBAL\Types\IntegerType;
@@ -47,8 +48,38 @@ final class SortieController extends AbstractController
         return $this->render('sortie/index.html.twig', [
             'form' => $form
         ]);
-
     }
+    #[Route('/sortie/{id}', name: 'app_sortie_show', requirements: ['id'=>'\d+'])]
+    public function show(Sortie $sortie): Response
+    {
+        return $this->render('sortie/show.html.twig', [
+            'sortie' => $sortie
+        ]);
+    }
+
+    #[Route('/sortie/{id}/register', name: 'app_sortie_register', requirements: ['id'=>'\d+'], methods: ['GET', 'POST'])]
+    public function register(Sortie $sortie, EntityManagerInterface $em): Response
+    {
+
+        $userConnected = $this->getUser();
+
+        if(!$userConnected){
+            throw $this->createAccessDeniedException('You must be logged in to register.');
+        }
+        $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
+
+        if (!$sortie->getParticipants()->contains($user)) {
+            $sortie->addParticipant($user);
+            $em->persist($sortie);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+    }
+
+
+
+
 
 
 }
