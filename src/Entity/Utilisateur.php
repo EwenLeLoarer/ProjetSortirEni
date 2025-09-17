@@ -242,4 +242,27 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getSortiesPrevues(): Collection
+    {
+        return $this->sortiesPrevues;
+    }
+    public function setSortiesPrevues(Collection $sortiesPrevues): static
+    {
+        $this->sortiesPrevues = $sortiesPrevues;
+    }
+    public function addSortiePrevue(Sortie $sortie): static
+    {
+        if (!$this->sortiesPrevues->contains($sortie)) {
+            $this->sortiesPrevues->add($sortie);
+        }
+        return $this;
+    }
+    public function removeSortiePrevue(Sortie $sortie): static
+    {
+        if ($this->sortiesPrevues->contains($sortie)) {
+            $this->sortiesPrevues->removeElement($sortie);
+        }
+        return $this;
+    }
 }
