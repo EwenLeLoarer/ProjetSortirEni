@@ -11,18 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 final class SortieController extends AbstractController
 {
     #[Route('/sortie', name: 'app_sortie')]
-    public function index(): Response
-    {
-        return $this->render('sortie/index.html.twig', [
-            'controller_name' => 'SortieController',
-        ]);
-    }
-
-    public function new(Request $Request): Response
+    public function new(Request $Request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();
 
@@ -31,13 +25,16 @@ final class SortieController extends AbstractController
         $form->handleRequest($Request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $task = $form->getData();
+            //$sortie = $form->getData();
+
+            $em->persist($sortie);
+            $em->flush();
 
             //TODO change to the list of Sortie
-            return $this->redirectToRoute('app_main');
+            return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('sortie/new.html.twig', [
+        return $this->render('sortie/index.html.twig', [
             'form' => $form
         ]);
 
