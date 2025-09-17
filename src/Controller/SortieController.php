@@ -21,7 +21,8 @@ final class SortieController extends AbstractController
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();
-        $user = $this->getUser();
+        $userConnected = $this->getUser();
+        $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
         $form = $this->createForm(SortieType::class, $sortie, [
             'organisateur' => $user,
         ]);
@@ -37,12 +38,13 @@ final class SortieController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $sortie->setOrganisateur($user);
+            $sortie->addParticipant($user);
             //$sortie = $form->getData();
             $em->persist($sortie);
             $em->flush();
 
             //TODO change to the list of Sortie
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         return $this->render('sortie/index.html.twig', [
