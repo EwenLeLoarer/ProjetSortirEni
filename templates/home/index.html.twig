@@ -1,8 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sortir.com{% endblock %}
-
 {% block body %}
+    <form method="get" id="filters">
+        <h2 class="filtre_title">Filtrer les sorties</h2>
+
+        <div class="form_filters">
+            <label class="filtre_label">
+                Site :
+                <select name="site" onchange="this.form.submit()">
+                    <option value="">Tous les sites</option>
+                    {% for site in sites %}
+                        <option value="{{ site.id }}" {{ filters.site == site.id ? 'selected' : '' }}>
+                            {{ site.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+
+            <label class="filtre_label">
+                Filtrer :
+                <input type="text" name="query" value="{{ filters.query }}" placeholder="search">
+            </label>
+
+            <label class="filtre_label">
+                Entre :
+                <input type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
+            </label>
+
+            <label class="filtre_label">
+                Et :
+                <input type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
+            </label>
+        </div>
+
+        <div class="form_filters">
+            {% if app.user %}
+                <label class="filtre_label_right">
+                    <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
+                    Sorties que j'organise
+                </label>
+
+                <fieldset>
+                    <label class="filtre_label_right">
+                        <input type="radio" name="prevues" onchange="this.form.submit()" value="" {% if filters.prevues is not defined or filters.prevues is same as('') %}checked{% endif %}>
+                        Toutes les sorties
+                    </label>
+
+                    <label class="filtre_label_right">
+                        <input type="radio" name="prevues" onchange="this.form.submit()" value="1" {% if filters.prevues is defined and filters.prevues =='1' %}checked{% endif %}>
+                        Sorties auxquelles je participe
+                    </label>
+
+                    <label class="filtre_label_right">
+                        <input type="radio" name="prevues" onchange="this.form.submit()" value="0" {% if filters.prevues is defined and filters.prevues == '0' %}checked{% endif %}>
+                        Sorties auxquelles je ne participe pas
+                    </label>
+                </fieldset>
+            {% endif %}
+
+            <label class="filtre_label_right">
+                <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
+                Sorties passées
+            </label>
+        </div>
+
+        <a href="/">Réinitialiser</a>
+    </form>
+
     <table class="border-2 border-black">
         <thead class="">
             <tr class="bg-amber-500">

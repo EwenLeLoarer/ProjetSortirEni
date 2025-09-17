@@ -1,29 +1,31 @@
-<header class="h-[80px]">
-    <nav class="flex justify-between items-center h-full pr-[50px] pl-[50px] font-bold">
-        <a class="w-[200px]" href="/"><img class="header_logo" src="" />Sortir.com</a>
-        <ul class="flex gap-[50px] items-center ">
-            {#<li class="header_item">
-                <a class="header_link" href="{{ path('app_ville') }}">Villes</a>
+{% set current_route = app.request.attributes.get('_route') %}
+
+<header class="header">
+    <nav class="header_nav">
+        <h1 class="header_title"><a href="/" ><img class="header_logo" src="" />Sortir.com</a></h1>
+        <ul class="nav_list">
+            {#<li class="nav_item">
+                <a class="nav_link" href="{{ path('app_ville') }}">Villes</a>
             </li>
-            <li class="header_item">
-                <a class="header_link" href="{{ path('app_site') }}">Sites</a>
+            <li class="nav_item">
+                <a class="nav_link" href="{{ path('app_site') }}">Sites</a>
             </li>#}
-            <li class="header_item">
-                <a class="header_link" href="{{ path('app_home') }}">Accueil</a>
+            <li class="nav_item">
+                <a class="nav_link{{ current_route == 'app_home' ? ' nav_link_active' : '' }}" href="{{ path('app_home') }}">Accueil</a>
             </li>
             {#<li class="header_item">
                 <a class="header_link" href="{{ path('app_profil') }}">Mon profil</a>
             </li>#}
             {% if app.user %}
-                {# utilisateur coonecté #}
-                <li class="header_item">
-                    <a class="header_link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                {# utilisateur connecté #}
+                <li class="nav_item">
+                    <a class="nav_link" href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
-            {#{% else %}
-                #}{# utilisateur non connecté #}{#
-            <li class="header_item">
-                <a class="header_link" href="{{ path('app_login') }}">Se connecter</a>
-            </li>#}
+            {% else %}
+                {# Utilisateur non connecté #}
+            <li class="nav_item">
+                <a class="nav_link{{ current_route == 'app_login' ? ' nav_link_active' : '' }}" href="{{ path('app_login') }}">Se connecter</a>
+            </li>
             {% endif %}
         </ul>
     </nav>
