@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UtilisateurController!{% endblock %}
+
+{% block body %}
+    <h2>Mon profil</h2>
+    {% for utilisateur in utilisateurs %}
+    Pseudo :
+    Prénom : {{ utilisateur.prenom }}
+    Nom : {{ utilisateur.nom }}
+    Tel : {{ utilisateur.telephone }}
+    email : {{ utilisateur.email}}
+    {% endfor %}
+{% endblock %}
