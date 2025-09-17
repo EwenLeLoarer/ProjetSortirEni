@@ -255,6 +255,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSortiesPrevues(Collection $sortiesPrevues): static
     {
         $this->sortiesPrevues = $sortiesPrevues;
+        return $this;
     }
     public function addSortiePrevue(Sortie $sortie): static
     {
