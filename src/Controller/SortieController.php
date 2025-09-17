@@ -66,6 +66,24 @@ final class SortieController extends AbstractController
         if(!$userConnected){
             throw $this->createAccessDeniedException('You must be logged in to register.');
         }
+
+        if($sortie->getDateLimiteInscription() < new \DateTime()){
+            $this->addFlash('error', "la date d'inscription est depassé");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        if($sortie->getEtat()->getId() != 2)
+        {
+            $this->addFlash('error', "l'inscription n'est plus ouverte");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        if($sortie->getNbInscriptionsMax() <= $sortie->getParticipants()->count())
+        {
+            $this->addFlash('error', "nombre de d'inscrit atteint");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
 
         if (!$sortie->getParticipants()->contains($user)) {
