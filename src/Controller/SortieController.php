@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Utilisateur;
+use App\Form\SortieAnnulationType;
 use App\Form\SortieType;
 use Doctrine\DBAL\Types\DateType;
 use Doctrine\DBAL\Types\IntegerType;
@@ -128,14 +130,69 @@ final class SortieController extends AbstractController
             $em->flush();
         } else {
             $this->addFlash('error', "utilisateur ne participe pas a la sortie");
-            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
 
     }
 
+    #[Route('/sortie/{id}/cancel', name: 'app_sortie_cancel', requirements: ['id'=>'\d+'])]
+    public function GetCancel(Sortie $sortie, EntityManagerInterface $em, Request $request): Response
+    {
+        $userConnected = $this->getUser();
+        $cancelEtat = $em->getRepository(Etat::Class)->find(6);
+        if(!$userConnected){
+            throw $this->createAccessDeniedException('You must be logged in to cancel.');
+        }
 
+        if($sortie->getDateHeureDebut() < new \DateTime()){
+            $this->addFlash('error', "la date d'inscription est depassé");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        if($sortie->getEtat()->getId() == 4)
+        {
+            $this->addFlash('error', "la sortie est en cours");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+        if($sortie->getEtat()->getId() == 5)
+        {
+            $this->addFlash('error', "la sortie est deja passé");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+        if($sortie->getEtat()->getId() == 6)
+        {
+            $this->addFlash('error', "la sortie est deja annulé");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
+
+        if($user != $sortie->getOrganisateur()){
+            $this->addFlash('error', "l'utilisateur connecter n'est pas le createur de la sortie");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        $form = $this->createForm(SortieAnnulationType::class, $sortie);
+
+        $form->handleRequest($request);
+
+
+
+        if($form->isSubmitted() && $form->isValid()){
+            $sortie->setEtat($cancelEtat);
+            $em->persist($sortie);
+            $em->flush();
+
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        return $this->render('sortie/cancel.html.twig', [
+            'sortie' => $sortie,
+            'form' => $form
+        ]);
+
+    }
 
 
 
