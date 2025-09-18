@@ -1,6 +1,6 @@
 /* ===== Thème & reset léger ===== */
 :root{
-    --accent: purple;              /* bleu principal */
+    --accent: #4e014e;              /* bleu principal */
     --accent-rgb: 37,99,235;
     --text: #0f172a;
     --muted: #475569;
@@ -225,7 +225,7 @@ body .container{
 
 .user_info{
     width: 320px;
-    margin: 32px auto;
+    margin: 32px auto 0 auto;
     gap: 16px;
     background-color: rgba(128, 0, 128, 0.15);
     padding: 16px 24px;
@@ -277,6 +277,41 @@ body .container{
         margin-right: 24px;
     }
 }
+
+.buttons button, .button{
+    border-radius: 4px;
+    text-align: center;
+    height: 32px;
+    padding: 0 16px;
+}
+
+.button_primary{
+    background-color: var(--accent);
+    color: white;
+}
+.button_primary:hover{
+    background-color: #2b002b;
+    color: white;
+}
+
+.button_secondary{
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+.button_secondary:hover{
+    border: 2px solid #4E014EFF;
+    color: #4E014EFF;
+}
+
+.return_button{
+    width: 320px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px auto;
+}
+
 
 .user_info span{
     font-weight: bold;

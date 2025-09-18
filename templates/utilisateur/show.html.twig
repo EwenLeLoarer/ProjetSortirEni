@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UtilisateurController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 
@@ -9,6 +9,8 @@
     <div>
         {% if utilisateur.photo != null %}
             <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateur.photo ) }}" alt="image">
+        {% else %}
+            <img src="{{asset('images/placeholder_img.jpg')}}" alt="image">
         {% endif %}
     </div>
     <div class="user_info">
@@ -28,5 +30,6 @@
             Site de rattachement : <span>{{utilisateur.site.nom}}</span>
         </div>
     </div>
+        <a class="button button_primary return_button" href="{{ path('app_home')}}">Retour</a>
 </div>
 {% endblock %}
