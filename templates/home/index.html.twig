@@ -92,7 +92,11 @@
                             x
                         {% endif %}
                     </td>
-                    <td>{{ sortie.organisateur.prenomEtInitiale }}</td>
+                    <td>
+                        <a href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
+                            {{ sortie.organisateur.prenomEtInitiale }}
+                        </a>
+                    </td>
                     <td>A faire</td>
                 </tr>
             {% else %}

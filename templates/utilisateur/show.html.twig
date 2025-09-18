@@ -3,12 +3,30 @@
 {% block title %}Hello UtilisateurController!{% endblock %}
 
 {% block body %}
-    <h2>Mon profil</h2>
-    {% for utilisateur in utilisateurs %}
-    Pseudo :
-    Prénom : {{ utilisateur.prenom }}
-    Nom : {{ utilisateur.nom }}
-    Tel : {{ utilisateur.telephone }}
-    email : {{ utilisateur.email}}
-    {% endfor %}
+
+<div class="profile">
+    <h1>{{ utilisateur.pseudo }}</h1>
+    <div>
+        {% if utilisateur.photo != null %}
+            <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateur.photo ) }}" alt="image">
+        {% endif %}
+    </div>
+    <div class="user_info">
+        <div>
+            Prénom : <span>{{ utilisateur.prenom }}</span>
+        </div>
+        <div>
+            Nom : <span>{{ utilisateur.nom }}</span>
+        </div>
+        <div>
+            Téléphone : <span>{{ utilisateur.telephone }}</span>
+        </div>
+        <div>
+            Email : <span>{{ utilisateur.email}}</span>
+        </div>
+        <div>
+            Site de rattachement : <span>{{utilisateur.site.nom}}</span>
+        </div>
+    </div>
+</div>
 {% endblock %}

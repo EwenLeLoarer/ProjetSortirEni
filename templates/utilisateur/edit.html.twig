@@ -7,9 +7,7 @@
         {{ form_start(utilisateurForm) }}
         <div>
             {% if utilisateurForm.vars.value.photo != null %}
-                <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}"
-                     class="img-fluid" alt="image">
-
+                <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}" alt="image">
             {% endif %}
         </div>
         <div>
