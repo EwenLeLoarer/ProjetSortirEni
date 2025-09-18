@@ -45,7 +45,14 @@
                 {% endfor %}
               </tbody>
           </table>
-          {% if app.user in sortie.participants %}
+          {% if app.user == sortie.organisateur and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
+              <a href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
+                  annulé cette sortie
+              </a>
+          {% elseif sortie.etat.id == 6%}
+              <button disabled class="inline-block px-4 py-2 bg-gray-400 text-gray-700 rounded cursor-not-allowed" title="Sortie has started">sortie annulé</button>
+              <a>pour motif de : {{ sortie.annulationMotif }}</a>
+          {% elseif app.user in sortie.participants %}
             <a href="{{ path('app_sortie_unregister', {id: sortie.id}) }}">se desisté</a>
           {% elseif date(sortie.dateLimiteInscription) > date() and sortie.etat.id == 2 and sortie.nbInscriptionsMax > sortie.participants|length %}
             <a href="{{ path('app_sortie_register', {id: sortie.id}) }}">
