@@ -19,7 +19,7 @@
 
             <label class="filtre_label">
                 Filtrer :
-                <input type="text" name="query" value="{{ filters.query }}" placeholder="search">
+                <input type="text" name="query" value="{{ filters.query }}" placeholder="rechercher">
             </label>
 
             <label class="filtre_label">
@@ -92,7 +92,11 @@
                             x
                         {% endif %}
                     </td>
-                    <td>{{ sortie.organisateur.prenomEtInitiale }}</td>
+                    <td>
+                        <a href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
+                            {{ sortie.organisateur.prenomEtInitiale }}
+                        </a>
+                    </td>
                     <td>A faire</td>
                 </tr>
             {% else %}

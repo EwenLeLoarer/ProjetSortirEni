@@ -1,15 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UtilisateurController!{% endblock %}
+{% block title %}{% endblock %}
 {% block body %}
-    <div class="profile">
+    <div class="main_container profile">
         <h1>Mon profil</h1>
         {{ form_start(utilisateurForm) }}
         <div>
             {% if utilisateurForm.vars.value.photo != null %}
-                <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}"
-                     class="img-fluid" alt="image">
-
+                <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}" alt="image">
             {% endif %}
         </div>
         <div>
@@ -52,9 +50,9 @@
             {{ form_widget(utilisateurForm._token) }}
         </div>
         <div class="buttons">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enregistrer</button>
-            <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="submit">Annuler</button>
-            {{ form_end(utilisateurForm, {'render_rest': false})}}
+            <button class="button_primary" type="submit">Enregistrer</button>
+            <button class="button_secondary" type="submit">Annuler</button>
         </div>
+        {{ form_end(utilisateurForm, {'render_rest': false})}}
     </div>
 {% endblock %}
