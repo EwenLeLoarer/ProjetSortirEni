@@ -3,7 +3,10 @@
 <header class="header">
     <nav class="header_nav">
         <h1 class="header_title"><a href="/" ><img class="header_logo" src="" />Sortir.com</a></h1>
-        <ul class="nav_list">
+        <button class="burger_button" id="burger_button" aria-label="Toggle menu">
+            &#9776;
+        </button>
+        <ul class="nav_list" id="nav_list">
             {#<li class="nav_item">
                 <a class="nav_link" href="{{ path('app_ville') }}">Villes</a>
             </li>

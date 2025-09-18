@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html class="bg-white">
+<html class="bg-white" lang="fr">
 <head>
     <meta charset="UTF-8" />
     <title>Sortir.com{% block title %}{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     {{ importmap('app') }}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 {% include "_partials/header.html.twig" %}
@@ -32,4 +33,15 @@
     </div>
 </main>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const burger = document.getElementById('burger_button');
+        const navList = document.getElementById('nav_list');
+
+        burger.addEventListener('click', function () {
+            navList.classList.toggle('open');
+        });
+    });
+</script>
+
 </html>

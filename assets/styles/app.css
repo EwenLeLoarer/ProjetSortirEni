@@ -21,11 +21,17 @@ body {
     padding: 0 50px;
 }
 
+.main_container{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 .main_container h1{
     font-weight: bold;
     font-size: 20px;
 }
-.main_container h2{
+.main_container h2, .event-tile h2{
     font-weight: bold;
     font-size: 16px;
 }
@@ -44,6 +50,9 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 100%;
+}
+.header_nav button{
+    display : none;
 }
 
 .nav_list {
@@ -66,7 +75,7 @@ body {
 }
 
 
-#filters, .main_container{
+#filters{
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -233,13 +242,15 @@ body .container{
     gap: 32px;
 }
 
+.user_info, .event_details{
+    background-color: rgba(175, 162, 175, 0.15);
+    padding: 16px 24px;
+    border-radius: 4px;}
+
 .user_info{
     width: 320px;
     margin: 32px auto 0 auto;
     gap: 16px;
-    background-color: rgba(128, 0, 128, 0.15);
-    padding: 16px 24px;
-    border-radius: 4px;
 }
 
 .profile form, .user_info{
@@ -281,6 +292,10 @@ body .container{
     :first-child{
         margin-right: 24px;
     }
+}
+
+.event_tile .buttons{
+    text-align: center;
 }
 
 .buttons button, .button{
@@ -336,46 +351,137 @@ button.disabled:hover{
 }
 
 
-.user_info span{
+.user_info span, .event_tile span{
     font-weight: bold;
     margin-left: 24px;
 }
 
 .event_details {
+    width: 100%;
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
     padding: 10px;
-    column-gap: 32px;
+    row-gap: 16px;
 }
 
 .event_details > * {
-    flex-basis: 15%;
-    width: 50%
+    flex-basis: 50%;
 }
 
+td, th{
+    padding: 4px 8px;
+    text-align: center;
+}
+td{
+    padding: 8px;
+}
 
 table.participants{
     width: 50%;
-    td, th{
-        text-align: left;
-        padding: 4px 8px;
-    }
+}
+
+table, thead th, .participants{
+    border: 2px solid black;
+}
+
+thead tr{
+    background-color: rgba(128, 0, 128, 0.15);
+}
+
+tbody td{
+    border: 1px solid lightgrey;
+}
+
+.all_events_table{
+    width: 100%;
     td{
-        padding: 8px;
+        text-align: center
     }
 }
+
+.all_events_tiles{
+    display: none;
+}
+
+.event_tile{
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding-bottom: 24px;
+}
+
+.event_tile h2{
+    background-color: rgba(175, 162, 175, 0.15);
+    text-align: center;
+    padding: 4px 8px;
+}
+
+.event_content{
+    padding: 8px 24px;
+}
+
+.event_content div{
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.event_content img{
+    width: 24px;
+    margin-right: 24px;
+}
+
 /* ===== Responsive finitions ===== */
-@media (max-width: 640px){
-    #filters{ padding: 12px; }
-    .filtre_label{
+@media (max-width: 640px) {
+
+    .header_nav button{
+        display: flex;
+    }
+    .header_nav ul{
+        display: none;
+    }
+    #filters {
+        padding: 12px;
+    }
+
+    .filtre_label {
         flex-wrap: wrap;
         gap: 8px;
     }
+
     .filtre_label > select,
     .filtre_label > input[type="text"],
-    .filtre_label > input[type="date"]{
+    .filtre_label > input[type="date"] {
         margin-left: 0;
         width: 100%;
     }
 }
+@media (max-width: 920px) {
+    .event_details {
+        height: 300px;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    .event_details > * {
+        flex-basis: 100%;
+    }
+
+    table.participants{
+        width: 100%;
+    }
+
+    .all_events_tiles{
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .all_events_table{
+        display: none;
+    }
+
+    .nav_list.open{
+        display:flex;
+    }
+}
+
