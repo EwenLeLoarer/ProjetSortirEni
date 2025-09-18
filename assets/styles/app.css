@@ -20,6 +20,11 @@
 body {
     padding: 0 50px;
 }
+
+.main_container h1{
+    font-weight: bold;
+    font-size: 20px;
+}
 .header {
     height:80px;
     border-bottom: 2px purple double;
@@ -56,7 +61,7 @@ body {
 }
 
 
-#filters, .profile{
+#filters, .main_container{
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -253,11 +258,6 @@ body .container{
 }
 .profile select{
     padding: 10px 16px;
-}
-
-.profile h1{
-    font-weight: bold;
-    font-size: 20px;
 }
 
 .profile img{
