@@ -56,7 +56,7 @@ body {
 }
 
 
-#filters{
+#filters, .profile{
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -114,9 +114,10 @@ body {
 }
 
 /* ===== Inputs ===== */
-#filters select,
-#filters input[type="text"],
-#filters input[type="date"]{
+select,
+input[type="text"],
+input[type="date"],
+input[type="password"]{
     appearance: none;
     border: 1px solid var(--line);
     background: var(--bg);
@@ -129,17 +130,19 @@ body {
     box-shadow: inset 0 1px 0 rgba(255,255,255,.4);
 }
 
-#filters select:hover,
-#filters input[type="text"]:hover,
-#filters input[type="date"]:hover{
+select:hover,
+input[type="text"]:hover,
+input[type="date"]:hover,
+input[type="password"]:hover{
     border-color: color-mix(in oklab, var(--line) 60%, var(--text));
     color: purple;
     cursor: pointer;
 }
 
-#filters select:focus-visible,
-#filters input[type="text"]:focus-visible,
-#filters input[type="date"]:focus-visible{
+select:focus-visible,
+input[type="text"]:focus-visible,
+input[type="date"]:focus-visible,
+input[type="password"]:focus-visible{
     border-color: var(--accent);
     box-shadow:
             0 0 0 1px var(--accent),
@@ -206,6 +209,62 @@ body {
 }
 #filters > a:active{
     transform: translateY(1px);
+}
+
+body .container{
+    max-width: none;
+}
+.profile form{
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.profile form div div{
+    display: flex;
+    gap: 40px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+.profile label{
+    width: 30%;
+}
+.profile input, .profile select{
+    width: 100%;
+    margin-left: auto;
+    min-height: 32px;
+}
+.profile select{
+    padding: 10px 16px;
+}
+
+.profile h1{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.profile img{
+    text-align: center;
+}
+.profile img{
+    width: 320px;
+    height: 320px;
+    border-radius: 100%;
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+.profile form{
+
+}
+
+.buttons {
+    margin: 0 auto;
+    :first-child{
+        margin-right: 24px;
+    }
 }
 
 /* ===== Responsive finitions ===== */

@@ -13,11 +13,11 @@
             <li class="nav_item">
                 <a class="nav_link{{ current_route == 'app_home' ? ' nav_link_active' : '' }}" href="{{ path('app_home') }}">Accueil</a>
             </li>
-            {#<li class="header_item">
-                <a class="header_link" href="{{ path('app_profil') }}">Mon profil</a>
-            </li>#}
             {% if app.user %}
                 {# utilisateur connecté #}
+                <li class="nav_item">
+                    <a class="nav_link" href="{{ path('app_profil') }}">Mon profil</a>
+                </li>
                 <li class="nav_item">
                     <a class="nav_link" href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
