@@ -56,6 +56,12 @@ final class SortieController extends AbstractController
     #[Route('/sortie/{id}', name: 'app_sortie_show', requirements: ['id'=>'\d+'])]
     public function show(Sortie $sortie): Response
     {
+
+        if($sortie->getEtat()->getId() == 7)
+        {
+            $this->addFlash('error', "cette sortie est archivé");
+            return $this->redirectToRoute('app_home');
+        }
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie
         ]);
