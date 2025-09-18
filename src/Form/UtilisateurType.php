@@ -34,10 +34,13 @@ class UtilisateurType extends AbstractType
            ])
             ->add('password', PasswordType::Class, options:[
                 'label' => 'Mot de passe',
+                'required'=> false,
+                'mapped' => false
             ])
             ->add('passwordConfirmation', PasswordType::Class, options:[
                 'label' => 'Confirmation',
                 'mapped' => false,
+                'required'=> false,
             ],
                 )
             ->add('nom', options: [

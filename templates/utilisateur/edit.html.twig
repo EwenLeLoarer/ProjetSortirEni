@@ -2,41 +2,59 @@
 
 {% block title %}Hello UtilisateurController!{% endblock %}
 {% block body %}
-    <div class="flex-col align-center m-auto w-md ">
-    <h1 class="text-lg font-medium mb-3 block">Mon profil</h1>
-        {% form_theme utilisateurForm'tailwind_2_layout.html.twig' %}
+    <div class="profile">
+        <h1>Mon profil</h1>
         {{ form_start(utilisateurForm) }}
-        <div class="col-sm-3">
+        <div>
             {% if utilisateurForm.vars.value.photo != null %}
                 <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}"
                      class="img-fluid" alt="image">
 
             {% endif %}
         </div>
-        {{ form_label(utilisateurForm.pseudo) }}
-        {{ form_widget(utilisateurForm.pseudo) }}
-        {{ form_label(utilisateurForm.prenom) }}
-        {{ form_widget(utilisateurForm.prenom) }}
-        {{ form_label(utilisateurForm.nom) }}
-        {{ form_widget(utilisateurForm.nom) }}
-        {{ form_label(utilisateurForm.telephone) }}
-        {{ form_widget(utilisateurForm.telephone) }}
-        {{ form_label(utilisateurForm.email) }}
-        {{ form_widget(utilisateurForm.email) }}
-        {{ form_label(utilisateurForm.password) }}
-        {{ form_widget(utilisateurForm.password) }}
-        {{ form_label(utilisateurForm.passwordConfirmation) }}
-        {{ form_widget(utilisateurForm.passwordConfirmation) }}
-        {{ form_label(utilisateurForm.site) }}
-        {{ form_widget(utilisateurForm.site) }}
-        {{ form_label(utilisateurForm.photo) }}
-        {{ form_widget(utilisateurForm.photo) }}
-        {{ form_widget(utilisateurForm._token) }}
-{#        {{ form(utilisateurForm) }}#}
-    <div>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enregistrer</button>
-        <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="submit">Annuler</button>
-        {{ form_end(utilisateurForm, {'render_rest': false})}}
-    </div>
+        <div>
+            <div>
+                {{ form_label(utilisateurForm.pseudo) }}
+                {{ form_widget(utilisateurForm.pseudo) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.prenom) }}
+                {{ form_widget(utilisateurForm.prenom) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.nom) }}
+                {{ form_widget(utilisateurForm.nom) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.telephone) }}
+                {{ form_widget(utilisateurForm.telephone) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.email) }}
+                {{ form_widget(utilisateurForm.email) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.password) }}
+                {{ form_widget(utilisateurForm.password) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.passwordConfirmation) }}
+                {{ form_widget(utilisateurForm.passwordConfirmation) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.site) }}
+                {{ form_widget(utilisateurForm.site) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.photo) }}
+                {{ form_widget(utilisateurForm.photo) }}
+            </div>
+            {{ form_widget(utilisateurForm._token) }}
+        </div>
+        <div class="buttons">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enregistrer</button>
+            <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="submit">Annuler</button>
+            {{ form_end(utilisateurForm, {'render_rest': false})}}
+        </div>
     </div>
 {% endblock %}

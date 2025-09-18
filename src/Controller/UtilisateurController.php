@@ -38,38 +38,9 @@ final class UtilisateurController extends AbstractController
                     $utilisateur->setPassword($encodedPassword);}
             }
             $em->flush();
-            $this->addFlash('success', "Profil mis à jour");
-            return $this->render('utilisateur/edit.html.twig', ['utilisateurForm' => $utilisateurForm, 'utilisateur' => $utilisateur]);
+            $this->addFlash('success', "La mise à jour du profil a bien été prise en compte.");
+            return $this->redirectToRoute('app_profil');
         }
         return $this->render('utilisateur/edit.html.twig', ['utilisateurForm' => $utilisateurForm, 'utilisateur' => $utilisateur]);
     }
-    #[Route('/utilisateurs', name: 'app_utilisateurs')]
-    public function show(UtilisateurRepository $utilisateurRepository): Response
-    {
-        $utilisateurs = $utilisateurRepository->findAll();
-        return $this->render('utilisateur/show.html.twig', ['utilisateurs' => $utilisateurs]);
-    }
-//    #[Route('/utilisateurs/{id}/edit', name: 'app_utilisateur', requirements: ['id' => '\d+'])]
-//    public function edit(Utilisateur $utilisateur, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response{
-//        $utilisateurForm = $this->createForm(UtilisateurType::class, $utilisateur);
-//        $utilisateurForm->handleRequest($request);
-//        if($utilisateurForm->isSubmitted() && $utilisateurForm->isValid()){
-//            $plainPassword = $utilisateurForm->get('password')->getData();
-//            $passwordConfirmation = $utilisateurForm->get('passwordConfirmation')->getData();
-//
-//            if ($plainPassword) {
-//                if ($plainPassword !== $passwordConfirmation) {
-//                    $utilisateurForm->get('passwordConfirmation')->addError(new FormError('Les mots de passe ne correspondent pas.'));
-//                } else{
-//                // encode password and set it
-//                $encodedPassword = $passwordHasher->hashPassword($utilisateur, $plainPassword);
-//                $utilisateur->setPassword($encodedPassword);}
-//            }
-//            $em->flush();
-//            $this->addFlash('success', "Profil mis à jour");
-//
-//            return $this->redirectToRoute('utilisateurs_list');
-//        }
-//        return $this->render('utilisateur/edit.html.twig', ['utilisateurForm' => $utilisateurForm, 'utilisateur' => $utilisateur]);
-//}
 }
