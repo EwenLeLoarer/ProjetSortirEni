@@ -18,6 +18,7 @@
                 <th>actif</th>
                 <th>pseudo</th>
                 <th>desactiver</th>
+                <th>supprimer</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
                     <td> {{ user.actif ? 'oui' : 'non' }}</td>
                     <td> {{ user.pseudo }}</td>
                     <td> <a href="{{ path('app_desactivate_user', {id:user.id}) }}">desactiver</a></td>
+                    <td> <a href="{{ path('app_delete_user', {id:user.id}) }}">supprimer</a></td>
                 </tr>
 
             {% endfor %}

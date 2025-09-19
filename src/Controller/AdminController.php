@@ -127,4 +127,13 @@ final class AdminController extends AbstractController
         return $this->redirectToRoute('app_list_user');
     }
 
+    #[Route('/admin/{id}/delete', name: 'app_delete_user', requirements: ['id' => '\d+'])]
+    public function deleteUser(Utilisateur $user, EntityManagerInterface $em) : Response
+    {
+        $em->remove($user);
+        $em->flush();
+
+        return $this->redirectToRoute('app_list_user');
+    }
+
 }
