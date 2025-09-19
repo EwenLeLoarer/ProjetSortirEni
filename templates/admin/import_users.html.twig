@@ -4,57 +4,12 @@
 
 {% block body %}
     <div class="main_container profile">
-        <h1>Mon profil</h1>
+        <h1>importer les utilisateurs avec un</h1>
+
         {{ form_start(form) }}
-        <div>
-            {% if form.vars.value.photo != null %}
-                <img src="{{ asset(app_images_profil_directory ~ '/' ~ form.vars.value.photo ) }}" alt="image">
-            {% endif %}
-        </div>
-        <div>
-            <div>
-                {{ form_label(form.pseudo) }}
-                {{ form_widget(form.pseudo) }}
-            </div>
-            <div>
-                {{ form_label(form.prenom) }}
-                {{ form_widget(form.prenom) }}
-            </div>
-            <div>
-                {{ form_label(form.nom) }}
-                {{ form_widget(form.nom) }}
-            </div>
-            <div>
-                {{ form_label(form.telephone) }}
-                {{ form_widget(form.telephone) }}
-            </div>
-            <div>
-                {{ form_label(form.email) }}
-                {{ form_widget(form.email) }}
-            </div>
-            <div>
-                {{ form_label(form.password) }}
-                {{ form_widget(form.password) }}
-            </div>
-            <div>
-                {{ form_label(form.passwordConfirmation) }}
-                {{ form_widget(form.passwordConfirmation) }}
-            </div>
-            <div>
-                {{ form_label(form.site) }}
-                {{ form_widget(form.site) }}
-            </div>
-            <div>
-                {{ form_label(form.photo) }}
-                {{ form_widget(form.photo) }}
-            </div>
-            {{ form_widget(form._token) }}
-        </div>
-        <div class="buttons">
-            <button class="button_primary" type="submit">Enregistrer</button>
-            <button class="button_secondary" type="submit">Annuler</button>
-        </div>
-        {{ form_end(form, {'render_rest': false})}}
+            {{ form_row(form.csvFile) }}
+            <button>Import</button>
+        {{ form_end(form) }}
     </div>
 
 {% endblock %}
