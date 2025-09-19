@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Site;
 use App\Entity\Utilisateur;
+use App\Form\CsvImportType;
 use App\Form\UtilisateurType;
+use App\Repository\SiteRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +26,7 @@ final class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/createUser', name: 'app_admin')]
+    #[Route('/admin/createUser', name: 'app_create_user')]
     public function createUser(Request $Request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, FileUploader $fileUploader): Response
     {
         $user = new Utilisateur();
@@ -56,6 +59,50 @@ final class AdminController extends AbstractController
 
         return $this->render('admin/create_user.html.twig', [
             'form' =>  $form
+        ]);
+    }
+    #[Route('/admin/importUser', name: 'app_import_user')]
+    public function importUsers(Request $Request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $form = $this->createForm(CsvImportType::class);
+        $form->handleRequest($Request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $csvFile = $form->get('csvFile')->getData();
+
+            if($csvFile){
+                $handle = fopen($csvFile->getPathName(), "r");
+
+                fgetcsv($handle);
+
+                while(($data = fgetcsv($handle, 1000, ';')) !== false){
+                    [$email, $roles, $password, $prenom, $nom, $telephone, $site, $is_Actif, $pseudo, $photo] = $data;
+
+                    $roles = ['ROLE_USER'];
+                    $user = new Utilisateur();
+                    $user->setEmail($email);
+                    $user->setRoles($roles);
+                    $user->setPassword($passwordHasher->hashPassword($user, $password));
+                    $user->setPrenom($prenom);
+                    $user->setNom($nom);
+                    $user->setTelephone($telephone);
+                    $user->setSite($em->getRepository(site::class)->findOneBy(['id' => $site]));
+                    $user->setIsActif($is_Actif);
+                    $user->setPseudo($pseudo);
+                    $user->setPhoto($photo);
+
+                    $em->persist($user);
+                }
+                fclose($handle);
+
+                $em->flush();
+                $this->addFlash('success', 'Utilisateur importé avec success');
+                return $this->redirectToRoute('app_admin');
+            }
+
+        }
+        return $this->render('admin/import_users.html.twig', [
+            'form' => $form
         ]);
     }
 
