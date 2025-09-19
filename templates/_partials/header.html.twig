@@ -2,34 +2,52 @@
 
 <header class="header">
     <nav class="header_nav">
-        <h1 class="header_title"><a href="/" ><img class="header_logo" src="" />Sortir.com</a></h1>
-        <button class="burger_button" id="burger_button" aria-label="Toggle menu">
-            &#9776;
-        </button>
-        <ul class="nav_list" id="nav_list">
-            {#<li class="nav_item">
+        <div>
+            <h1 class="header_title"><a href="/" ><img class="header_logo" src="{{ asset('logo.png') }}" />Sortir.com</a></h1>
+        </div>
+        {% if isMobile %}
+            <ul>
+                <li class="nav_item">
+                    <a class="nav_link{{ current_route == 'app_home' ? ' nav_link_active' : '' }}" href="{{ path('app_home') }}">Accueil</a>
+                </li>
+                {% if app.user %}
+                    {# utilisateur connecté #}
+                    <li class="nav_item">
+                        <a class="nav_link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </li>
+                {% else %}
+                    {# Utilisateur non connecté #}
+                    <li class="nav_item">
+                        <a class="nav_link{{ current_route == 'app_login' ? ' nav_link_active' : '' }}" href="{{ path('app_login') }}">Se connecter</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% else %}
+            <ul class="nav_list" id="nav_list">
+                {#<li class="nav_item desktop">
                 <a class="nav_link" href="{{ path('app_ville') }}">Villes</a>
             </li>
-            <li class="nav_item">
+            <li class="nav_item desktop">
                 <a class="nav_link" href="{{ path('app_site') }}">Sites</a>
             </li>#}
-            <li class="nav_item">
-                <a class="nav_link{{ current_route == 'app_home' ? ' nav_link_active' : '' }}" href="{{ path('app_home') }}">Accueil</a>
-            </li>
-            {% if app.user %}
-                {# utilisateur connecté #}
                 <li class="nav_item">
-                    <a class="nav_link" href="{{ path('app_profil') }}">Mon profil</a>
+                    <a class="nav_link{{ current_route == 'app_home' ? ' nav_link_active' : '' }}" href="{{ path('app_home') }}">Accueil</a>
                 </li>
-                <li class="nav_item">
-                    <a class="nav_link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                </li>
-            {% else %}
-                {# Utilisateur non connecté #}
-            <li class="nav_item">
-                <a class="nav_link{{ current_route == 'app_login' ? ' nav_link_active' : '' }}" href="{{ path('app_login') }}">Se connecter</a>
-            </li>
-            {% endif %}
-        </ul>
+                {% if app.user %}
+                    {# utilisateur connecté #}
+                    <li class="nav_item">
+                        <a class="nav_link" href="{{ path('app_profil') }}">Mon profil</a>
+                    </li>
+                    <li class="nav_item">
+                        <a class="nav_link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </li>
+                {% else %}
+                    {# Utilisateur non connecté #}
+                    <li class="nav_item">
+                        <a class="nav_link{{ current_route == 'app_login' ? ' nav_link_active' : '' }}" href="{{ path('app_login') }}">Se connecter</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
     </nav>
 </header>

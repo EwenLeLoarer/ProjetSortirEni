@@ -27,7 +27,7 @@ body {
     gap: 24px;
 }
 
-.main_container h1{
+.main_container h1, .login_form h1, .all_events_tiles h1{
     font-weight: bold;
     font-size: 20px;
 }
@@ -36,8 +36,10 @@ body {
     font-size: 16px;
 }
 
+/**************************** HEADER**************************************************/
+
 .header {
-    height:80px;
+    height:100px;
     border-bottom: 2px purple double;
     margin-bottom: 50px;
 }
@@ -45,35 +47,48 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
-.header_nav {
+.header_nav, .header_nav div{
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
 }
+
 .header_nav button{
     display : none;
 }
+.header_title a{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
 
+.header_title img{
+    height: 80px;
+}
 .nav_list {
     display: flex;
     gap: 20px;
     height: 45px;
 }
 .nav_item {
-    height: 100%;
     font-weight: bold;
 }
 .nav_link {
     display: flex;
     align-items: center;
-    height: 100%;
     alignment-baseline: center;
+}
+.header_nav ul{
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 .nav_link_active {
     color: purple;
 }
 
+/******************************* FiLTRES ****************************************************/
 
 #filters{
     background: var(--panel);
@@ -132,11 +147,12 @@ body {
     cursor: pointer;
 }
 
-/* ===== Inputs ===== */
+/****************************** ===== Inputs ===== ****************************************/
 select,
 input[type="text"],
 input[type="date"],
-input[type="password"]{
+input[type="password"],
+input[type="email"]{
     appearance: none;
     border: 1px solid var(--line);
     background: var(--bg);
@@ -152,7 +168,8 @@ input[type="password"]{
 select:hover,
 input[type="text"]:hover,
 input[type="date"]:hover,
-input[type="password"]:hover{
+input[type="password"]:hover,
+input[type="email"]:hover{
     border-color: color-mix(in oklab, var(--line) 60%, var(--text));
     color: purple;
     cursor: pointer;
@@ -234,7 +251,7 @@ body .container{
     max-width: none;
 }
 
-/*GESTION DU PROFIL*/
+/********************************* GESTION DU PROFIL ***************************************/
 
 .profile form{
     width: 50%;
@@ -392,7 +409,7 @@ tbody td{
     border: 1px solid lightgrey;
 }
 
-.all_events_table{
+.all_events_table, .mobile_table{
     width: 100%;
     td{
         text-align: center
@@ -403,7 +420,7 @@ tbody td{
     display: none;
 }
 
-.event_tile{
+.event_tile, .login_form{
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     padding-bottom: 24px;
@@ -430,9 +447,32 @@ tbody td{
     margin-right: 24px;
 }
 
-/* ===== Responsive finitions ===== */
-@media (max-width: 640px) {
 
+.login_form{
+    width: 40%;
+    padding: 24px;
+    margin: 30vh auto;
+}
+
+.login_form form{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+.login_form h1{
+    text-align: center;
+}
+
+.link{
+    color: var(--accent);
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+/************************ ===== RESPONSIVE DESIGN ===== *********************************/
+@media (max-width: 640px) {
     .header_nav button{
         display: flex;
     }
@@ -455,7 +495,99 @@ tbody td{
         width: 100%;
     }
 }
-@media (max-width: 920px) {
+
+@media (max-width: 461px) {
+    .desktop{
+        display: none;
+    }
+    .mobile{
+        display: inline;
+    }
+    body{
+        padding: 0 16px;
+    }
+    .header_nav{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .event_details{
+        flex-direction: column;
+    }
+    .event_details li{
+        width: 100%;
+    }
+
+    .header_title a{
+        height: 72px;
+    }
+
+    .header_title img {
+        height: 64px;
+    }
+
+    .login_form{
+        width: 100%;
+        padding: 24px;
+        margin: 40px auto;
+    }
+
+    table.participants{
+        width: 100%;
+    }
+
+    .profile img{
+        width: 160px;
+        height: 160px;
+    }
+    .all_events_tiles{
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+}
+@media (min-width: 462px) and (max-width: 540px){
+    .desktop{
+        display: none;
+    }
+    .mobile{
+        display: inline;
+    }
+    .header_nav{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .profile img{
+        width: 200px;
+        height: 200px;
+    }
+}
+@media (min-width:540px) and (max-width: 920px){
+    .profile img{
+        width: 240px;
+        height: 240px;
+    }
+
+    .mobile{
+        display: none;
+    }
+}
+@media (min-width:461px) and (max-width: 920px) {
+    .desktop{
+        display: none;
+    }
+
+    .header_title img {
+        height: 64px;
+    }
+
+    .login_form{
+        width: 100%;
+        padding: 24px;
+        margin: 160px auto;
+    }
+
     .event_details {
         height: 300px;
         overflow: scroll;
@@ -480,8 +612,8 @@ tbody td{
         display: none;
     }
 
-    .nav_list.open{
-        display:flex;
+    .profile img{
+        width: 160px;
+        height: 160px;
     }
 }
-

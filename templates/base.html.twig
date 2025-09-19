@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <title>Sortir.com{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     {{ importmap('app') }}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-{% include "_partials/header.html.twig" %}
+{% include "_partials/header.html.twig" with {'isMobile': isMobile|default(false)} %}
 <main>
     {# Code permettant d'afficher les éventuels messages flash #}
     <div>
