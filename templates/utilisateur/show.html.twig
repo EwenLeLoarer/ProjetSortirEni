@@ -8,9 +8,9 @@
     <h1>{{ utilisateur.pseudo }}</h1>
     <div>
         {% if utilisateur.photo != null %}
-            <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateur.photo ) }}" alt="image">
+            <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateur.photo ) }}" alt="profil">
         {% else %}
-            <img src="{{asset('images/placeholder_img.jpg')}}" alt="image">
+            <img src="{{asset('images/placeholder_img.jpg')}}" alt="profil">
         {% endif %}
     </div>
     <div class="user_info">

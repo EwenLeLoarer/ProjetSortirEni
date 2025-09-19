@@ -8,6 +8,8 @@
         <div>
             {% if utilisateurForm.vars.value.photo != null %}
                 <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}" alt="image">
+            {% else %}
+                <img src="{{asset('images/placeholder_img.jpg')}}" alt="profil">
             {% endif %}
         </div>
         <div>
