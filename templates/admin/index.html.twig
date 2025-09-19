@@ -11,10 +11,9 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/wamp64/www/projetSortirEni/src/Controller/AdminController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/projetSortirEni/templates/admin/index.html.twig</code></li>
-    </ul>
+    <h1>importer des utilisateurs</h1>
+    <a href="{{ path('app_import_user') }}">import</a>
+    <h1>creer un utilisateur</h1>
+    <a href="{{ path('app_create_user') }}">creer</a>
 </div>
 {% endblock %}
