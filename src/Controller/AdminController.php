@@ -123,7 +123,7 @@ final class AdminController extends AbstractController
 
         $em->persist($user);
         $em->flush();
-        
+
         return $this->redirectToRoute('app_list_user');
     }
 
