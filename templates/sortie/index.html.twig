@@ -3,31 +3,61 @@
 {% block title %}Hello SortieController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper border border-3">
-
+<div class="new_event">
+<h1>Créer une sortie</h1>
     {{ form_start(form) }}
     {{ form_row(form.nom) }}
     {{ form_row(form.dateHeureDebut) }}
-    {{ form_row(form.duree) }}
     {{ form_row(form.dateLimiteInscription) }}
     {{ form_row(form.nbInscriptionsMax) }}
+    {{ form_row(form.duree) }}
     {{ form_row(form.infosSortie) }}
-    {{ form_row(form.etat) }}
-    {{ form_row(form.organisateur) }}
-    {{ form_row(form.participants) }}
-    {{ form_row(form.site) }}
     <div style="display: flex; align-items: center;">
         {{ form_row(form.lieu) }}
         <a href="{{ path('app_lieu', { backToSortie: true }) }}" class="btn btn-secondary" style="margin-left: 10px;">
             + Create New Lieu
         </a>
     </div>
+
+    {% if sortie.lieu %}
+        <div>
+            Rue : <span id="lieu_rue">Sélectionnez un lieu</span>
+        </div>
+    {% else %}
+        Rue : Non défini
+    {% endif %}
+        Code postal :
+    </div>
+    {{ form_row(form.organisateur) }}
+    {{ form_row(form.participants) }}
+    {{ form_row(form.site) }}
     {{ form_row(form.enregistrer) }}
     {{ form_end(form) }}
 </div>
+
+    <script>
+        document.addEventListener('change', () => {
+            const lieux = {{ lieuxData|json_encode|raw }};
+            const lieuSelect = document.getElementById('sortie_lieu');
+            const rueSpan = document.getElementById('lieu-rue');
+            console.log("lieux" + lieux)
+            console.log("rueSpan" + rueSpan)
+            if (!lieuSelect || !rueSpan) {
+                console.error('Element(s) not found:', { lieuSelect, rueSpan });
+                return;
+            }
+
+            function updateRue() {
+                const selectedId = lieuSelect.value;
+                if (lieux[selectedId]) {
+                    rueSpan.textContent = lieux[selectedId].rue;
+                } else {
+                    rueSpan.textContent = 'Sélectionnez un lieu';
+                }
+            }
+
+            updateRue();
+            lieuSelect.addEventListener('change', updateRue);
+        });
+    </script>
 {% endblock %}

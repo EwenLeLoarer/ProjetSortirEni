@@ -18,15 +18,41 @@ class SortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('dateHeureDebut')
-            ->add('duree')
-            ->add('dateLimiteInscription')
-            ->add('nbInscriptionsMax')
-            ->add('infosSortie')
-            ->add('etat', EntityType::class, [
-                'class' => Etat::class,
-                'choice_label' => 'libelle',
+            ->add('nom', options: [
+                'label' => 'Nom de la sortie',
+            ])
+            ->add('dateHeureDebut', options: [
+                'label' => 'Date et heure de la sortie',
+            ])
+            ->add('dateLimiteInscription', options: [
+                'label' => 'Date limite d\'inscription',
+            ])
+            ->add('nbInscriptionsMax', options: [
+                'label' => 'Nombre de places',
+            ])
+            ->add('duree', options: [
+                'label' => 'Durée',
+            ])
+            ->add('infosSortie', options: [
+                'label' => 'Description et infos',
+            ])
+//            ->add('etat', EntityType::class, [
+//                'class' => Etat::class,
+//                'choice_label' => 'libelle',
+//                'label' => 'Description et infos',
+//            ])
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
+                'choice_label' => 'nom',
+                'label' => 'Lieu',
+                'attr' => [
+                    'id' => 'sortie_lieu'
+                ],
+            ])
+            ->add('site', EntityType::class, [
+                'class' => Site::class,
+                'choice_label' => 'nom',
+                'label' => 'Ville organisatrice',
             ])
             ->add('organisateur', EntityType::class, [
                 'class' => Utilisateur::class,
@@ -44,14 +70,6 @@ class SortieType extends AbstractType
                 },
                 'multiple' => true,
                 'expanded' => true,
-            ])
-            ->add('site', EntityType::class, [
-                'class' => Site::class,
-                'choice_label' => 'nom',
-            ])
-            ->add('lieu', EntityType::class, [
-                'class' => Lieu::class,
-                'choice_label' => 'nom',
             ])
             ->add('enregistrer', SubmitType::class, [])
         ;
