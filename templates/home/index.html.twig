@@ -1,109 +1,139 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <form method="get" id="filters">
-        <h2 class="filtre_title">Filtrer les sorties</h2>
-
-        <div class="form_filters">
-            <label class="filtre_label">
-                Site :
-                <select name="site" onchange="this.form.submit()">
-                    <option value="">Tous les sites</option>
-                    {% for site in sites %}
-                        <option value="{{ site.id }}" {{ filters.site == site.id ? 'selected' : '' }}>
-                            {{ site.nom }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </label>
-
-            <label class="filtre_label">
-                Filtrer :
-                <input type="text" name="query" value="{{ filters.query }}" placeholder="rechercher">
-            </label>
-
-            <label class="filtre_label">
-                Entre :
-                <input type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
-            </label>
-
-            <label class="filtre_label">
-                Et :
-                <input type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
-            </label>
-        </div>
-
-        <div class="form_filters">
-            {% if app.user %}
-                <label class="filtre_label_right">
-                    <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
-                    Sorties que j'organise
+    <div class="main_container">
+        <form method="get" id="filters">
+            <h2 class="filtre_title">Filtrer les sorties</h2>
+            <div class="form_filters">
+                <label class="filtre_label">
+                    Site :
+                    <select name="site" onchange="this.form.submit()">
+                        <option value="">Tous les sites</option>
+                        {% for site in sites %}
+                            <option value="{{ site.id }}" {{ filters.site == site.id ? 'selected' : '' }}>
+                                {{ site.nom }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </label>
 
-                <fieldset>
+                <label class="filtre_label">
+                    Filtrer :
+                    <input type="text" name="query" value="{{ filters.query }}" placeholder="search">
+                </label>
+
+                <label class="filtre_label">
+                    Entre :
+                    <input type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
+                </label>
+
+                <label class="filtre_label">
+                    Et :
+                    <input type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
+                </label>
+            </div>
+
+            <div class="form_filters">
+                {% if app.user %}
                     <label class="filtre_label_right">
-                        <input type="radio" name="prevues" onchange="this.form.submit()" value="" {% if filters.prevues is not defined or filters.prevues is same as('') %}checked{% endif %}>
-                        Toutes les sorties
+                        <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
+                        Sorties que j'organise
                     </label>
 
-                    <label class="filtre_label_right">
-                        <input type="radio" name="prevues" onchange="this.form.submit()" value="1" {% if filters.prevues is defined and filters.prevues =='1' %}checked{% endif %}>
-                        Sorties auxquelles je participe
-                    </label>
+                    <fieldset>
+                        <label class="filtre_label_right">
+                            <input type="radio" name="prevues" onchange="this.form.submit()" value="" {% if filters.prevues is not defined or filters.prevues is same as('') %}checked{% endif %}>
+                            Toutes les sorties
+                        </label>
 
-                    <label class="filtre_label_right">
-                        <input type="radio" name="prevues" onchange="this.form.submit()" value="0" {% if filters.prevues is defined and filters.prevues == '0' %}checked{% endif %}>
-                        Sorties auxquelles je ne participe pas
-                    </label>
-                </fieldset>
-            {% endif %}
+                        <label class="filtre_label_right">
+                            <input type="radio" name="prevues" onchange="this.form.submit()" value="1" {% if filters.prevues is defined and filters.prevues =='1' %}checked{% endif %}>
+                            Sorties auxquelles je participe
+                        </label>
 
-            <label class="filtre_label_right">
-                <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
-                Sorties passées
-            </label>
-        </div>
+                        <label class="filtre_label_right">
+                            <input type="radio" name="prevues" onchange="this.form.submit()" value="0" {% if filters.prevues is defined and filters.prevues == '0' %}checked{% endif %}>
+                            Sorties auxquelles je ne participe pas
+                        </label>
+                    </fieldset>
+                {% endif %}
 
-        <a href="/">Réinitialiser</a>
-    </form>
+                <label class="filtre_label_right">
+                    <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
+                    Sorties passées
+                </label>
+            </div>
 
-    <table class="border-2 border-black">
-        <thead class="">
-            <tr class="bg-amber-500">
-                <th class="border border-black border-b-2">Nom de la sortie</th>
-                <th class="border border-black border-b-2">Date de la sortie</th>
-                <th class="border border-black border-b-2">Clôture</th>
-                <th class="border border-black border-b-2">Inscrits/places</th>
-                <th class="border border-black border-b-2">Etat</th>
-                <th class="border border-black border-b-2">Inscrit</th>
-                <th class="border border-black border-b-2">Organisateur</th>
-                <th class="border border-black border-b-2">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+            <a href="/">Réinitialiser</a>
+        </form>
+        <table class="border-2 border-black all_events_table">
+            <thead>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>Inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+                        <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+                        <td>{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>{% if app.user and sortie.isInscrit(app.user) %}
+                                x
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
+                                {{ sortie.organisateur.prenomEtInitiale }}
+                            </a>
+                        </td>
+                        <td>A faire</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center">Aucune donnée fournie</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="all_events_tiles">
             {% for sortie in sorties %}
-                <tr>
-                    <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
-                    <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
-                    <td>{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</td>
-                    <td>{{ sortie.etat.libelle }}</td>
-                    <td>{% if app.user and sortie.isInscrit(app.user) %}
-                            x
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
-                            {{ sortie.organisateur.prenomEtInitiale }}
-                        </a>
-                    </td>
-                    <td>A faire</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="8" class="text-center">Aucune donnée fournie</td>
-                </tr>
+                <div class="event_tile">
+                    <h2>{{ sortie.nom }}</h2>
+                    <div class="event_content">
+                        <div><img src="{{asset('icons/date.svg')}}" alt="date"> Date de la sortie : <span>  {{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</span></div>
+                        <div><img src="{{asset('icons/cloture.svg')}}" alt="cloture"> Clôture : <span>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</span></div>
+                        <div>
+                                <img src="{{ asset('icons/inscrits.svg') }}" alt="image">
+                            Inscrits/places : <span>{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</span></div>
+                        <div><img src="{{ asset('icons/etat.svg') }}" alt="image">Etat : <span>{{ sortie.etat.libelle }}</span></div>
+                        <div><img src="{{ asset('icons/participant.svg') }}" alt="image">Inscrit : <span>{% if app.user and sortie.isInscrit(app.user) %}
+                                    Oui
+                                {% else %}
+                                    Non
+                                {% endif %}</span>
+                        </div>
+                        <div><img src="{{ asset('icons/utilisateur.svg') }}" alt="image"> Organisateur :&nbsp;
+                            <a href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
+                                <span>{{ sortie.organisateur.prenomEtInitiale }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="button_primary">Action 1</button>
+                        <button class="button_secondary">Action 2</button>
+                    </div>
+                </div>
             {% endfor %}
-        </tbody>
-    </table>
+        </div>
+    </div>
 {% endblock %}
