@@ -6,7 +6,7 @@
             <h2 class="filtre_title">Filtrer les sorties</h2>
             <div class="form_filters">
                 <label class="filtre_label">
-                    Site :
+                    Site:
                     <select name="site" onchange="this.form.submit()">
                         <option value="">Tous les sites</option>
                         {% for site in sites %}
@@ -18,27 +18,35 @@
                 </label>
 
                 <label class="filtre_label">
-                    Filtrer :
+                    Filtrer:
                     <input type="text" name="query" value="{{ filters.query }}" placeholder="search">
                 </label>
+            </div>
 
+            <div class="form_filters">
                 <label class="filtre_label">
-                    Entre :
+                    Entre:
                     <input type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
                 </label>
 
                 <label class="filtre_label">
-                    Et :
+                    Et:
                     <input type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
                 </label>
             </div>
 
             <div class="form_filters">
                 {% if app.user %}
-                    <label class="filtre_label_right">
-                        <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
-                        Sorties que j'organise
-                    </label>
+                    <fieldset>
+                        <label class="filtre_label_right">
+                            <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
+                            Sorties que j'organise
+                        </label>
+                        <label class="filtre_label_right">
+                            <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
+                            Sorties passées
+                        </label>
+                    </fieldset>
 
                     <fieldset>
                         <label class="filtre_label_right">
@@ -56,17 +64,17 @@
                             Sorties auxquelles je ne participe pas
                         </label>
                     </fieldset>
+                {% else %}
+                    <label class="filtre_label_right">
+                        <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
+                        Sorties passées
+                    </label>
                 {% endif %}
-
-                <label class="filtre_label_right">
-                    <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
-                    Sorties passées
-                </label>
             </div>
 
             <a href="/">Réinitialiser</a>
         </form>
-        <table class="border-2 border-black all_events_table">
+        <table class="all_events_table">
             <thead>
                 <tr>
                     <th>Nom de la sortie</th>
@@ -82,7 +90,8 @@
             <tbody>
                 {% for sortie in sorties %}
                     <tr>
-                        <td>{{ sortie.nom }}</td>
+
+                        <td class="nom_sortie">{{ sortie.nom }}</td>
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
                         <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
                         <td>{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</td>
@@ -92,15 +101,21 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
+                            <a class="link" href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
                                 {{ sortie.organisateur.prenomEtInitiale }}
                             </a>
                         </td>
-                        <td>A faire</td>
+                        <td>
+                            {%  include '_partials/actions.html.twig' %}
+                        </td>
+                        <td class="sortie_link">
+                            <a class="cover-link" href="{{ path('app_sortie_show', {id: sortie.id}) }}">
+                            </a>
+                        </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="8" class="text-center">Aucune donnée fournie</td>
+                        <td colspan="8" class="text-center">Aucune sortie trouvée</td>
                     </tr>
                 {% endfor %}
             </tbody>

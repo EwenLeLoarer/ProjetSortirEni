@@ -1,0 +1,9 @@
+{% if app.user %}
+    {% if sortie.organisateur is same as(app.user) %}
+        {% if sortie.etat.libelle is same as('Ouverte') %}
+            <a class="link" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">Annuler</a>
+        {% elseif sortie.etat.libelle is same as('En création') %}
+            <a class="link" href="{{ path('app_sortie_edit', {id:sortie.id}) }}">Modifier</a>
+        {% endif %}
+    {% endif %}
+{% endif %}

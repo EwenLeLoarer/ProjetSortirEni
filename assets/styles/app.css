@@ -23,7 +23,7 @@ body {
 
 .main_container{
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 24px;
 }
 
@@ -95,12 +95,12 @@ body {
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 16px;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 14px;
     box-shadow: var(--shadow);
     color: var(--text);
-    /* option sticky : */
-    /* position: sticky; top: 0.75rem; z-index: 20; */
+    width: fit-content;
 }
 .filtre_title {
     font-weight: bold;
@@ -109,12 +109,11 @@ body {
 }
 #filters .form_filters{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 12px 16px;
 }
 
 /* ===== Labels “pills” ===== */
-.filtre_label{
+.filtre_label {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -125,6 +124,7 @@ body {
     font-weight: 500;
     line-height: 1.2;
     color: var(--text);
+    width: 320px;
 }
 
 /* Les champs “contrôles” poussés à droite, largeur fluide */
@@ -134,6 +134,7 @@ body {
     margin-left: auto;
     width: min(100%, 320px);
     min-height: 40px;
+    padding-left: 12px;
 }
 
 /* Si le label contient une checkbox ou un radio, aligne en ligne (pas à droite) */
@@ -212,7 +213,6 @@ input[type="password"]:focus-visible{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 10px;
     min-width: 0;
 }
 #filters fieldset .filtre_label{
@@ -224,6 +224,17 @@ input[type="password"]:focus-visible{
 }
 
 /* ===== Lien “Réinitialiser” → bouton discret ===== */
+.sortie_link {
+    position: absolute;
+    padding: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.sortie_link:hover {
+    box-shadow: inset 0 8px 30px rgba(2, 6, 23, .06)
+}
 #filters > a{
     justify-self: start;
     display: inline-flex;
@@ -237,6 +248,7 @@ input[type="password"]:focus-visible{
     padding: 8px 12px;
     font-weight: 600;
     transition: background .15s, color .15s, border-color .15s;
+    width: 150px;
 }
 #filters > a:hover{
     background: var(--bg);
@@ -257,6 +269,11 @@ body .container{
     width: 50%;
     margin: 0 auto;
     gap: 32px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
 }
 
 .user_info, .event_details{
@@ -396,20 +413,41 @@ td{
 table.participants{
     width: 50%;
 }
-
-table, thead th, .participants{
-    border: 2px solid black;
+thead {
+    color: purple;
+}
+tr {
+    position: relative;
 }
 
-thead tr{
-    background-color: rgba(128, 0, 128, 0.15);
+tbody > tr > td{
+    position: relative;
+    border-top: 1px solid var(--line);
 }
-
-tbody td{
-    border: 1px solid lightgrey;
+tbody > tr:hover {
+    color: purple;
 }
-
-.all_events_table, .mobile_table{
+.nom_sortie {
+    font-weight: bold;
+}
+.cover-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.all_events_table {
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    flex-grow: 1;
+}
+.mobile_table{
     width: 100%;
     td{
         text-align: center
@@ -469,8 +507,12 @@ tbody td{
     color: var(--accent);
     text-decoration: underline;
     font-weight: bolder;
+    position: relative;
+    z-index: 1000;
 }
-
+.link:hover {
+    color: blue;
+}
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 @media (max-width: 640px) {
     .header_nav button{
