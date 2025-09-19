@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use App\Form\SortieAnnulationType;
 use App\Form\SortieType;
+use App\Repository\LieuRepository;
 use Doctrine\DBAL\Types\DateType;
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\DBAL\Types\TextType;
@@ -20,7 +21,7 @@ use Doctrine\ORM\EntityManagerInterface;
 final class SortieController extends AbstractController
 {
     #[Route('/sortie', name: 'app_sortie')]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, LieuRepository $lieuRepository): Response
     {
         $sortie = new Sortie();
         $userConnected = $this->getUser();
@@ -37,6 +38,15 @@ final class SortieController extends AbstractController
 
 
 
+        $lieux = $lieuRepository->findAll();
+
+        $lieuxData = [];
+        foreach ($lieux as $lieu) {
+            $lieuxData[$lieu->getId()] = [
+                'rue' => $lieu->getRue(),
+            ];
+        }
+
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -51,7 +61,9 @@ final class SortieController extends AbstractController
         }
 
         return $this->render('sortie/index.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'sortie' => $sortie,
+            'lieuxData' => $lieuxData,
         ]);
     }
     #[Route('/sortie/{id}', name: 'app_sortie_show', requirements: ['id'=>'\d+'])]
