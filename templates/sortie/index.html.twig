@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SortieController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
 <div class="new_event">
@@ -12,52 +12,47 @@
     {{ form_row(form.nbInscriptionsMax) }}
     {{ form_row(form.duree) }}
     {{ form_row(form.infosSortie) }}
+    {{ form_row(form.site) }}
     <div style="display: flex; align-items: center;">
         {{ form_row(form.lieu) }}
         <a href="{{ path('app_lieu', { backToSortie: true }) }}" class="btn btn-secondary" style="margin-left: 10px;">
-            + Create New Lieu
+            + Créer un nouveau lieu
         </a>
     </div>
-
-    {% if sortie.lieu %}
-        <div>
-            Rue : <span id="lieu_rue">Sélectionnez un lieu</span>
-        </div>
-    {% else %}
-        Rue : Non défini
-    {% endif %}
-        Code postal :
-    </div>
-    {{ form_row(form.organisateur) }}
-    {{ form_row(form.participants) }}
-    {{ form_row(form.site) }}
+    {{ form_row(form.rue) }}
+    {{ form_row(form.codePostal) }}
+    {{ form_row(form.ville) }}
+    {{ form_row(form.latitude) }}
+    {{ form_row(form.longitude) }}
     {{ form_row(form.enregistrer) }}
-    {{ form_end(form) }}
+    {{ form_end(form, {'render_rest': false}) }}
 </div>
-
     <script>
-        document.addEventListener('change', () => {
-            const lieux = {{ lieuxData|json_encode|raw }};
+        document.addEventListener('DOMContentLoaded', function () {
             const lieuSelect = document.getElementById('sortie_lieu');
-            const rueSpan = document.getElementById('lieu-rue');
-            console.log("lieux" + lieux)
-            console.log("rueSpan" + rueSpan)
-            if (!lieuSelect || !rueSpan) {
-                console.error('Element(s) not found:', { lieuSelect, rueSpan });
-                return;
+            if (!lieuSelect) return;
+
+            function updateLieuDetails(lieuId) {
+                if (!lieuId) return;
+
+                fetch('/lieu/' + lieuId)
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById('sortie_rue').value = data.rue;
+                        document.getElementById('sortie_codePostal').value = data.codePostal;
+                        document.getElementById('sortie_ville').value = data.ville;
+                        document.getElementById('sortie_latitude').value = data.latitude;
+                        document.getElementById('sortie_longitude').value = data.longitude;
+                    });
             }
 
-            function updateRue() {
-                const selectedId = lieuSelect.value;
-                if (lieux[selectedId]) {
-                    rueSpan.textContent = lieux[selectedId].rue;
-                } else {
-                    rueSpan.textContent = 'Sélectionnez un lieu';
-                }
-            }
+            lieuSelect.addEventListener('change', function () {
+                updateLieuDetails(this.value);
+            });
 
-            updateRue();
-            lieuSelect.addEventListener('change', updateRue);
+            if (lieuSelect.value) {
+                updateLieuDetails(lieuSelect.value);
+            }
         });
     </script>
 {% endblock %}

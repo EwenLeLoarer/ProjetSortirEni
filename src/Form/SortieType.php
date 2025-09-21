@@ -9,6 +9,7 @@ use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,11 +22,15 @@ class SortieType extends AbstractType
             ->add('nom', options: [
                 'label' => 'Nom de la sortie',
             ])
-            ->add('dateHeureDebut', options: [
+            ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie',
+                'widget' => 'single_text',
+                'html5' => true,
             ])
-            ->add('dateLimiteInscription', options: [
+            ->add('dateLimiteInscription', DateTimeType::class, [
                 'label' => 'Date limite d\'inscription',
+                'widget' => 'single_text',
+                'html5' => true,
             ])
             ->add('nbInscriptionsMax', options: [
                 'label' => 'Nombre de places',
@@ -36,11 +41,6 @@ class SortieType extends AbstractType
             ->add('infosSortie', options: [
                 'label' => 'Description et infos',
             ])
-//            ->add('etat', EntityType::class, [
-//                'class' => Etat::class,
-//                'choice_label' => 'libelle',
-//                'label' => 'Description et infos',
-//            ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom',
@@ -48,6 +48,37 @@ class SortieType extends AbstractType
                 'attr' => [
                     'id' => 'sortie_lieu'
                 ],
+            ])
+
+            ->add('rue', null, [
+                'mapped' => false,
+                'disabled' => true,
+                'label' => 'Rue',
+                'attr' => ['id' => 'sortie_rue'],
+            ])
+            ->add('codePostal', null, [
+                'mapped' => false,
+                'disabled' => true,
+                'label' => 'Code postal',
+                'attr' => ['id' => 'sortie_codePostal'],
+            ])
+            ->add('ville', null, [
+                'mapped' => false,
+                'disabled' => true,
+                'label' => 'Ville',
+                'attr' => ['id' => 'sortie_ville'],
+            ])
+            ->add('latitude', null, [
+                'mapped' => false,
+                'disabled' => true,
+                'label' => 'Latitude',
+                'attr' => ['id' => 'sortie_latitude'],
+            ])
+            ->add('longitude', null, [
+                'mapped' => false,
+                'disabled' => true,
+                'label' => 'Longitude',
+                'attr' => ['id' => 'sortie_longitude'],
             ])
             ->add('site', EntityType::class, [
                 'class' => Site::class,
@@ -71,7 +102,9 @@ class SortieType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
-            ->add('enregistrer', SubmitType::class, [])
+            ->add('enregistrer', SubmitType::class, [
+                'attr' => ['class' => 'button button_primary'],
+                ])
         ;
     }
 
