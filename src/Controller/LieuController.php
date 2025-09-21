@@ -29,8 +29,6 @@ final class LieuController extends AbstractController
 
         $form = $this->createForm(LieuType::class, $lieu);
 
-
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
