@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Lieu;
+use App\Entity\Ville;
 use App\Form\LieuType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,17 @@ final class LieuController extends AbstractController
     {
         $lieu = new Lieu();
 
+        if($request->query->has('newVilleId')){
+            $ville = $em->getRepository(Ville::class)->find($request->query->get('newVilleId'));
+            if($ville){
+
+                $lieu->setVille($ville);
+            }
+        }
+
         $form = $this->createForm(LieuType::class, $lieu);
+
+
 
         $form->handleRequest($request);
 
