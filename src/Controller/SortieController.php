@@ -204,7 +204,7 @@ final class SortieController extends AbstractController
 
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
 
-        if($user != $sortie->getOrganisateur()){
+        if($user != $sortie->getOrganisateur() and !$this->isGranted('ROLE_ADMIN')){
             $this->addFlash('error', "l'utilisateur connecter n'est pas le createur de la sortie");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
