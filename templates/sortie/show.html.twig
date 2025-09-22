@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<div class="main_container">
+<div class="main_container event_container">
     <h1>Détail de la sortie</h1>
       <ul class="event_details">
           <li><Strong>Nom <span class="desktop">de la sortie :</span></Strong> {{ sortie.nom }}</li>
@@ -27,7 +27,7 @@
           <li><Strong>Code postal :</Strong> {{ sortie.lieu.ville.codePostal }}</li>
           <li><Strong>Latitude :</Strong> {{ sortie.lieu.latitude }}</li>
           <li><Strong>Longitude :</Strong> {{ sortie.lieu.longitude }}</li>
-          <li><div id="map" style="width: 100%; height: 500px;"></div></li>
+          <div id="map" ></div>
           <script>
               // Center the map on a given location [lat, lng], e.g., Paris
               var map = L.map('map').setView([{{ sortie.lieu.latitude|json_encode }}, {{ sortie.lieu.longitude|json_encode   }}], 13);
@@ -69,37 +69,34 @@
         {% else %}
         <p>Cette sortie ne compte aucun participant pour le moment.</p>
     {% endif %}
-    {% if  app.user == sortie.organisateur and sortie.etat.id == 1 and date(sortie.dateLimiteInscription) > date() %}
-        <a class="button button_primary" href="{{ path('app_sortie_publish', {id: sortie.id}) }}">
-            publier cette sortie
-        </a>
-    {% endif %}
-    {% if is_granted('ROLE_ADMIN') and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
-    <a class="button button_primary" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
-        Annuler cette sortie
-    </a>
-    {% endif %}
+    <div class="buttons">
+        {% if  app.user == sortie.organisateur and sortie.etat.id == 1 and date(sortie.dateLimiteInscription) > date() %}
+            <a class="button button_primary action" href="{{ path('app_sortie_publish', {id: sortie.id}) }}">
+                publier cette sortie
+            </a>
+        {% endif %}
       {% if app.user == sortie.organisateur and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
-          <a class="button button_primary" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
+          <a class="button button_primary action" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
               Annuler cette sortie
           </a>
       {% elseif sortie.etat.id == 6%}
-          <button disabled class="button disabled" title="Sortie annulée">
+          <button disabled class="button disabled action" title="Sortie annulée">
               Sortie annulée
           </button>
           <a>pour motif de : {{ sortie.annulationMotif }}</a>
       {% elseif app.user in sortie.participants %}
-        <a class="button button_primary" href="{{ path('app_sortie_unregister', {id: sortie.id}) }}">
+        <a class="button button_primary action" href="{{ path('app_sortie_unregister', {id: sortie.id}) }}">
             Se désister
         </a>
       {% elseif date(sortie.dateLimiteInscription) > date() and sortie.etat.id == 2 and sortie.nbInscriptionsMax > sortie.participants|length %}
-        <a class="button button_primary" href="{{ path('app_sortie_register', {id: sortie.id}) }}">
+        <a class="button button_primary action" href="{{ path('app_sortie_register', {id: sortie.id}) }}">
             Participer à cette sortie
         </a>
       {% else %}
-          <button disabled class="button disabled" title="Inscription fermée">
+          <button disabled class="button disabled action" title="Inscription fermée">
               Inscription fermée
           </button>
       {% endif %}
+</div>
 </div>
 {% endblock %}
