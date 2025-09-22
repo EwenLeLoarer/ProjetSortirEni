@@ -5,27 +5,31 @@
 {% block body %}
 <div class="new_event">
 <h1>Créer une sortie</h1>
-    {{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    {{ form_row(form.dateHeureDebut) }}
-    {{ form_row(form.dateLimiteInscription) }}
-    {{ form_row(form.nbInscriptionsMax) }}
-    {{ form_row(form.duree) }}
-    {{ form_row(form.infosSortie) }}
-    {{ form_row(form.site) }}
-    <div style="display: flex; align-items: center;">
-        {{ form_row(form.lieu) }}
-        <a href="{{ path('app_lieu', { backToSortie: true }) }}" class="btn btn-secondary" style="margin-left: 10px;">
-            + Créer un nouveau lieu
-        </a>
+    <div class="event_creation">
+        {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.dateHeureDebut) }}
+        {{ form_row(form.dateLimiteInscription) }}
+        {{ form_row(form.nbInscriptionsMax) }}
+        {{ form_row(form.duree) }}
+        {{ form_row(form.infosSortie) }}
+        {{ form_row(form.site) }}
+        <div class="location_div">
+            {{ form_row(form.lieu) }}
+            <a href="{{ path('app_lieu', { backToSortie: true }) }}" class="button button_secondary">
+                + Créer un nouveau lieu
+            </a>
+        </div>
+        {{ form_row(form.rue) }}
+        {{ form_row(form.codePostal) }}
+        {{ form_row(form.ville) }}
+        {{ form_row(form.latitude) }}
+        {{ form_row(form.longitude) }}
+        {{ form_row(form.enregistrer) }}
+        {{ form_widget(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+
     </div>
-    {{ form_row(form.rue) }}
-    {{ form_row(form.codePostal) }}
-    {{ form_row(form.ville) }}
-    {{ form_row(form.latitude) }}
-    {{ form_row(form.longitude) }}
-    {{ form_row(form.enregistrer) }}
-    {{ form_end(form, {'render_rest': false}) }}
 </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

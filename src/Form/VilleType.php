@@ -15,7 +15,8 @@ class VilleType extends AbstractType
         $builder
             ->add('nom')
             ->add('codePostal')
-            ->add('enregistrer', SubmitType::class, [])
+            ->add('enregistrer', SubmitType::class, [
+                'attr' => ['class' => 'button button_primary'],])
         ;
     }
 

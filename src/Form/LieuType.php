@@ -23,7 +23,9 @@ class LieuType extends AbstractType
                     return $ville->getCodePostal() . ' ' . $ville->getNom();
                 },
             ])
-            ->add('enregistrer', SubmitType::class, [])
+            ->add('enregistrer', SubmitType::class, [
+                'attr' => ['class' => 'button button_primary'],
+            ])
         ;
     }
 
