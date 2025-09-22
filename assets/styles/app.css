@@ -27,7 +27,7 @@ body {
     gap: 24px;
 }
 
-.main_container h1, .login_form h1, .all_events_tiles h1{
+.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1{
     font-weight: bold;
     font-size: 20px;
 }
@@ -472,13 +472,20 @@ tbody td{
 }
 
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
+
+.mobile{
+    display: none;
+}
 @media (max-width: 640px) {
+    .header_nav{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
     .header_nav button{
         display: flex;
     }
-    .header_nav ul{
-        display: none;
-    }
+
     #filters {
         padding: 12px;
     }
@@ -501,7 +508,7 @@ tbody td{
         display: none;
     }
     .mobile{
-        display: inline;
+        display: flex;
     }
     body{
         padding: 0 16px;
@@ -551,7 +558,7 @@ tbody td{
         display: none;
     }
     .mobile{
-        display: inline;
+        display: flex;
     }
     .header_nav{
         display: flex;
@@ -574,10 +581,6 @@ tbody td{
     }
 }
 @media (min-width:461px) and (max-width: 920px) {
-    .desktop{
-        display: none;
-    }
-
     .header_title img {
         height: 64px;
     }
