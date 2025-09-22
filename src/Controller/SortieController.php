@@ -275,7 +275,7 @@ final class SortieController extends AbstractController
             $em->persist($sortie);
             $em->flush();
 
-        
+
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
 
     }
