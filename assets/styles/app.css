@@ -1,3 +1,694 @@
+/* ===== Thème & reset léger ===== */
+:root{
+    --accent: #4e014e;              /* bleu principal */
+    --accent-rgb: 37,99,235;
+    --text: #0f172a;
+    --muted: #475569;
+    --panel: #ffffff;
+    --bg: #f8fafc;
+    --line: #e5e7eb;
+    --shadow: 0 8px 30px rgba(2, 6, 23, .06);
+}
+
+@media (prefers-color-scheme: dark){
+    :root{
+        --text:#e2e8f0; --muted:#94a3b8; --panel:#0b1220; --bg:#050816; --line:#1f2937;
+        --shadow: 0 8px 30px rgba(0,0,0,.35);
+    }
+}
+
 body {
-    background-color: skyblue;
+    padding: 0 50px;
+}
+
+.main_container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+.main_container_index {
+    max-height: 800px;
+    margin-top: 90px;
+}
+.main_container h1, .login_form h1, .all_events_tiles h1{
+    font-weight: bold;
+    font-size: 20px;
+}
+.main_container h2, .event-tile h2{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/**************************** HEADER**************************************************/
+
+.header {
+    height:100px;
+    border-bottom: 2px purple double;
+    margin-bottom: 50px;
+}
+.header_title {
+    font-size: 30px;
+    font-weight: bold;
+}
+.header_nav, .header_nav div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.header_nav button{
+    display : none;
+}
+.header_title a{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header_title img{
+    height: 80px;
+}
+.nav_list {
+    display: flex;
+    gap: 20px;
+    height: 45px;
+}
+.nav_item {
+    font-weight: bold;
+}
+.nav_link {
+    display: flex;
+    align-items: center;
+    alignment-baseline: center;
+}
+.header_nav ul{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.nav_link_active {
+    color: purple;
+}
+
+/******************************* FiLTRES ****************************************************/
+.name_and_date {
+    position: absolute;
+    right: 50px;
+    top: 120px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+#filters{
+    height: 100%;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: var(--shadow);
+    color: var(--text);
+    width: fit-content;
+}
+.filtre_title {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px 0;
+}
+#filters .form_filters{
+    display: grid;
+    gap: 12px 16px;
+}
+
+/* ===== Labels “pills” ===== */
+.filtre_label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: color-mix(in oklab, var(--panel) 85%, var(--bg));
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text);
+    width: 320px;
+}
+
+/* Les champs “contrôles” poussés à droite, largeur fluide */
+.filtre_label > select,
+.filtre_label > input[type="text"],
+.filtre_label > input[type="date"]{
+    margin-left: auto;
+    width: min(100%, 240px);
+    min-height: 40px;
+    padding-left: 12px;
+}
+
+/* Si le label contient une checkbox ou un radio, aligne en ligne (pas à droite) */
+.filtre_label_right {
+    padding-block: 8px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+.filtre_label_right:hover {
+    cursor: pointer;
+}
+
+/****************************** ===== Inputs ===== ****************************************/
+select,
+input[type="text"],
+input[type="date"],
+input[type="password"],
+input[type="email"]{
+    appearance: none;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.4);
+
+}
+
+select:hover,
+input[type="text"]:hover,
+input[type="date"]:hover,
+input[type="password"]:hover,
+input[type="email"]:hover{
+    border-color: color-mix(in oklab, var(--line) 60%, var(--text));
+    color: purple;
+    cursor: pointer;
+}
+
+select:focus-visible,
+input[type="text"]:focus-visible,
+input[type="date"]:focus-visible,
+input[type="password"]:focus-visible{
+    border-color: var(--accent);
+    box-shadow:
+            0 0 0 1px var(--accent),
+            0 0 0 4px rgba(var(--accent-rgb), .18);
+}
+
+/* Petite flèche stylée pour <select> (reste discret si non supporté) */
+#filters select{
+    background-image:
+            linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+            linear-gradient(135deg, var(--muted) 50%, transparent 50%),
+            linear-gradient(var(--muted), var(--muted));
+    background-position:
+            calc(100% - 18px) 50%,
+            calc(100% - 12px) 50%,
+            calc(100% - 2.25rem) 50%;
+    background-size: 6px 6px, 6px 6px, 1px 60%;
+    background-repeat: no-repeat;
+    padding-right: 2.5rem; /* place pour la flèche */
+}
+
+/* ===== Cases à cocher & radios ===== */
+#filters input[type="checkbox"],
+#filters input[type="radio"]{
+    accent-color: var(--accent);
+    width: 1.1em; height: 1.1em;
+}
+
+/* ===== Fieldset (bloc radios) ===== */
+#filters fieldset{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+#filters fieldset .filtre_label{
+    border: 0;
+    background: transparent;
+    padding: 6px 4px;
+    gap: 10px;
+    font-weight: 500;
+}
+
+/* ===== Lien “Réinitialiser” → bouton discret ===== */
+.row_link {
+    position: absolute;
+    padding: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.row_link:hover {
+    box-shadow: inset 0 8px 30px rgba(2, 6, 23, .06)
+}
+.form_buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.form_buttons > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--line);
+    background: white;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-weight: 600;
+    transition: background .15s, color .15s, border-color .15s;
+    width: 150px;
+    justify-content: center;
+}
+.form_buttons > a:hover {
+    background: var(--bg);
+    color: var(--text);
+    border-color: color-mix(in oklab, var(--line) 60%, var(--text));
+}
+.form_buttons > a:active {
+    transform: translateY(1px);
+}
+body .container{
+    max-width: none;
+}
+
+/********************************* GESTION DU PROFIL ***************************************/
+
+.profile form{
+    width: 50%;
+    margin: 0 auto;
+    gap: 32px;
+}
+
+.user_info, .event_details{
+    background-color: rgba(175, 162, 175, 0.15);
+    padding: 16px 24px;
+    border-radius: 4px;}
+
+.user_info{
+    width: 320px;
+    margin: 32px auto 0 auto;
+    gap: 16px;
+}
+
+.profile form, .user_info{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile form div div{
+    display: flex;
+    gap: 40px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+.profile label{
+    width: 30%;
+}
+.profile input, .profile select{
+    width: 100%;
+    margin-left: auto;
+    min-height: 32px;
+}
+.profile select{
+    padding: 10px 16px;
+}
+
+.profile img{
+    text-align: center;
+}
+.profile img{
+    width: 320px;
+    height: 320px;
+    border-radius: 100%;
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+.buttons {
+    margin: 0 auto;
+    :first-child{
+        margin-right: 24px;
+    }
+}
+
+.event_tile .buttons{
+    text-align: center;
+}
+
+.buttons button, .button{
+    border-radius: 4px;
+    text-align: center;
+    height: 32px;
+    padding: 0 16px;
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button_primary{
+    background-color: var(--accent);
+    color: white;
+    margin: 0 auto;
+}
+
+.button_primary:hover{
+    background-color: #2b002b;
+    color: white;
+}
+
+.button_secondary{
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+.button_secondary:hover{
+    border: 2px solid #4E014EFF;
+    color: #4E014EFF;
+}
+
+.return_button{
+    width: 320px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px auto;
+}
+
+button.disabled{
+    background-color: #cfcecf;
+    width: fit-content;
+    margin: 24px auto;
+}
+
+button.disabled:hover{
+    cursor: not-allowed;
+}
+
+
+.user_info span, .event_tile span{
+    font-weight: bold;
+    margin-left: 24px;
+}
+
+.event_details {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    row-gap: 16px;
+}
+
+.event_details > * {
+    flex-basis: 50%;
+}
+
+td, th{
+    padding: 4px 8px;
+    text-align: center;
+}
+th {
+    border-bottom: 1px solid #e5e7eb;
+}
+td{
+    padding: 8px;
+}
+
+table.participants{
+    width: 50%;
+}
+thead {
+    color: purple;
+}
+tr {
+    position: relative;
+}
+
+tbody > tr > td{
+    position: relative;
+    border-top: 1px solid var(--line);
+}
+tbody > tr:hover {
+    color: purple;
+}
+.nom_sortie {
+    font-weight: bold;
+}
+.cover-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.table_area {
+    flex-grow: 1;
+    height: 670px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    scrollbar-width: thin;
+    scrollbar-color: purple #f0f0f0;
+}
+.all_events_table {
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--panel);
+}
+.all_events_table thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 3;
+    height: 80px;
+}
+.all_events_table tbody tr {
+    height: 80px;
+}
+.mobile_table{
+    width: 100%;
+    td{
+        text-align: center
+    }
+}
+
+.all_events_tiles{
+    display: none;
+}
+
+.event_tile, .login_form{
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding-bottom: 24px;
+}
+
+.event_tile h2{
+    background-color: rgba(175, 162, 175, 0.15);
+    text-align: center;
+    padding: 4px 8px;
+}
+
+.event_content{
+    padding: 8px 24px;
+}
+
+.event_content div{
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.event_content img{
+    width: 24px;
+    margin-right: 24px;
+}
+
+
+.login_form{
+    width: 40%;
+    padding: 24px;
+    margin: 30vh auto;
+}
+
+.login_form form{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+.login_form h1{
+    text-align: center;
+}
+
+.sortie_link{
+    color: var(--accent);
+    text-decoration: underline;
+    font-weight: bolder;
+    position: relative;
+    z-index: 2;
+}
+.sortie_link:hover {
+    color: blue;
+}
+/************************ ===== RESPONSIVE DESIGN ===== *********************************/
+
+.mobile{
+    display: none;
+}
+@media (max-width: 640px) {
+    .header_nav{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .header_nav button{
+        display: flex;
+    }
+
+    #filters {
+        padding: 12px;
+    }
+
+    .filtre_label {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .filtre_label > select,
+    .filtre_label > input[type="text"],
+    .filtre_label > input[type="date"] {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 461px) {
+    .desktop{
+        display: none;
+    }
+    .mobile{
+        display: flex;
+    }
+    body{
+        padding: 0 16px;
+    }
+    .header_nav{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .event_details{
+        flex-direction: column;
+    }
+    .event_details li{
+        width: 100%;
+    }
+
+    .header_title a{
+        height: 72px;
+    }
+
+    .header_title img {
+        height: 64px;
+    }
+
+    .login_form{
+        width: 100%;
+        padding: 24px;
+        margin: 40px auto;
+    }
+
+    table.participants{
+        width: 100%;
+    }
+
+    .profile img{
+        width: 160px;
+        height: 160px;
+    }
+    .all_events_tiles{
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+}
+@media (min-width: 462px) and (max-width: 540px){
+    .desktop{
+        display: none;
+    }
+    .mobile{
+        display: flex;
+    }
+    .header_nav{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .profile img{
+        width: 200px;
+        height: 200px;
+    }
+}
+@media (min-width:540px) and (max-width: 920px){
+    .profile img{
+        width: 240px;
+        height: 240px;
+    }
+
+    .mobile{
+        display: none;
+    }
+}
+@media (min-width:461px) and (max-width: 920px) {
+    .header_title img {
+        height: 64px;
+    }
+
+    .login_form{
+        width: 100%;
+        padding: 24px;
+        margin: 160px auto;
+    }
+
+    .event_details {
+        height: 300px;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    .event_details > * {
+        flex-basis: 100%;
+    }
+
+    table.participants{
+        width: 100%;
+    }
+
+    .all_events_tiles{
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .all_events_table{
+        display: none;
+    }
+
+    .profile img{
+        width: 160px;
+        height: 160px;
+    }
 }

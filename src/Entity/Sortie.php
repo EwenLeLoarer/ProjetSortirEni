@@ -34,18 +34,18 @@ class Sortie
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $infosSortie = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Sorties')]
+    #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Sorties')]
+    #[ORM\ManyToOne(inversedBy: 'sortiesOrganisees')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $organisateur = null;
 
     /**
      * @var Collection<int, Utilisateur>
      */
-    #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'sorties')]
+    #[ORM\ManyToMany(targetEntity: Utilisateur::class, inversedBy: 'sortiesPrevues')]
     private Collection $participants;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
@@ -55,6 +55,9 @@ class Sortie
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieu = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $annulationMotif = null;
 
     public function __construct()
     {
@@ -100,6 +103,12 @@ class Sortie
         $this->duree = $duree;
 
         return $this;
+    }
+
+    public function getDateFin(): ?\DateTime
+    {
+        $dateFin = clone $this->dateHeureDebut;
+        return $dateFin->add(new \DateInterval('PT' . $this->duree . 'M'));
     }
 
     public function getDateLimiteInscription(): ?\DateTime
@@ -174,16 +183,21 @@ class Sortie
     {
         if (!$this->participants->contains($participant)) {
             $this->participants->add($participant);
-            $participant->addSortieOrganisee($this);
+            $participant->addSortiePrevue($this);
         }
 
         return $this;
     }
 
+    public function getNbParticipants(): int
+    {
+        return count($this->participants);
+    }
+
     public function removeParticipant(Utilisateur $participant): static
     {
         $this->participants->removeElement($participant);
-        $participant->removeSortieOrganisee($this);
+        $participant->removeSortiePrevue($this);
         return $this;
     }
 
@@ -209,5 +223,21 @@ class Sortie
         $this->lieu = $lieu;
 
         return $this;
+    }
+
+    public function getAnnulationMotif(): ?string
+    {
+        return $this->annulationMotif;
+    }
+
+    public function setAnnulationMotif(?string $annulationMotif): static
+    {
+        $this->annulationMotif = $annulationMotif;
+
+        return $this;
+    }
+
+    public function isInscrit(Utilisateur $participant): bool{
+        return $this->participants->contains($participant);
     }
 }

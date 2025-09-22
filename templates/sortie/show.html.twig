@@ -3,52 +3,82 @@
 {% block title %}Hello SortieController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<h1>detail sortie</h1>
-<div>
-      <ul>
-          <li><Strong>ID:</Strong> {{ sortie.id }}</li>
-          <li><Strong>nom:</Strong> {{ sortie.nom }}</li>
-          <li><Strong>date heure debut:</Strong> {{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d-m-Y H:i') : 'No date' }}</li>
-          <li><Strong>duree</Strong>
+<div class="main_container">
+    <h1>Détail de la sortie</h1>
+      <ul class="event_details">
+          <li><Strong>Nom <span class="desktop">de la sortie :</span></Strong> {{ sortie.nom }}</li>
+          <li><Strong>Date et heure <span class="desktop"> de la sortie : </span></Strong> {{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d-m-Y H:i') : 'No date' }}</li>
+          <li><Strong><span class="desktop">Date limite d'inscription :</span><span class="mobile">Clôture</span></Strong> {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d-m-Y') : 'No date' }}</li>
+          <li><Strong>Durée :</Strong>
               {%set duree = sortie.duree%}
               {% if duree > 60 %}
                 {% set hours = (duree // 60) %}
                   {% set minutes = (duree % 60) %}
-                  {{ hours }} heures{{ hours > 1 ? 's' : '' }}{% if minutes > 0 %} {{ minutes }} minute{{ minutes > 1 ? 's' : '' }}{% endif %}
+                  {{ hours }} heure{{ hours > 1 ? 's' : '' }}{% if minutes > 0 %} {{ minutes }} minute{{ minutes > 1 ? 's' : '' }}{% endif %}
               {% else %}
                   {{ duree }} minutes
               {% endif %}
           </li>
-          <li><Strong>date limite inscription:</Strong> {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d-m-Y') : 'No date' }}</li>
-          <li><Strong>nombre maximum d'inscrit:</Strong> {{ sortie.nbInscriptionsMax }}</li>
-          <li><Strong>info sortie:</Strong> {{ sortie.infosSortie }}</li>
-          <li><Strong>etat:</Strong> {{ sortie.etat.libelle }}</li>
-          <li><Strong>ville organisatrice:</Strong> {{ sortie.site.nom }}</li>
-          <table class="border border-gray-300">
-              <thead class="bg-gray-50">
-                <tr>
-                    <th class="border border-gray-300">pseudo</th>
-                    <th class="border border-gray-300">Nom</th>
-                </tr>
-              </thead>
-              <tbody class="divide-gray-200">
-                {% for user in sortie.participants %}
-                    <tr>
-                        <td class="border border-gray-300">{{ user.pseudo }}</td>
-                        <td class="border border-gray-300">{{ user.Prenom }} {{ user.nom }}</td>
-                    </tr>
-                {% endfor %}
-              </tbody>
-          </table>
-        <a href="{{ path('app_sortie_register', {id: sortie.id}) }}">
-            participer a cette sortie
-        </a>
-
+          <li><Strong>Nombre de places :</Strong> {{ sortie.nbInscriptionsMax }}</li>
+          <li><Strong>Description et infos:</Strong> {{ sortie.infosSortie }}</li>
+          <li><Strong>Ville <span class="desktop">organisatrice :</span></Strong> {{ sortie.site.nom }}</li>
+          <li><Strong>Lieu:</Strong> {{ sortie.lieu.nom }}</li>
+          <li><Strong>Rue:</Strong> {{ sortie.lieu.rue }}</li>
+          <li><Strong>Code postal :</Strong> {{ sortie.lieu.ville.codePostal }}</li>
+          <li><Strong>Latitude :</Strong> {{ sortie.lieu.latitude }}</li>
+          <li><Strong>Longitude :</Strong> {{ sortie.lieu.longitude }}</li>
       </ul>
+    <h2>Liste des participants inscrits</h2>
+    {% if sortie.participants|length > 0 %}
+      <table class="participants">
+          <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>Nom</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in sortie.participants %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_utilisateur', {id: user.id}) }}">
+                            {{ user.pseudo }}
+                        </a>
+                    </td>
+                    <td >{{ user.Prenom }} {{ user.nom }}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+        {% else %}
+        <p>Cette sortie ne compte aucun participant pour le moment.</p>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
+    <a class="button button_primary" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
+        Annuler cette sortie
+    </a>
+    {% endif %}
+      {% if app.user == sortie.organisateur and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
+          <a class="button button_primary" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
+              Annuler cette sortie
+          </a>
+      {% elseif sortie.etat.id == 6%}
+          <button disabled class="button disabled" title="Sortie annulée">
+              Sortie annulée
+          </button>
+          <a>pour motif de : {{ sortie.annulationMotif }}</a>
+      {% elseif app.user in sortie.participants %}
+        <a class="button button_primary" href="{{ path('app_sortie_unregister', {id: sortie.id}) }}">
+            Se désister
+        </a>
+      {% elseif date(sortie.dateLimiteInscription) > date() and sortie.etat.id == 2 and sortie.nbInscriptionsMax > sortie.participants|length %}
+        <a class="button button_primary" href="{{ path('app_sortie_register', {id: sortie.id}) }}">
+            Participer à cette sortie
+        </a>
+      {% else %}
+          <button disabled class="button disabled" title="Inscription fermée">
+              Inscription fermée
+          </button>
+      {% endif %}
 </div>
 {% endblock %}

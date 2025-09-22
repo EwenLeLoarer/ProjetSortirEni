@@ -7,4 +7,14 @@ import './bootstrap.js';
  */
 import './styles/app.css';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+const form_filters = document.getElementById('filters');
+const query = form_filters.querySelector('input[name="query"]');
+
+// Auto submit la recherche des sorties, avec un délai pour la frappe
+if (query) {
+    let time;
+    query.addEventListener('input', () => {
+        clearTimeout(time);
+        time = setTimeout(() => form_filters.requestSubmit(), 350);
+    })
+}

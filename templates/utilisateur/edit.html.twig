@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+{% block body %}
+    <div class="main_container profile">
+        <h1>Mon profil</h1>
+        {{ form_start(utilisateurForm) }}
+        <div>
+            {% if utilisateurForm.vars.value.photo != null %}
+                <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}" alt="image">
+            {% else %}
+                <img src="{{asset('images/placeholder_img.jpg')}}" alt="profil">
+            {% endif %}
+        </div>
+        <div>
+            <div>
+                {{ form_label(utilisateurForm.pseudo) }}
+                {{ form_widget(utilisateurForm.pseudo) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.prenom) }}
+                {{ form_widget(utilisateurForm.prenom) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.nom) }}
+                {{ form_widget(utilisateurForm.nom) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.telephone) }}
+                {{ form_widget(utilisateurForm.telephone) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.email) }}
+                {{ form_widget(utilisateurForm.email) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.password) }}
+                {{ form_widget(utilisateurForm.password) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.passwordConfirmation) }}
+                {{ form_widget(utilisateurForm.passwordConfirmation) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.site) }}
+                {{ form_widget(utilisateurForm.site) }}
+            </div>
+            <div>
+                {{ form_label(utilisateurForm.photo) }}
+                {{ form_widget(utilisateurForm.photo) }}
+            </div>
+            {{ form_widget(utilisateurForm._token) }}
+        </div>
+        <div class="buttons">
+            <button class="button_primary" type="submit">Enregistrer</button>
+            <button class="button_secondary" type="submit">Annuler</button>
+        </div>
+        {{ form_end(utilisateurForm, {'render_rest': false})}}
+    </div>
+{% endblock %}

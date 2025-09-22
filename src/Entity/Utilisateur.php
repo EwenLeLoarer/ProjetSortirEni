@@ -64,6 +64,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $photo = null;
+
     public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
@@ -164,6 +167,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPrenomEtInitiale(): ?string
+    {
+        $initiale = strtoupper($this->nom[0]);
+        return $this->prenom . ' ' . $initiale;
+    }
+
     public function getTelephone(): ?string
     {
         return $this->telephone;
@@ -230,6 +239,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
 
     public function isActif(): ?bool
     {
@@ -239,7 +260,30 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActif(bool $isActif): static
     {
         $this->isActif = $isActif;
+        return $this;
+    }
 
+    public function getSortiesPrevues(): Collection
+    {
+        return $this->sortiesPrevues;
+    }
+    public function setSortiesPrevues(Collection $sortiesPrevues): static
+    {
+        $this->sortiesPrevues = $sortiesPrevues;
+        return $this;
+    }
+    public function addSortiePrevue(Sortie $sortie): static
+    {
+        if (!$this->sortiesPrevues->contains($sortie)) {
+            $this->sortiesPrevues->add($sortie);
+        }
+        return $this;
+    }
+    public function removeSortiePrevue(Sortie $sortie): static
+    {
+        if ($this->sortiesPrevues->contains($sortie)) {
+            $this->sortiesPrevues->removeElement($sortie);
+        }
         return $this;
     }
 }
