@@ -28,7 +28,7 @@ final class SortieController extends AbstractController
         if (!$etat) {
             throw $this->createNotFoundException('Etat "En création" not found.');
         }
-        $sortie->setEtat($etat); // 👈 Set before form
+        $sortie->setEtat($etat);
 
         $userConnected = $this->getUser();
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
@@ -67,7 +67,7 @@ final class SortieController extends AbstractController
 
         if($sortie->getEtat()->getId() == 7)
         {
-            $this->addFlash('error', "cette sortie est archivé");
+            $this->addFlash('error', "Cette sortie est archivée");
             return $this->redirectToRoute('app_home');
         }
         return $this->render('sortie/show.html.twig', [
@@ -115,7 +115,7 @@ final class SortieController extends AbstractController
         }
 
         if($sortie->getDateLimiteInscription() < new \DateTime()){
-            $this->addFlash('error', "la date d'inscription est depassé");
+            $this->addFlash('error', "la date d'inscription est depassée");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
@@ -127,7 +127,7 @@ final class SortieController extends AbstractController
 
         if($sortie->getNbInscriptionsMax() <= $sortie->getParticipants()->count())
         {
-            $this->addFlash('error', "nombre de d'inscrit atteint");
+            $this->addFlash('error', "Le nombre d'inscrits est atteint");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
@@ -235,5 +235,42 @@ final class SortieController extends AbstractController
             'form' => $form
         ]);
 
+    }
+
+    #[Route('/sortie/{id}/publish', name: 'app_sortie_publish', requirements: ['id'=>'\d+'])]
+    public function publish(Sortie $sortie, EntityManagerInterface $em, Request $request): Response
+    {
+        $userConnected = $this->getUser();
+        $startedEtat = $em->getRepository(Etat::Class)->find(2);
+        if(!$userConnected){
+            throw $this->createAccessDeniedException('You must be logged in to cancel.');
+        }
+
+        if($sortie->getDateHeureDebut() < new \DateTime()){
+            $this->addFlash('error', "la date d'inscription est depassé");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        if($sortie->getEtat()->getId() != 1)
+        {
+            $this->addFlash('error', "la sortie n'est plus en preparation");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
+
+        if($user != $sortie->getOrganisateur() ){
+            $this->addFlash('error', "l'utilisateur connecter n'est pas le createur de la sortie");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+        $form = $this->createForm(SortieAnnulationType::class, $sortie);
+
+            $sortie->setEtat($startedEtat);
+            $em->persist($sortie);
+            $em->flush();
+
+        
+        return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
     }
 }
