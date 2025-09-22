@@ -26,7 +26,10 @@ body {
     flex-wrap: wrap;
     gap: 24px;
 }
-
+.main_container_index {
+    max-height: 800px;
+    margin-top: 40px;
+}
 .main_container h1, .login_form h1, .all_events_tiles h1{
     font-weight: bold;
     font-size: 20px;
@@ -89,8 +92,15 @@ body {
 }
 
 /******************************* FiLTRES ****************************************************/
-
+.name_and_date {
+    position: absolute;
+    right: 50px;
+    top: 120px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
 #filters{
+    height: 100%;
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -224,7 +234,7 @@ input[type="password"]:focus-visible{
 }
 
 /* ===== Lien “Réinitialiser” → bouton discret ===== */
-.sortie_link {
+.row_link {
     position: absolute;
     padding: 0;
     left: 0;
@@ -232,16 +242,20 @@ input[type="password"]:focus-visible{
     height: 100%;
     z-index: 1;
 }
-.sortie_link:hover {
+.row_link:hover {
     box-shadow: inset 0 8px 30px rgba(2, 6, 23, .06)
 }
-#filters > a{
-    justify-self: start;
+.form_buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.form_buttons > a {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     border: 1px solid var(--line);
-    background: transparent;
+    background: white;
     color: var(--muted);
     text-decoration: none;
     border-radius: 10px;
@@ -249,18 +263,20 @@ input[type="password"]:focus-visible{
     font-weight: 600;
     transition: background .15s, color .15s, border-color .15s;
     width: 150px;
+    justify-content: center;
 }
-#filters > a:hover{
+.form_buttons > a:hover {
     background: var(--bg);
     color: var(--text);
     border-color: color-mix(in oklab, var(--line) 60%, var(--text));
 }
-#filters > a:active{
+.form_buttons > a:active {
     transform: translateY(1px);
 }
-
 body .container{
     max-width: none;
+    display: flex;
+    flex-direction: column;
 }
 
 /********************************* GESTION DU PROFIL ***************************************/
@@ -406,6 +422,9 @@ td, th{
     padding: 4px 8px;
     text-align: center;
 }
+th {
+    border-bottom: 1px solid #e5e7eb;
+}
 td{
     padding: 8px;
 }
@@ -437,15 +456,32 @@ tbody > tr:hover {
     width: 100%;
     height: 100%;
 }
+.table_area {
+    flex-grow: 1;
+    height: 670px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    scrollbar-width: thin;
+    scrollbar-color: purple #f0f0f0;
+}
 .all_events_table {
+    width: 100%;
+    height: 100%;
     border-collapse: separate;
     border-spacing: 0;
     background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    flex-grow: 1;
+}
+.all_events_table thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 3;
+    height: 80px;
+}
+.all_events_table tbody tr {
+    height: 80px;
 }
 .mobile_table{
     width: 100%;
@@ -503,14 +539,14 @@ tbody > tr:hover {
     text-align: center;
 }
 
-.link{
+.sortie_link{
     color: var(--accent);
     text-decoration: underline;
     font-weight: bolder;
     position: relative;
-    z-index: 1000;
+    z-index: 2;
 }
-.link:hover {
+.sortie_link:hover {
     color: blue;
 }
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/

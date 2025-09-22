@@ -1,9 +1,23 @@
 {% if app.user %}
-    {% if sortie.organisateur is same as(app.user) %}
-        {% if sortie.etat.libelle is same as('Ouverte') %}
-            <a class="link" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">Annuler</a>
-        {% elseif sortie.etat.libelle is same as('En création') %}
-            <a class="link" href="{{ path('app_sortie_edit', {id:sortie.id}) }}">Modifier</a>
+    {% if sortie.organisateur.id == app.user.id %}
+        {% if sortie.etat.libelle == 'Ouverte' %}
+            <form method="post" action="{{ path('app_sortie_cancel', {id: sortie.id}) }}" onsubmit="return confirm('Confirmer l\'annulation ?');">
+                <button class="sortie_link" type="submit">Annuler</button>
+            </form>
+        {% elseif sortie.etat.libelle == 'En création' %}
+            <a class="sortie_link" href="{{ path('app_sortie_edit', {id: sortie.id}) }}">Modifier</a>
+        {% endif %}
+    {% else %}
+        {% if sortie.etat.libelle == 'Ouverte' %}
+            {% if sortie.isInscrit(app.user) %}
+                <form method="post" action="{{ path('app_sortie_unregister', {id: sortie.id}) }}">
+                    <button class="sortie_link" type="submit">Se désister</button>
+                </form>
+            {% else %}
+                <form method="post" action="{{ path('app_sortie_register', {id: sortie.id}) }}">
+                    <button class="sortie_link" type="submit">S'inscrire</button>
+                </form>
+            {% endif %}
         {% endif %}
     {% endif %}
 {% endif %}
