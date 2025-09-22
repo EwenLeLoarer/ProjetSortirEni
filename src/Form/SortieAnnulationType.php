@@ -47,7 +47,8 @@ class SortieAnnulationType extends AbstractType
                 'label' => 'Motif de l\'annulation',
             ])
             ->add('Enregistrer', SubmitType::class, [
-                'attr' => ['class' => 'button button_primary'],
+                'label' => 'Supprimer la sortie',
+                'attr' => ['class' => 'button button_primary cancel'],
             ])
         ;
     }
