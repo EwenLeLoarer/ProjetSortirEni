@@ -266,10 +266,9 @@ final class SortieController extends AbstractController
 
         $form = $this->createForm(SortieAnnulationType::class, $sortie);
 
-            $sortie->setEtat($startedEtat);
-            $em->persist($sortie);
-            $em->flush();
-
+        $sortie->setEtat($startedEtat);
+        $em->persist($sortie);
+        $em->flush();
 
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
     }
