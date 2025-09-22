@@ -28,7 +28,7 @@ final class SortieController extends AbstractController
         if (!$etat) {
             throw $this->createNotFoundException('Etat "En création" not found.');
         }
-        $sortie->setEtat($etat); // 👈 Set before form
+        $sortie->setEtat($etat);
 
         $userConnected = $this->getUser();
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
@@ -67,7 +67,7 @@ final class SortieController extends AbstractController
 
         if($sortie->getEtat()->getId() == 7)
         {
-            $this->addFlash('error', "cette sortie est archivé");
+            $this->addFlash('error', "Cette sortie est archivée");
             return $this->redirectToRoute('app_home');
         }
         return $this->render('sortie/show.html.twig', [
@@ -115,7 +115,7 @@ final class SortieController extends AbstractController
         }
 
         if($sortie->getDateLimiteInscription() < new \DateTime()){
-            $this->addFlash('error', "la date d'inscription est depassé");
+            $this->addFlash('error', "la date d'inscription est depassée");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
@@ -127,7 +127,7 @@ final class SortieController extends AbstractController
 
         if($sortie->getNbInscriptionsMax() <= $sortie->getParticipants()->count())
         {
-            $this->addFlash('error', "nombre de d'inscrit atteint");
+            $this->addFlash('error', "Le nombre d'inscrits est atteint");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
@@ -266,17 +266,10 @@ final class SortieController extends AbstractController
 
         $form = $this->createForm(SortieAnnulationType::class, $sortie);
 
-
-
-
-
-
-            $sortie->setEtat($startedEtat);
-            $em->persist($sortie);
-            $em->flush();
-
+        $sortie->setEtat($startedEtat);
+        $em->persist($sortie);
+        $em->flush();
 
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
-
     }
 }

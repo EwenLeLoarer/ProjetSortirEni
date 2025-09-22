@@ -72,7 +72,7 @@
     <div class="buttons">
         {% if  app.user == sortie.organisateur and sortie.etat.id == 1 and date(sortie.dateLimiteInscription) > date() %}
             <a class="button button_primary action" href="{{ path('app_sortie_publish', {id: sortie.id}) }}">
-                publier cette sortie
+                Publier cette sortie
             </a>
         {% endif %}
       {% if app.user == sortie.organisateur and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
@@ -97,6 +97,6 @@
               Inscription fermée
           </button>
       {% endif %}
-</div>
+    </div>
 </div>
 {% endblock %}
