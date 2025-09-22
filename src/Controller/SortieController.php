@@ -25,16 +25,17 @@ final class SortieController extends AbstractController
         $sortie = new Sortie();
         $userConnected = $this->getUser();
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
-        $form = $this->createForm(SortieType::class, $sortie, [
-            'organisateur' => $user,
-        ]);
-
         if ($request->query->has('newLieuId')){
             $lieu = $em->getRepository(Lieu::Class)->find($request->query->get('newLieuId'));
             if($lieu){
                 $sortie->setLieu($lieu);
             }
         }
+        $form = $this->createForm(SortieType::class, $sortie, [
+            'organisateur' => $user,
+        ]);
+
+
 
         $form->handleRequest($request);
 
@@ -66,6 +67,35 @@ final class SortieController extends AbstractController
             'sortie' => $sortie
         ]);
     }
+
+    #[Route('/sortie/{id}/modify', name: 'app_sortie_modify', requirements: ['id'=>'\d+'])]
+    public function modify(Request $request, Sortie $sortie, EntityManagerInterface $em): Response
+    {
+
+        if($sortie->getEtat()->getId() == 7)
+        {
+            $this->addFlash('error', "cette sortie est archivé");
+            return $this->redirectToRoute('app_home');
+        }
+
+        $form = $this->createForm(SortieType::class, $sortie, []);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($sortie);
+            $em->flush();
+
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
+
+
+        return $this->render('sortie/modify.html.twig', [
+            'form' => $form,
+            'sortie' => $sortie
+        ]);
+    }
+
 
     #[Route('/sortie/{id}/register', name: 'app_sortie_register', requirements: ['id'=>'\d+'], methods: ['GET', 'POST'])]
     public function register(Sortie $sortie, EntityManagerInterface $em): Response
