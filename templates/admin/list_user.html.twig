@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <div class="main_container profile">
+        <h1>les utilisateur</h1>
+    </div>
+
+    <table class="border-2 border-black all_events_table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>email</th>
+                <th>prenom</th>
+                <th>nom</th>
+                <th>telephone</th>
+                <th>actif</th>
+                <th>pseudo</th>
+                <th>desactiver</th>
+                <th>supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td> {{ user.email }}</td>
+                    <td> {{ user.prenom }}</td>
+                    <td> {{ user.nom }}</td>
+                    <td> {{ user.telephone }}</td>
+                    <td> {{ user.actif ? 'oui' : 'non' }}</td>
+                    <td> {{ user.pseudo }}</td>
+                    <td> <a href="{{ path('app_desactivate_user', {id:user.id}) }}">desactiver</a></td>
+                    <td> <a href="{{ path('app_delete_user', {id:user.id}) }}">supprimer</a></td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

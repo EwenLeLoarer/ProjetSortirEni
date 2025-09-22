@@ -275,8 +275,6 @@ input[type="password"]:focus-visible{
 }
 body .container{
     max-width: none;
-    display: flex;
-    flex-direction: column;
 }
 
 /********************************* GESTION DU PROFIL ***************************************/
@@ -285,11 +283,6 @@ body .container{
     width: 50%;
     margin: 0 auto;
     gap: 32px;
-}
-
-.profile {
-    display: flex;
-    flex-direction: column;
 }
 
 .user_info, .event_details{
@@ -550,13 +543,20 @@ tbody > tr:hover {
     color: blue;
 }
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
+
+.mobile{
+    display: none;
+}
 @media (max-width: 640px) {
+    .header_nav{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
     .header_nav button{
         display: flex;
     }
-    .header_nav ul{
-        display: none;
-    }
+
     #filters {
         padding: 12px;
     }
@@ -579,7 +579,7 @@ tbody > tr:hover {
         display: none;
     }
     .mobile{
-        display: inline;
+        display: flex;
     }
     body{
         padding: 0 16px;
@@ -629,7 +629,7 @@ tbody > tr:hover {
         display: none;
     }
     .mobile{
-        display: inline;
+        display: flex;
     }
     .header_nav{
         display: flex;
@@ -652,10 +652,6 @@ tbody > tr:hover {
     }
 }
 @media (min-width:461px) and (max-width: 920px) {
-    .desktop{
-        display: none;
-    }
-
     .header_title img {
         height: 64px;
     }

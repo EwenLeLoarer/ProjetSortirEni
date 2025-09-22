@@ -7,13 +7,13 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Utilisateur
-                property: email
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            user_checker: App\Security\UserChecker
             lazy: true
             provider: app_user_provider
             form_login:

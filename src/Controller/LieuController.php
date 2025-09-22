@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Lieu;
+use App\Entity\Ville;
 use App\Form\LieuType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +18,14 @@ final class LieuController extends AbstractController
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $lieu = new Lieu();
+
+        if($request->query->has('newVilleId')){
+            $ville = $em->getRepository(Ville::class)->find($request->query->get('newVilleId'));
+            if($ville){
+
+                $lieu->setVille($ville);
+            }
+        }
 
         $form = $this->createForm(LieuType::class, $lieu);
 
@@ -38,6 +48,19 @@ final class LieuController extends AbstractController
 
         return $this->render('lieu/create.html.twig', [
             'form' => $form
+        ]);
+    }
+
+    // ajout de la route suivante pour mettre en place la récupération de ces champs dans le formulaire de création d'une sortie
+    #[Route('/lieu/{id}', name: 'lieu_details')]
+    public function lieuDetails(Lieu $lieu): JsonResponse
+    {
+        return new JsonResponse([
+            'rue' => $lieu->getRue(),
+            'codePostal' => $lieu->getVille()->getCodePostal(),
+            'ville' => $lieu->getVille()->getNom(),
+            'latitude' => $lieu->getLatitude(),
+            'longitude' => $lieu->getLongitude(),
         ]);
     }
 }

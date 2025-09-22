@@ -106,4 +106,34 @@ final class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/listUser', name: 'app_list_user')]
+    public function listUsers(EntityManagerInterface $em) : Response
+    {
+        $users = $em->getRepository(Utilisateur::class)->findAll();
+
+        return $this->render('admin/list_user.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+    #[Route('/admin/{id}/desativate', name: 'app_desactivate_user', requirements: ['id' => '\d+'])]
+    public function desactivateUser(Utilisateur $user, EntityManagerInterface $em) : Response
+    {
+        $user->setIsActif(false);
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('app_list_user');
+    }
+
+    #[Route('/admin/{id}/delete', name: 'app_delete_user', requirements: ['id' => '\d+'])]
+    public function deleteUser(Utilisateur $user, EntityManagerInterface $em) : Response
+    {
+        $em->remove($user);
+        $em->flush();
+
+        return $this->redirectToRoute('app_list_user');
+    }
+
 }
