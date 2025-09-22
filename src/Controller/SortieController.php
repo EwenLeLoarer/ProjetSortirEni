@@ -23,6 +23,13 @@ final class SortieController extends AbstractController
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();
+
+        $etat = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'En création']);
+        if (!$etat) {
+            throw $this->createNotFoundException('Etat "En création" not found.');
+        }
+        $sortie->setEtat($etat); // 👈 Set before form
+
         $userConnected = $this->getUser();
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
         if ($request->query->has('newLieuId')){
