@@ -24,7 +24,6 @@ body {
 .main_container{
     display: flex;
     flex-wrap:wrap;
-    /*flex-direction: column;*/
     gap: 24px;
 }
 
@@ -33,7 +32,7 @@ body {
     margin-top: 90px;
 }
 
-.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1{
+.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1, .new_town h1{
     font-weight: bold;
     font-size: 20px;
 }
@@ -365,6 +364,9 @@ body .container{
 }
 
 /********************************* GESTION DU PROFIL ***************************************/
+.profile{
+    flex-direction: column;
+}
 
 .profile form{
     width: 50%;
