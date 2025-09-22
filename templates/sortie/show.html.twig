@@ -18,7 +18,7 @@
               {% if duree > 60 %}
                 {% set hours = (duree // 60) %}
                   {% set minutes = (duree % 60) %}
-                  {{ hours }} heures{{ hours > 1 ? 's' : '' }}{% if minutes > 0 %} {{ minutes }} minute{{ minutes > 1 ? 's' : '' }}{% endif %}
+                  {{ hours }} heure{{ hours > 1 ? 's' : '' }}{% if minutes > 0 %} {{ minutes }} minute{{ minutes > 1 ? 's' : '' }}{% endif %}
               {% else %}
                   {{ duree }} minutes
               {% endif %}
