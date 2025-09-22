@@ -32,7 +32,7 @@ body {
     margin-top: 90px;
 }
 
-.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1, .new_town h1{
+.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1, .new_town h1, .deletion_container h1{
     font-weight: bold;
     font-size: 20px;
 }
@@ -330,6 +330,20 @@ select{
     font-weight: 500;
 }
 
+
+input:disabled{
+    border : none;
+    background: rgba(248, 250, 252, 0.64);
+}
+
+label{
+    font-weight: 500;
+}
+
+#sortie_annulation_annulationMotif, #sortie_infosSortie{
+    padding: 12px;
+    min-height: 80px;
+}
 /* ===== Lien “Réinitialiser” → bouton discret ===== */
 .row_link {
     position: absolute;
@@ -385,7 +399,7 @@ body .container{
     gap: 32px;
 }
 
-.user_info, .event_details, .event_creation, .new_location_content{
+.user_info, .event_details, .event_creation, .new_location_content, .deletion_content{
     background-color: rgba(175, 162, 175, 0.15);
     padding: 16px 24px;
     border-radius: 4px;}
@@ -572,7 +586,7 @@ tbody > tr:hover {
 
 /***************** Page de création d'une sortie ***************************/
 
-.event_creation, .new_location_content{
+.event_creation, .new_location_content, .deletion_content{
     margin: 24px auto;
 }
 
@@ -589,7 +603,7 @@ tbody > tr:hover {
     width: 100%;
 }
 
-#sortie_lieu, #sortie_site, #lieu_ville{
+#sortie_lieu, #sortie_site, #lieu_ville, #sortie_annulation_site, #sortie_annulation_lieu{
     height: 46px;
     padding-left: 12px;
 }
@@ -641,6 +655,7 @@ tbody > tr:hover {
 .participants th{
     border-radius: 8px 8px 0 0;
 }
+
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 
 .mobile{
