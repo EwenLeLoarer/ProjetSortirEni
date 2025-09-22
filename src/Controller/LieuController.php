@@ -53,7 +53,7 @@ final class LieuController extends AbstractController
 
     // ajout de la route suivante pour mettre en place la récupération de ces champs dans le formulaire de création d'une sortie
     #[Route('/lieu/{id}', name: 'lieu_details')]
-    public function lieuDeails(Lieu $lieu): JsonResponse
+    public function lieuDetails(Lieu $lieu): JsonResponse
     {
         return new JsonResponse([
             'rue' => $lieu->getRue(),
