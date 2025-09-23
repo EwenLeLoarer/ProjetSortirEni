@@ -72,6 +72,7 @@ final class VilleController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/ville/{id}/edit', name: 'app_edit_ville')]
     public function edit(Request $request, EntityManagerInterface $em, Ville $ville): Response
     {
@@ -91,6 +92,7 @@ final class VilleController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/ville/{id}/delete', name: 'app_delete_ville')]
     public function delete(Request $request, Ville $ville, EntityManagerInterface $em): Response
     {
