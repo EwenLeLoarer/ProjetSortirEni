@@ -647,6 +647,14 @@ tbody > tr:hover {
     margin: 16px 0;
 }
 
+.login_info_container{
+    width: 100%;
+    padding: 16px;
+    border-radius: 4px;
+    background-color: rgba(237, 228, 237, 0.51);
+}
+
+
 /***************** Page de création d'une sortie ***************************/
 
 /*.event_creation, .new_location_content, .deletion_content{*/
