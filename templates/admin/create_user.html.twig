@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="main_container profile form_container">
-        <h1>Mon profil</h1>
+        <h1>Inscrire un utilisateur</h1>
         {{ form_start(form) }}
         <div>
             {% if form.vars.value.photo != null %}
@@ -52,8 +52,7 @@
         </div>
         <div class="buttons">
             <button class="button_primary" type="submit">Enregistrer</button>
-            <button class="button_secondary" type="submit">Annuler</button>
-        </div>
+            <a href="{{ path('app_home') }}" class=" button button_secondary">Annuler</a>        </div>
         {{ form_end(form, {'render_rest': false})}}
     </div>
 

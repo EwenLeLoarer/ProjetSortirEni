@@ -67,7 +67,7 @@ final class SortieController extends AbstractController
 
         if($sortie->getEtat()->getId() == 7)
         {
-            $this->addFlash('error', "Cette sortie est archivée");
+            $this->addFlash('error', "Cette sortie est archivée.");
             return $this->redirectToRoute('app_home');
         }
         return $this->render('sortie/show.html.twig', [
@@ -81,7 +81,7 @@ final class SortieController extends AbstractController
 
         if($sortie->getEtat()->getId() == 7)
         {
-            $this->addFlash('error', "cette sortie est archivé");
+            $this->addFlash('error', "Cette sortie est archivée.");
             return $this->redirectToRoute('app_home');
         }
 
@@ -115,19 +115,19 @@ final class SortieController extends AbstractController
         }
 
         if($sortie->getDateLimiteInscription() < new \DateTime()){
-            $this->addFlash('error', "la date d'inscription est depassée");
+            $this->addFlash('error', "La date d'inscription est dépassée.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         if($sortie->getEtat()->getId() != 2)
         {
-            $this->addFlash('error', "l'inscription n'est plus ouverte");
+            $this->addFlash('error', "L'inscription n'est plus ouverte.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         if($sortie->getNbInscriptionsMax() <= $sortie->getParticipants()->count())
         {
-            $this->addFlash('error', "Le nombre d'inscrits est atteint");
+            $this->addFlash('error', "Le nombre d'inscrits est atteint.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
@@ -138,7 +138,7 @@ final class SortieController extends AbstractController
             $em->persist($sortie);
             $em->flush();
         } else {
-            $this->addFlash('error', "utilisateur participe deja la sortie");
+            $this->addFlash('error', "L'utilisateur participe déjà à la sortie");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
@@ -155,13 +155,13 @@ final class SortieController extends AbstractController
         }
 
         if($sortie->getDateHeureDebut() < new \DateTime()){
-            $this->addFlash('error', "la sortie est commencé");
+            $this->addFlash('error', "La sortie a déjà commencé.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         if($sortie->getEtat()->getId() > 2)
         {
-            $this->addFlash('error', "l'inscription n'est plus ouverte ou en cours de creation");
+            $this->addFlash('error', "L'inscription n'est plus ouverte ou est en cours de création.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
@@ -172,7 +172,7 @@ final class SortieController extends AbstractController
             $em->persist($sortie);
             $em->flush();
         } else {
-            $this->addFlash('error', "utilisateur ne participe pas a la sortie");
+            $this->addFlash('error', "L'utilisateur ne participe pas à la sortie");
         }
 
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
@@ -189,30 +189,30 @@ final class SortieController extends AbstractController
         }
 
         if($sortie->getDateHeureDebut() < new \DateTime()){
-            $this->addFlash('error', "la date d'inscription est depassé");
+            $this->addFlash('error', "La date d'inscription est dépassée.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         if($sortie->getEtat()->getId() == 4)
         {
-            $this->addFlash('error', "la sortie est en cours");
+            $this->addFlash('error', "La sortie est en cours.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
         if($sortie->getEtat()->getId() == 5)
         {
-            $this->addFlash('error', "la sortie est deja passé");
+            $this->addFlash('error', "la sortie est déjà passée.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
         if($sortie->getEtat()->getId() == 6)
         {
-            $this->addFlash('error', "la sortie est deja annulé");
+            $this->addFlash('error', "la sortie est déjà annulée.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
 
         if($user != $sortie->getOrganisateur() and !$this->isGranted('ROLE_ADMIN')){
-            $this->addFlash('error', "l'utilisateur connecter n'est pas le createur de la sortie");
+            $this->addFlash('error', "l'utilisateur connecté n'est pas le créateur de la sortie.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
@@ -247,20 +247,20 @@ final class SortieController extends AbstractController
         }
 
         if($sortie->getDateHeureDebut() < new \DateTime()){
-            $this->addFlash('error', "la date d'inscription est depassé");
+            $this->addFlash('error', "La date d'inscription est dépassée.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         if($sortie->getEtat()->getId() != 1)
         {
-            $this->addFlash('error', "la sortie n'est plus en preparation");
+            $this->addFlash('error', "La sortie n'est plus en préparation.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
 
         if($user != $sortie->getOrganisateur() ){
-            $this->addFlash('error', "l'utilisateur connecter n'est pas le createur de la sortie");
+            $this->addFlash('error', "L'utilisateur connecté n'est pas le créateur de la sortie.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
