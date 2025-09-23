@@ -3,17 +3,17 @@
 {% block body %}
     <div class="ville_container">
         {% if app.user and is_granted('ROLE_ADMIN') %}
-            <form method="get" id="form_villes" data-ajax-list
-                  data-target="#villes_list"
+            <form method="get" id="form_sites" data-ajax-list
+                  data-target="#sites_list"
                   data-delay="200">
-                <h2 class="filtre_title">Filtrer les villes</h2>
+                <h2 class="filtre_title">Filtrer les sites</h2>
                 <label class="filtre_label ville_label">
                     Le nom contient :
                     <input type="text" name="query" data-autosubmit="350">
                 </label>
             </form>
-            <div class="table_area" id="villes_list">
-                {% include 'ville/_table.html.twig' %}
+            <div class="table_area" id="sites_list">
+                {% include 'site/_table.html.twig' %}
             </div>
         {% endif %}
     </div>

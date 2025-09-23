@@ -99,7 +99,7 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
 }
-#filters{
+#filters, #form_villes {
     height: 100%;
     background: var(--panel);
     border: 1px solid var(--line);
@@ -251,7 +251,7 @@ input[type="password"]:focus-visible{
     display: flex;
     justify-content: space-between;
 }
-.form_buttons > a {
+.form_buttons > a, .button_ville, .button_site {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -266,12 +266,12 @@ input[type="password"]:focus-visible{
     width: 150px;
     justify-content: center;
 }
-.form_buttons > a:hover {
+.form_buttons > a:hover, .button_ville:hover, .button_site:hover {
     background: var(--bg);
     color: var(--text);
     border-color: color-mix(in oklab, var(--line) 60%, var(--text));
 }
-.form_buttons > a:active {
+.form_buttons > a:active, .button_ville:active, .button_site:hover {
     transform: translateY(1px);
 }
 body .container{
@@ -451,8 +451,9 @@ tbody > tr:hover {
     height: 100%;
 }
 .table_area {
+    align-self: flex-start;
     flex-grow: 1;
-    height: 670px;
+    max-height: 670px;
     overflow-y: auto;
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -542,6 +543,69 @@ tbody > tr:hover {
 }
 .sortie_link:hover {
     color: blue;
+}
+.ville_container {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+.ville_container .table_area {
+    flex-grow: 0;
+}
+.ville_input {
+    width: 100%;
+}
+.ville_label {
+    width: 430px;
+}
+#table_ville, #table_site {
+    padding: 0 20px;
+ }
+#table_ville td, #table_site td {
+    max-width: 450px;
+    min-width: 330px;
+}
+#table_ville .last_column, #table_site .last_column {
+    text-align: center;
+    padding: 0 15px 0 0;
+}
+tfoot {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 3;
+    height: 80px;
+}
+tfoot .last_column, tbody .last_column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+tfoot td {
+    border-top: 1px solid var(--line);
+    height: 80px;
+}
+#table_ville td, #table_ville th, #table_site td, #table_site th {
+    text-align: start;
+    padding-left: 15px;
+}
+#table_ville tfoot td, #table_site tfoot td {
+    padding-left: 0;
+}
+#table_ville input, #table_site input {
+    width: 100%;
+}
+#table_ville .form_buttons, #table_site .form_buttons {
+    height: 80px;
+}
+.button_ville, .button_site {
+    height: 46px;
+}
+#table_ville tbody .last_column, #table_site tbody .last_column {
+    justify-content: space-between;
+}
+#table_ville .row-edit>td, #table_site .row-edit>td {
+    padding-left: 0;
 }
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 
@@ -683,7 +747,7 @@ tbody > tr:hover {
         gap: 24px;
     }
 
-    .all_events_table{
+    .table_area{
         display: none;
     }
 

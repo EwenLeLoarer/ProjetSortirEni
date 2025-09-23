@@ -1,0 +1,49 @@
+<table class="all_events_table">
+    <thead>
+    <tr>
+        <th>Nom de la sortie</th>
+        <th>Date de la sortie</th>
+        <th>Clôture</th>
+        <th>Inscrits/places</th>
+        <th>Etat</th>
+        <th>Inscrit</th>
+        <th>Organisateur</th>
+        {% if app.user %}
+            <th>Actions</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for sortie in sorties %}
+        <tr>
+            <td class="nom_sortie">{{ sortie.nom }}</td>
+            <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+            <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+            <td>{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</td>
+            <td>{{ sortie.etat.libelle }}</td>
+            <td>{% if app.user and sortie.isInscrit(app.user) %}
+                    x
+                {% endif %}
+            </td>
+            <td>
+                <a class="sortie_link" href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
+                    {{ sortie.organisateur.prenomEtInitiale }}
+                </a>
+            </td>
+            {% if app.user %}
+                <td>
+                    {%  include '_partials/actions.html.twig' %}
+                </td>
+            {% endif %}
+            <td class="row_link">
+                <a class="cover-link" href="{{ path('app_sortie_show', {id: sortie.id}) }}" title="Afficher la sortie">
+                </a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="8" class="text-center">Aucune sortie trouvée</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
