@@ -24,7 +24,7 @@ final class VilleController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($ville);
             $em->flush();
-
+            $this->addFlash('success', "La ville a bien été créée.");
             if($request->query->has('backToLieu')){
                 return $this->redirectToRoute('app_lieu', [
                     'newVilleId' => $ville->getId(),

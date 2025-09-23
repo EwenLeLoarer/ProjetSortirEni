@@ -49,6 +49,27 @@ body {
     font-weight: bolder;
 }
 
+.flex{
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.flex > * {
+    flex-basis: calc(100% / 3);
+}
+
+
+.flash-message{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+
 /********************************** Boutons ******************************************/
 .buttons{
     display: flex;
@@ -401,7 +422,7 @@ body .container{
     gap: 24px;
 }
 
-.user_info, .event_details, .event_creation, .new_location_content, .deletion_content, .registration_content, .import_content{
+.user_info, .event_details, .event_creation, .new_location_content, .deletion_content, .registration_content, .import_content, .new_town_content{
     /*background-color: rgba(175, 162, 175, 0.15);*/
     padding: 16px 24px;
     border-radius: 4px;}
@@ -500,7 +521,7 @@ td{
 }
 
 table.participants{
-    width: 50%;
+    width: 100%;
 }
 thead {
     color: purple;
