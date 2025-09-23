@@ -78,13 +78,17 @@ final class SortieController extends AbstractController
     #[Route('/sortie/{id}/modify', name: 'app_sortie_modify', requirements: ['id'=>'\d+'])]
     public function modify(Request $request, Sortie $sortie, EntityManagerInterface $em): Response
     {
-
+        $user = $this->getUser();
         if($sortie->getEtat()->getId() == 7)
         {
             $this->addFlash('error', "Cette sortie est archivée.");
             return $this->redirectToRoute('app_home');
         }
 
+        if($user != $sortie->getOrganisateur() and !$this->isGranted('ROLE_ADMIN')){
+            $this->addFlash('error', "L'utilisateur n'a pas les droits nécessaires pour modifier la sortie.");
+            return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
+        }
         $form = $this->createForm(SortieType::class, $sortie, []);
 
         $form->handleRequest($request);
@@ -212,7 +216,7 @@ final class SortieController extends AbstractController
         $user = $em->getRepository(Utilisateur::Class)->find($userConnected->getId());
 
         if($user != $sortie->getOrganisateur() and !$this->isGranted('ROLE_ADMIN')){
-            $this->addFlash('error', "l'utilisateur connecté n'est pas le créateur de la sortie.");
+            $this->addFlash('error', "L'utilisateur n'a pas les droits pour supprimer la sortie.");
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
