@@ -3,9 +3,9 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <div class="form_container">
+    <div class="new_event form_container">
         <h1>Modifier la sortie</h1>
-        <div class="event_edition">
+        <div class="event_creation">
             {{ form_start(form) }}
             {{ form_row(form.nom) }}
             {{ form_row(form.dateHeureDebut) }}
@@ -22,12 +22,12 @@
             </div>
             <h2>Détails du lieu</h2>
             <div class="location_details">
-                <div class="flex flex-3">
+                <div class="flex">
                     {{ form_row(form.rue) }}
                     {{ form_row(form.codePostal) }}
                     {{ form_row(form.ville) }}
                 </div>
-                <div class="flex flex-2">
+                <div class="flex">
                     {{ form_row(form.latitude) }}
                     {{ form_row(form.longitude) }}
                 </div>
