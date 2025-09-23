@@ -269,7 +269,7 @@ final class SortieController extends AbstractController
         $sortie->setEtat($startedEtat);
         $em->persist($sortie);
         $em->flush();
-
+        $this->addFlash('success', "La sortie a bien été publiée.");
         return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
     }
 }
