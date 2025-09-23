@@ -50,8 +50,10 @@ body {
 /********************************** Boutons ******************************************/
 .buttons{
     display: flex;
+    justify-content: center;
     gap: 24px;
-    margin: 0 auto;
+    margin: 24px auto;
+    width: fit-content;
 }
 
 .buttons button, .button{
@@ -81,6 +83,8 @@ body {
 .button_secondary{
     border: 2px solid var(--accent);
     color: var(--accent);
+    background-color: white;
+    font-weight: bold;
 }
 .button_secondary:hover{
     border: 2px solid #4E014EFF;
@@ -88,7 +92,7 @@ body {
 }
 
 .return_button{
-    width: 320px;
+    width: 50%;
     height: 32px;
     display: flex;
     align-items: center;
@@ -104,13 +108,6 @@ button.disabled{
 
 button.disabled:hover{
     cursor: not-allowed;
-}
-
-.buttons {
-    margin: 0 auto;
-    :first-child{
-        margin-right: 24px;
-    }
 }
 
 .event_tile .buttons{
@@ -331,9 +328,13 @@ select{
 }
 
 
-input:disabled{
-    border : none;
-    background: rgba(248, 250, 252, 0.64);
+input:disabled, select:disabled{
+    background: none;
+    all: unset;
+}
+
+input:disabled:hover, select:disabled:hover{
+    all: unset;
 }
 
 label{
@@ -400,12 +401,17 @@ body .container{
 }
 
 .user_info, .event_details, .event_creation, .new_location_content, .deletion_content{
-    background-color: rgba(175, 162, 175, 0.15);
+    /*background-color: rgba(175, 162, 175, 0.15);*/
     padding: 16px 24px;
     border-radius: 4px;}
 
+ /*A vérifier : code en double */
+.user_info, .event_details, .deletion_content{
+    /*background-color: rgba(237, 228, 237, 0.18);*/
+}
+
 .user_info{
-    width: 320px;
+    width: 50%;
     margin: 32px auto 0 auto;
     gap: 16px;
 }
@@ -447,6 +453,24 @@ body .container{
 .user_info span, .event_tile span{
     font-weight: bold;
     margin-left: 24px;
+}
+
+.form_container, .event_container{
+    margin: 0 auto;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.form_container{
+    width: 50%
+}
+
+.form_container h1, .event_container h1{
+    display: block;
+    background-color: var(--accent);
+    color: white;
+    padding: 8px 24px;
 }
 /******************************** Page d'accueil / affichage de toutes les sorties *******************************************/
 
@@ -580,15 +604,15 @@ tbody > tr:hover {
 }
 
 
-.login_form h1{
-    text-align: center;
-}
+/*.login_form h1{*/
+/*    text-align: center;*/
+/*}*/
 
 /***************** Page de création d'une sortie ***************************/
 
-.event_creation, .new_location_content, .deletion_content{
-    margin: 24px auto;
-}
+/*.event_creation, .new_location_content, .deletion_content{*/
+/*    margin: 24px auto;*/
+/*}*/
 
 .location_div, .town_div{
     width: 100%;
@@ -630,9 +654,24 @@ tbody > tr:hover {
     color: blue;
 }
 
+
+.location_details{
+    background-color: rgba(237, 228, 237, 0.18);
+    border: 2px solid white;
+    border-radius: 4px;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+}
+
+.event_creation h2{
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
 /*************************** Détails d'une sortie ****************************************/
 #map{
     height: 280px;
+    width: 75%;
     margin: 0 auto 24px auto;
     border: 2px solid black;
     border-radius: 4px;
@@ -656,6 +695,44 @@ tbody > tr:hover {
     border-radius: 8px 8px 0 0;
 }
 
+.event_container h2{
+    margin-bottom: 16px;
+    padding: 8px;
+    border-bottom: 2px solid var(--accent);
+}
+.event_container section{
+    width: 70vw;
+    margin: 0 auto 24px auto;
+}
+
+/************************************ Annulation d'une sortie *****************************************/
+
+.deletion_content div{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.deletion_content .mb-6 input {
+    flex: 1;
+    flex-basis: 40%;
+}
+
+.deletion_content .mb-6 label{
+    width: 160px;
+}
+
+.deletion_content textarea {
+    width: calc(100% - 160px);
+}
+#sortie_annulation_lieu:disabled, #sortie_annulation_site:disabled{
+    height: fit-content;
+    padding: 0;
+}
+
+#sortie_annulation_nom, #sortie_annulation_dateHeureDebut, #sortie_annulation_site, #sortie_annulation_lieu{
+    font-weight: 500;
+}
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 
 .mobile{

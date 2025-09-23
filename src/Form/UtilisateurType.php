@@ -75,11 +75,6 @@ class UtilisateurType extends AbstractType
                         'mimeTypesMessage' => 'Veuillez télécharger une image (jpg, png)',
                     ])
                 ]])
-//            ->add('sortiesPrevues', EntityType::class, [
-//                'class' => Sortie::class,
-//                'choice_label' => 'id',
-//                'multiple' => true,
-//            ])
         ;
     }
 
