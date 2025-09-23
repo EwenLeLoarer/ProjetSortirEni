@@ -29,8 +29,13 @@
                     <td> {{ user.telephone }}</td>
                     <td> {{ user.actif ? 'oui' : 'non' }}</td>
                     <td> {{ user.pseudo }}</td>
-                    <td> <a href="{{ path('app_desactivate_user', {id:user.id}) }}">Désactiver</a></td>
-                    <td> <a href="{{ path('app_delete_user', {id:user.id}) }}">Supprimer</a></td>
+                    <td>
+                        {%  if user.actif %}
+                            <a class="link" href="{{ path('app_desactivate_user', {id:user.id}) }}">Désactiver</a>
+                            {% else %}
+                            <span>Utilisateur désactivé</span>
+                        {%  endif %}</td>
+                    <td> <a class="link" href="{{ path('app_delete_user', {id:user.id}) }}">Supprimer</a></td>
                 </tr>
             {% endfor %}
         </tbody>
