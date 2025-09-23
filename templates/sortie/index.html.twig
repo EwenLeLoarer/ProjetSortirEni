@@ -32,7 +32,10 @@
                     {{ form_row(form.longitude) }}
                 </div>
             </div>
-            {{ form_row(form.enregistrer) }}
+            <div class="buttons">
+                {{ form_row(form.enregistrer) }}
+                <a class="button button_secondary" href="{{ path('app_home') }}">Annuler</a>
+            </div>
             {{ form_widget(form._token) }}
             {{ form_end(form, {'render_rest': false}) }}
 
