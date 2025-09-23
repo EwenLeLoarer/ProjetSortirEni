@@ -5,18 +5,20 @@
 {% block body %}
     <div class="login_form form_container">
         <form method="post">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
-
-            {% if app.user %}
-                <div class="mb-3">
-                    Vous êtes connecté avec l'adresse {{ app.user.userIdentifier }}.<br/> <a class="link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                </div>
-            {% endif %}
-
             <h1>Connexion</h1>
             <div class="login_content">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="login_info_container">
+                        Vous êtes connecté avec l'adresse {{ app.user.userIdentifier }}.<br/>
+                        <div class="buttons">
+                            <a class="button button_primary" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        </div>
+                    </div>
+                {% else %}
                 <label for="username">Mail</label>
                 <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
                 <label for="password">Mot de passe</label>
@@ -32,6 +34,7 @@
                         Connexion
                     </button>
                 </div>
+                {% endif %}
             </div>
         </form>
     </div>
