@@ -422,7 +422,7 @@ body .container{
     gap: 24px;
 }
 
-.user_info, .event_details, .event_creation, .new_location_content, .deletion_content, .registration_content, .import_content, .new_town_content{
+.user_info, .event_details, .event_creation, .new_location_content, .deletion_content, .registration_content, .import_content, .new_town_content, .motDePasse_content, .login_content{
     /*background-color: rgba(175, 162, 175, 0.15);*/
     padding: 16px 24px;
     border-radius: 4px;}
@@ -614,22 +614,38 @@ tbody > tr:hover {
 
 
 /*************************** PAGE DE CONNEXION *********************************************/
-.login_form{
+.login_form, .motDePasse_container{
     width: 40%;
+    margin: 15vh auto;
+    padding-bottom: 0;
+}
+
+.login_content{
     padding: 24px;
-    margin: 30vh auto;
 }
 
 .login_form form{
     display: flex;
     flex-direction: column;
-    gap: 24px;
+}
+
+.login_content{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 
 /*.login_form h1{*/
 /*    text-align: center;*/
 /*}*/
+
+
+/*Réinitialisation de mdp*/
+
+.motDePasse_info{
+    margin: 16px 0;
+}
 
 /***************** Page de création d'une sortie ***************************/
 
