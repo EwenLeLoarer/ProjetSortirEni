@@ -66,8 +66,7 @@ class Sortie
     {
         $this->participants = new ArrayCollection();
     }
-
-
+    
     #[Assert\Callback]
     public function validateDates(ExecutionContextInterface $context): void
     {
