@@ -25,6 +25,7 @@ body {
     display: flex;
     flex-wrap:wrap;
     gap: 24px;
+    margin-bottom: 40px;
 }
 
 .main_container_index {
@@ -32,13 +33,14 @@ body {
     margin-top: 90px;
 }
 
-.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1, .new_town h1, .deletion_container h1{
+.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1, .new_town h1, .deletion_container h1, .users_container h1{
     font-weight: bold;
     font-size: 20px;
 }
-.main_container h2, .event-tile h2{
+.main_container h2, .event_tile h2, import_content h2{
     font-weight: bold;
     font-size: 16px;
+    margin-bottom: 16px;
 }
 
 .link{
@@ -125,7 +127,7 @@ button.disabled:hover{
 .header {
     height:100px;
     border-bottom: 2px purple double;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 .header_title {
     font-size: 30px;
@@ -395,19 +397,18 @@ body .container{
 }
 
 .profile form{
-    width: 50%;
     margin: 0 auto;
-    gap: 32px;
+    gap: 24px;
 }
 
-.user_info, .event_details, .event_creation, .new_location_content, .deletion_content{
+.user_info, .event_details, .event_creation, .new_location_content, .deletion_content, .registration_content, .import_content{
     /*background-color: rgba(175, 162, 175, 0.15);*/
     padding: 16px 24px;
     border-radius: 4px;}
 
  /*A vérifier : code en double */
-.user_info, .event_details, .deletion_content{
-    /*background-color: rgba(237, 228, 237, 0.18);*/
+.user_info, .event_details, .deletion_content, .registration_content{
+    background-color: rgba(237, 228, 237, 0.18);
 }
 
 .user_info{
@@ -427,6 +428,10 @@ body .container{
     margin-bottom: 8px;
     align-items: center;
 }
+
+.profile form{
+    width: 70%;
+}
 .profile label{
     width: 30%;
 }
@@ -440,11 +445,8 @@ body .container{
 }
 
 .profile img{
-    text-align: center;
-}
-.profile img{
-    width: 320px;
-    height: 320px;
+    width: 160px;
+    height: 160px;
     border-radius: 100%;
     margin: 0 auto;
     object-fit: cover;
@@ -455,7 +457,7 @@ body .container{
     margin-left: 24px;
 }
 
-.form_container, .event_container{
+.form_container, .event_container, .users-container{
     margin: 0 auto;
     border: 1px solid lightgray;
     border-radius: 8px;
@@ -463,10 +465,10 @@ body .container{
 }
 
 .form_container{
-    width: 50%
+    width: 70%
 }
 
-.form_container h1, .event_container h1{
+.form_container h1, .event_container h1, .users_container h1{
     display: block;
     background-color: var(--accent);
     color: white;
@@ -697,6 +699,7 @@ tbody > tr:hover {
 
 .event_container h2{
     margin-bottom: 16px;
+    margin-top: 24px;
     padding: 8px;
     border-bottom: 2px solid var(--accent);
 }
@@ -704,7 +707,6 @@ tbody > tr:hover {
     width: 70vw;
     margin: 0 auto 24px auto;
 }
-
 /************************************ Annulation d'une sortie *****************************************/
 
 .deletion_content div{
@@ -732,6 +734,35 @@ tbody > tr:hover {
 
 #sortie_annulation_nom, #sortie_annulation_dateHeureDebut, #sortie_annulation_site, #sortie_annulation_lieu{
     font-weight: 500;
+}
+
+/************************ Page d'inscription d'un utilisateur (admin) *********************************/
+.registration_content{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 40px 0;
+}
+.registration_content .button{
+    width: 70%;
+    margin: 0 auto
+}
+
+/*Formulaire d'import*/
+
+.import_content form{
+    width: 100%;
+}
+
+#csv_import_csvFile{
+    gap: 24px;
+}
+
+/* liste des utilisateurs */
+
+.users_container h1{
+    border-radius: 8px;
+    margin-bottom: 24px;
 }
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 
