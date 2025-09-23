@@ -6,16 +6,19 @@
     <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     {{ importmap('app') }}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 {% include "_partials/header.html.twig" with {'isMobile': isMobile|default(false)} %}
 <main>
     {# Code permettant d'afficher les éventuels messages flash #}
     <div>
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="mb-4 flex items-center justify-between rounded-lg border px-4 py-3
+                <div class="flash-message
                        {% if label == 'success' %} bg-green-50 border-green-400 text-green-800
                        {% elseif label == 'error' %} bg-red-50 border-red-400 text-red-800
                        {% elseif label == 'warning' %} bg-yellow-50 border-yellow-400 text-yellow-800
@@ -33,5 +36,33 @@
         {% block body %}{% endblock %}
     </div>
 </main>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const lieuSelect = document.getElementById('sortie_lieu');
+        if (!lieuSelect) return;
+
+        function updateLieuDetails(lieuId) {
+            if (!lieuId) return;
+
+            fetch('/lieu/' + lieuId)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('sortie_rue').value = data.rue;
+                    document.getElementById('sortie_codePostal').value = data.codePostal;
+                    document.getElementById('sortie_ville').value = data.ville;
+                    document.getElementById('sortie_latitude').value = data.latitude;
+                    document.getElementById('sortie_longitude').value = data.longitude;
+                });
+        }
+
+        lieuSelect.addEventListener('change', function () {
+            updateLieuDetails(this.value);
+        });
+
+        if (lieuSelect.value) {
+            updateLieuDetails(lieuSelect.value);
+        }
+    });
+</script>
 </body>
 </html>

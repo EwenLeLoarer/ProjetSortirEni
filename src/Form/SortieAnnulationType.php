@@ -9,6 +9,7 @@ use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,10 +22,16 @@ class SortieAnnulationType extends AbstractType
         $builder
             ->add('nom', null, [
                 'disabled' => true,
+                'label' => 'Nom de la sortie',
             ])
-            ->add('dateHeureDebut', null, ['disabled' => true])
+            ->add('dateHeureDebut', DateTimeType::class, [
+                'disabled' => true,
+                'label' => 'Date de la sortie',
+                'widget' => 'single_text',
+                'html5' => true,])
             ->add('site', EntityType::class, [
                 'class' => Site::class,
+                'label' => 'Ville organisatrice',
                 'choice_label' => 'nom',
                 'disabled' => true,
             ])
@@ -32,12 +39,17 @@ class SortieAnnulationType extends AbstractType
                 'class' => Lieu::class,
                 'choice_label' => 'nom',
                 'disabled' => true,
+                'label' => 'Lieu',
             ])
             ->add('annulationMotif', TextAreaType::class, [
                 'mapped' => true,
-                'required' => true
+                'required' => true,
+                'label' => 'Motif de l\'annulation',
             ])
-            ->add('enregistrer', SubmitType::class, [])
+            ->add('Enregistrer', SubmitType::class, [
+                'label' => 'Supprimer la sortie',
+                'attr' => ['class' => 'button button_primary cancel'],
+            ])
         ;
     }
 

@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-    <div class="main_container profile">
-        <h1>importer les utilisateurs avec un</h1>
-
+    <div class="main_container profile form_container">
+        <h1>Importer des utilisateurs</h1>
+    <div class="import_content">
+        <h2>Sélectionner un fichier au format CSV.</h2>
         {{ form_start(form) }}
-            {{ form_row(form.csvFile) }}
-            <button>Import</button>
+            {{ form_widget(form.csvFile) }}
+            <button class="button button_primary">Importer</button>
         {{ form_end(form) }}
+    </div>
     </div>
 
 {% endblock %}

@@ -1,32 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SortieController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper border border-3">
-
-    {{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    {{ form_row(form.dateHeureDebut) }}
-    {{ form_row(form.duree) }}
-    {{ form_row(form.dateLimiteInscription) }}
-    {{ form_row(form.nbInscriptionsMax) }}
-    {{ form_row(form.infosSortie) }}
-    {{ form_row(form.organisateur) }}
-    {{ form_row(form.participants) }}
-    {{ form_row(form.site) }}
-    <div style="display: flex; align-items: center;">
-        {{ form_row(form.lieu) }}
-        <a href="{{ path('app_lieu', { backToSortie: true }) }}" class="btn btn-secondary" style="margin-left: 10px;">
-            + Create New Lieu
-        </a>
+    <div class="new_event form_container">
+        <h1>Modifier la sortie</h1>
+        <div class="event_creation">
+            {{ form_start(form) }}
+            {{ form_row(form.nom) }}
+            {{ form_row(form.dateHeureDebut) }}
+            {{ form_row(form.dateLimiteInscription) }}
+            {{ form_row(form.nbInscriptionsMax) }}
+            {{ form_row(form.duree) }}
+            {{ form_row(form.infosSortie) }}
+            {{ form_row(form.site) }}
+            <div class="location_div">
+                {{ form_row(form.lieu) }}
+                <a href="{{ path('app_lieu', { backToSortie: true }) }}" class="button button_secondary" style="margin-left: 10px;">
+                    + Créer un nouveau lieu
+                </a>
+            </div>
+            <h2>Détails du lieu</h2>
+            <div class="location_details">
+                <div class="flex">
+                    {{ form_row(form.rue) }}
+                    {{ form_row(form.codePostal) }}
+                    {{ form_row(form.ville) }}
+                </div>
+                <div class="flex">
+                    {{ form_row(form.latitude) }}
+                    {{ form_row(form.longitude) }}
+                </div>
+            </div>
+            <div class="buttons">
+                {{ form_row(form.enregistrer) }}
+                {% if  app.user == sortie.organisateur and sortie.etat.id == 1 and date(sortie.dateLimiteInscription) > date() %}
+                    <a class="button button_primary action" href="{{ path('app_sortie_publish', {id: sortie.id}) }}">
+                        Publier la sortie
+                    </a>
+                {% endif %}
+                {% if app.user == sortie.organisateur and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
+                <a class="button button_primary action" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
+                    Annuler la sortie
+                </a>
+                {% endif %}
+                <a class="button button_secondary" href="{{ path('app_home') }}">Annuler</a>
+            </div>
+            {{ form_widget(form._token) }}
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
     </div>
-    {{ form_row(form.enregistrer) }}
-    {{ form_end(form) }}
-</div>
 {% endblock %}

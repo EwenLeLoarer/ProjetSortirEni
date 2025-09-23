@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Lieu;
 use App\Entity\Ville;
 use App\Form\LieuType;
+use App\Service\MapService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class LieuController extends AbstractController
 {
     #[Route('/lieu', name: 'app_lieu')]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, MapService $mapService): Response
     {
         $lieu = new Lieu();
 
@@ -27,11 +28,23 @@ final class LieuController extends AbstractController
             }
         }
 
+
+
         $form = $this->createForm(LieuType::class, $lieu);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $completeAdress = $lieu->getRue() . ' ' . $lieu->getVille()->getNom();
+            try{
+                $position = $mapService->getDataFromAddress($completeAdress);
+                $lieu->setLatitude($position['lat']);
+                $lieu->setLongitude($position['lon']);
+            } catch(\Exception $e){
+                $lieu->setLatitude(null);
+                $lieu->setLongitude(null);
+            }
+            $this->addFlash('success', "Le lieu a bien été créé.");
             $em->persist($lieu);
             $em->flush();
 

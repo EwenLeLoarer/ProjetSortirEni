@@ -1,23 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SortieController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper border border-3">
-
+<div class="deletion_container form_container">
+<h1>Suppression d'une sortie</h1>
+    <div class="deletion_content">
     {{ form_start(form) }}
     {{ form_row(form.nom) }}
     {{ form_row(form.dateHeureDebut) }}
     {{ form_row(form.site) }}
-    <div style="display: flex; align-items: center;">
+    <div>
         {{ form_row(form.lieu) }}
     </div>
     {{ form_row(form.annulationMotif) }}
     {{ form_end(form) }}
+    </div>
 </div>
 {% endblock %}
