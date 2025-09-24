@@ -32,7 +32,7 @@ class FileUploader
         return $this->uploadDir;
     }
 
-    public function delete(string $filename): void
+    public function delete(?string $filename): void
     {
         if (null != $filename) {
             $filePath = $this->getUploadDir() . '/' . $filename;
