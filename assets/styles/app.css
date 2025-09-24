@@ -622,7 +622,6 @@ tbody > tr:hover {
 
 .login_content{
     padding: 24px;
-    margin: 30vh auto;
 }
 
 .login_form form{
@@ -788,6 +787,10 @@ tfoot td {
     border-radius: 4px;
 }
 
+.event_container{
+    box-sizing: border-box;
+}
+
 .leaflet-control-attribution, .leaflet-control{
     display: none;
     visibility: hidden;
@@ -806,6 +809,11 @@ tfoot td {
     border-radius: 8px 8px 0 0;
 }
 
+
+.event_container{
+    gap:0;
+}
+
 .event_container h2{
     margin-bottom: 16px;
     margin-top: 24px;
@@ -813,7 +821,7 @@ tfoot td {
     border-bottom: 2px solid var(--accent);
 }
 .event_container section{
-    width: 70vw;
+    width: 70%;
     margin: 0 auto 24px auto;
 }
 /************************************ Annulation d'une sortie *****************************************/
@@ -888,21 +896,21 @@ tfoot td {
         display: flex;
     }
 
-    #filters {
-        padding: 12px;
-    }
+    /*#filters {*/
+    /*    padding: 12px;*/
+    /*}*/
 
-    .filtre_label {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
+    /*.filtre_label {*/
+    /*    flex-wrap: wrap;*/
+    /*    gap: 8px;*/
+    /*}*/
 
-    .filtre_label > select,
-    .filtre_label > input[type="text"],
-    .filtre_label > input[type="date"] {
-        margin-left: 0;
-        width: 100%;
-    }
+    /*.filtre_label > select,*/
+    /*.filtre_label > input[type="text"],*/
+    /*.filtre_label > input[type="date"] {*/
+    /*    margin-left: 0;*/
+    /*    width: 100%;*/
+    /*}*/
 }
 
 @media (max-width: 461px) {
@@ -910,15 +918,14 @@ tfoot td {
         display: none;
     }
     .mobile{
-        display: flex;
+        display: inline;
     }
     body{
         padding: 0 16px;
     }
-    .header_nav{
-        display: flex;
-        flex-direction: column;
-        gap: 0;
+
+    .header{
+        margin-bottom: 24px;
     }
     .event_details{
         flex-direction: column;
@@ -945,6 +952,11 @@ tfoot td {
         width: 100%;
     }
 
+    table.participants th, table.participants td, table.participants  thead{
+        height: 24px;
+        padding: 0
+    }
+
     .profile img{
         width: 160px;
         height: 160px;
@@ -953,6 +965,34 @@ tfoot td {
         display: flex;
         flex-direction: column;
         gap: 24px;
+    }
+
+    #map, .map_container{
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .event_container{
+        gap:0;
+    }
+
+    .event_container section{
+        margin: 0 auto;
+        width: 85vw;
+    }
+
+    .buttons{
+        flex-direction: column;
+        margin: 40px 0;
+    }
+
+    .button{
+        width: 85vw;
+        margin: 0;
+    }
+
+    .event_container h2{
+        margin-top: 16px;
     }
 }
 @media (min-width: 462px) and (max-width: 540px){
@@ -971,6 +1011,23 @@ tfoot td {
         width: 200px;
         height: 200px;
     }
+
+    .event_container{
+        gap:0;
+    }
+
+    .event_container section{
+        margin: 0 auto;
+        width: 85%;
+    }
+
+    #map{
+        margin: 24px auto 0 auto;
+    }
+
+    .event_container h2{
+        margin-top: 16px
+    }
 }
 @media (min-width:540px) and (max-width: 920px){
     .profile img{
@@ -981,6 +1038,16 @@ tfoot td {
     .mobile{
         display: none;
     }
+
+    .event_container{
+        gap:0;
+    }
+
+    .event_container section{
+        margin: 0 auto;
+        width: 85vw;
+    }
+
 }
 @media (min-width:461px) and (max-width: 920px) {
     .header_title img {
@@ -1020,5 +1087,43 @@ tfoot td {
     .profile img{
         width: 160px;
         height: 160px;
+    }
+
+    }
+@media(max-width:740px) {
+    .header_nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+}
+@media(max-width: 1385px){
+    #filters{
+        background-color: yellow;
+        flex-grow: 1;        /* allow it to grow and fill space */
+        flex-basis: auto;    /* base size is automatic */
+        width: fit-content;  /* keeps width as fit-content initially */
+        min-width: 0;
+    }
+
+    .main_container_index{
+        flex-grow: 1;
+    }
+
+    #filters .form_filters{
+        all: unset;
+        display: flex;
+        flex-direction: row;
+        width: 100%
+    }
+
+    .filtre_label{
+        width: 50%;
+    }
+
+    .form_buttons{
+        margin: 0 auto;
+        width: fit-content;
+        gap: 24px;
     }
 }
