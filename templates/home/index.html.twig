@@ -9,7 +9,9 @@
                 <p>Participant: {{ app.user.pseudo }}</p>
             </div>
         {% endif %}
-        <form method="get" id="filters">
+        <form method="get" id="filters" data-ajax-list
+              data-target="#sorties_list"
+              data-delay="200">
             <h2 class="filtre_title">Filtrer les sorties</h2>
             <div class="form_filters">
                 <label class="filtre_label">
@@ -26,7 +28,7 @@
 
                 <label class="filtre_label">
                     Filtrer:
-                    <input type="text" name="query" value="{{ filters.query }}" placeholder="search">
+                    <input type="text" name="query" data-autosubmit="350" placeholder="search">
                 </label>
             </div>
 
@@ -45,10 +47,7 @@
             <div class="form_filters">
                 {% if app.user %}
                     <fieldset>
-                        <label class="filtre_label_right">
-                            <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
-                            Sorties que j'organise
-                        </label>
+
                         <label class="filtre_label_right">
                             <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
                             Sorties passées
@@ -57,8 +56,8 @@
 
                     <fieldset>
                         <label class="filtre_label_right">
-                            <input type="radio" name="prevues" onchange="this.form.submit()" value="" {% if filters.prevues is not defined or filters.prevues is same as('') %}checked{% endif %}>
-                            Toutes les sorties
+                            <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
+                            Sorties que j'organise
                         </label>
 
                         <label class="filtre_label_right">
@@ -69,6 +68,11 @@
                         <label class="filtre_label_right">
                             <input type="radio" name="prevues" onchange="this.form.submit()" value="0" {% if filters.prevues is defined and filters.prevues == '0' %}checked{% endif %}>
                             Sorties auxquelles je ne participe pas
+                        </label>
+
+                        <label class="filtre_label_right">
+                            <input type="radio" name="prevues" onchange="this.form.submit()" value="" {% if filters.prevues is not defined or filters.prevues is same as('') %}checked{% endif %}>
+                            Toutes les sorties
                         </label>
                     </fieldset>
                 {% else %}
@@ -81,59 +85,11 @@
 
             <div class="form_buttons">
                 <a href="/">Réinitialiser</a>
-                <a class="button_create" href="{{  path('app_sortie') }}">Créer une sortie</a>
+                {% if app.user %}<a class="button_create" href="{{  path('app_sortie') }}">Créer une sortie</a>{% endif %}
             </div>
         </form>
-        <div class="table_area">
-            <table class="all_events_table">
-                <thead>
-                    <tr>
-                        <th>Nom de la sortie</th>
-                        <th>Date de la sortie</th>
-                        <th>Clôture</th>
-                        <th>Inscrits/places</th>
-                        <th>Etat</th>
-                        <th>Inscrit</th>
-                        <th>Organisateur</th>
-                        {% if app.user %}
-                            <th>Actions</th>
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for sortie in sorties %}
-                        <tr>
-                            <td class="nom_sortie">{{ sortie.nom }}</td>
-                            <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
-                            <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
-                            <td>{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</td>
-                            <td>{{ sortie.etat.libelle }}</td>
-                            <td>{% if app.user and sortie.isInscrit(app.user) %}
-                                    x
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a class="sortie_link" href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
-                                    {{ sortie.organisateur.prenomEtInitiale }}
-                                </a>
-                            </td>
-                            {% if app.user %}
-                                <td>
-                                    {%  include '_partials/actions.html.twig' %}
-                                </td>
-                            {% endif %}
-                            <td class="row_link">
-                                <a class="cover-link" href="{{ path('app_sortie_show', {id: sortie.id}) }}" title="Afficher la sortie">
-                                </a>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="8" class="text-center">Aucune sortie trouvée</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="table_area" id="sorties_list">
+            {% include 'sortie/_table.html.twig' %}
         </div>
         <div class="all_events_tiles">
             {% for sortie in sorties %}
