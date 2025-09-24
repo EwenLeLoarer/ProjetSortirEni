@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use App\Form\SortieAnnulationType;
 use App\Form\SortieType;
+use App\Service\SortieService;
 use Doctrine\DBAL\Types\DateType;
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\DBAL\Types\TextType;
@@ -19,7 +20,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class SortieController extends AbstractController
 {
-    #[Route('/sortie', name: 'app_sortie')]
+    #[Route('/sortie', name: 'app_sortie', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $sortie = new Sortie();
@@ -42,18 +43,25 @@ final class SortieController extends AbstractController
             'organisateur' => $user,
         ]);
 
-
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
             $sortie->setOrganisateur($user);
             $sortie->addParticipant($user);
-            //$sortie = $form->getData();
+            if ($form->get('publier')->isClicked()) {
+                if($sortie->getDateHeureDebut() > new \DateTime()){
+                    $etatOuvert = $em->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']);
+                    if ($etatOuvert) {
+                        $sortie->setEtat($etatOuvert);
+                    }
+                }
+                $this->addFlash('success', 'Sortie publiée avec succès !');
+            } else {
+                 $this->addFlash('success', 'Sortie enregistrée avec succès !');
+            }
+
             $em->persist($sortie);
             $em->flush();
-
-            //TODO change to the list of Sortie
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
 
