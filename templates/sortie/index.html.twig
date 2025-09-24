@@ -34,6 +34,7 @@
             </div>
             <div class="buttons">
                 {{ form_row(form.enregistrer) }}
+                {{ form_row(form.publier) }}
                 <a class="button button_secondary" href="{{ path('app_home') }}">Annuler</a>
             </div>
             {{ form_widget(form._token) }}
