@@ -44,7 +44,7 @@ final class LieuController extends AbstractController
                 $lieu->setLatitude(null);
                 $lieu->setLongitude(null);
             }
-
+            $this->addFlash('success', "Le lieu a bien été créé.");
             $em->persist($lieu);
             $em->flush();
 

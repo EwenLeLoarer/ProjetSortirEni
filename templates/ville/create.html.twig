@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <div class="new_town form_container">
+        <h1>Créer une ville</h1>
+        <div class="new_town_content">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.nom) }}
+            {{ form_row(form.codePostal) }}
+            {{ form_row(form.enregistrer) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

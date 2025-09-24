@@ -3,8 +3,9 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<div class="example-wrapper border border-3">
-
+<div class="deletion_container form_container">
+<h1>Suppression d'une sortie</h1>
+    <div class="deletion_content">
     {{ form_start(form) }}
     {{ form_row(form.nom) }}
     {{ form_row(form.dateHeureDebut) }}
@@ -14,5 +15,6 @@
     </div>
     {{ form_row(form.annulationMotif) }}
     {{ form_end(form) }}
+    </div>
 </div>
 {% endblock %}

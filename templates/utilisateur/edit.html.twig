@@ -2,7 +2,7 @@
 
 {% block title %}{% endblock %}
 {% block body %}
-    <div class="main_container profile">
+    <div class="main_container profile form_container">
         <h1>Mon profil</h1>
         {{ form_start(utilisateurForm) }}
         <div>
@@ -53,7 +53,7 @@
         </div>
         <div class="buttons">
             <button class="button_primary" type="submit">Enregistrer</button>
-            <button class="button_secondary" type="submit">Annuler</button>
+            <a href="{{ path('app_home') }}" class=" button button_secondary">Annuler</a>
         </div>
         {{ form_end(utilisateurForm, {'render_rest': false})}}
     </div>

@@ -1,19 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    <h1>importer des utilisateurs</h1>
-    <a href="{{ path('app_import_user') }}">import</a>
-    <h1>creer un utilisateur</h1>
-    <a href="{{ path('app_create_user') }}">creer</a>
+<div class="main_container profile form_container">
+    <h1>Inscrire des utilisateurs</h1>
+    <div class="registration_content">
+            <a class="button button_secondary" href="{{ path('app_import_user') }}">Importer des utilisateurs à partir d'un fichier</a>
+            <a class="button button_secondary" href="{{ path('app_create_user') }}">Créer un utilisateur manuellement</a>
+    </div>
 </div>
 {% endblock %}

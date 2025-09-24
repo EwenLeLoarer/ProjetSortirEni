@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-    <div class="main_container profile">
-        <h1>Mon profil</h1>
+    <div class="main_container profile form_container">
+        <h1>Inscrire un utilisateur</h1>
         {{ form_start(form) }}
         <div>
             {% if form.vars.value.photo != null %}
@@ -16,6 +16,7 @@
                 {{ form_label(form.pseudo) }}
                 {{ form_widget(form.pseudo) }}
             </div>
+            {{ form_errors(form.pseudo) }}
             <div>
                 {{ form_label(form.prenom) }}
                 {{ form_widget(form.prenom) }}
@@ -32,10 +33,12 @@
                 {{ form_label(form.email) }}
                 {{ form_widget(form.email) }}
             </div>
+            {{ form_errors(form.email) }}
             <div>
                 {{ form_label(form.password) }}
                 {{ form_widget(form.password) }}
             </div>
+            {{ form_errors(form.password) }}
             <div>
                 {{ form_label(form.passwordConfirmation) }}
                 {{ form_widget(form.passwordConfirmation) }}
@@ -52,8 +55,7 @@
         </div>
         <div class="buttons">
             <button class="button_primary" type="submit">Enregistrer</button>
-            <button class="button_secondary" type="submit">Annuler</button>
-        </div>
+            <a href="{{ path('app_home') }}" class=" button button_secondary">Annuler</a>        </div>
         {{ form_end(form, {'render_rest': false})}}
     </div>
 

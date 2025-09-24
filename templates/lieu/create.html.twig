@@ -3,10 +3,11 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<div class="new_location">
+<div class="new_location form_container">
     <h1>Créer un lieu</h1>
     <div class="new_location_content">
         {{ form_start(form) }}
+        {{ form_errors(form) }}
         {{ form_row(form.nom) }}
         {{ form_row(form.rue) }}
         <div class="town_div">

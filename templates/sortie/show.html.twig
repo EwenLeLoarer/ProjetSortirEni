@@ -3,100 +3,109 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<div class="main_container event_container">
-    <h1>Détail de la sortie</h1>
-      <ul class="event_details">
-          <li><Strong>Nom <span class="desktop">de la sortie :</span></Strong> {{ sortie.nom }}</li>
-          <li><Strong>Date et heure <span class="desktop"> de la sortie : </span></Strong> {{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d-m-Y H:i') : 'No date' }}</li>
-          <li><Strong><span class="desktop">Date limite d'inscription :</span><span class="mobile">Clôture</span></Strong> {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d-m-Y') : 'No date' }}</li>
-          <li><Strong>Durée :</Strong>
-              {%set duree = sortie.duree%}
-              {% if duree > 60 %}
-                {% set hours = (duree // 60) %}
-                  {% set minutes = (duree % 60) %}
-                  {{ hours }} heure{{ hours > 1 ? 's' : '' }}{% if minutes > 0 %} {{ minutes }} minute{{ minutes > 1 ? 's' : '' }}{% endif %}
-              {% else %}
-                  {{ duree }} minutes
-              {% endif %}
-          </li>
-          <li><Strong>Nombre de places :</Strong> {{ sortie.nbInscriptionsMax }}</li>
-          <li><Strong>Description et infos:</Strong> {{ sortie.infosSortie }}</li>
-          <li><Strong>Ville <span class="desktop">organisatrice :</span></Strong> {{ sortie.site.nom }}</li>
-          <li><Strong>Lieu:</Strong> {{ sortie.lieu.nom }}</li>
-          <li><Strong>Rue:</Strong> {{ sortie.lieu.rue }}</li>
-          <li><Strong>Code postal :</Strong> {{ sortie.lieu.ville.codePostal }}</li>
-          <li><Strong>Latitude :</Strong> {{ sortie.lieu.latitude }}</li>
-          <li><Strong>Longitude :</Strong> {{ sortie.lieu.longitude }}</li>
-          <div id="map" ></div>
-          <script>
-              // Center the map on a given location [lat, lng], e.g., Paris
-              var map = L.map('map').setView([{{ sortie.lieu.latitude|json_encode }}, {{ sortie.lieu.longitude|json_encode   }}], 13);
+    <div class="main_container event_container">
+        <h1>Détail de la sortie</h1>
+        <section>
+            <h2>Informations générales</h2>
+            <ul class="event_details">
+                <li><Strong>Nom <span class="desktop">de la sortie :</span></Strong> {{ sortie.nom }}</li>
+                <li><Strong>Date et heure <span class="desktop"> de la sortie : </span></Strong> {{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d-m-Y H:i') : 'No date' }}</li>
+                <li><Strong><span class="desktop">Date limite d'inscription :</span><span class="mobile">Clôture</span></Strong> {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d-m-Y') : 'No date' }}</li>
+                <li><Strong>Durée :</Strong>
+                    {%set duree = sortie.duree%}
+                    {% if duree > 60 %}
+                        {% set hours = (duree // 60) %}
+                        {% set minutes = (duree % 60) %}
+                        {{ hours }} heure{{ hours > 1 ? 's' : '' }}{% if minutes > 0 %} {{ minutes }} minute{{ minutes > 1 ? 's' : '' }}{% endif %}
+                    {% else %}
+                        {{ duree }} minutes
+                    {% endif %}
+                </li>
+                <li><Strong>Nombre de places :</Strong> {{ sortie.nbInscriptionsMax }}</li>
+                <li><Strong>Description et infos:</Strong> {{ sortie.infosSortie }}</li>
+                <li><Strong>Ville <span class="desktop">organisatrice :</span></Strong> {{ sortie.site.nom }}</li>
+                <li><Strong>Lieu:</Strong> {{ sortie.lieu.nom }}</li>
+                <li><Strong>Rue:</Strong> {{ sortie.lieu.rue }}</li>
+                <li><Strong>Code postal :</Strong> {{ sortie.lieu.ville.codePostal }}</li>
+                <li><Strong>Latitude :</Strong> {{ sortie.lieu.latitude }}</li>
+                <li><Strong>Longitude :</Strong> {{ sortie.lieu.longitude }}</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Localisation</h2>
+            <div id="map" ></div>
+        </section>
+        <section>
+            <h2>Liste des participants inscrits</h2>
+            {% if sortie.participants|length > 0 %}
+                <table class="participants">
+                    <thead>
+                    <tr>
+                        <th>Pseudo</th>
+                        <th>Nom</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in sortie.participants %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('app_utilisateur', {id: user.id}) }}">
+                                    {{ user.pseudo }}
+                                </a>
+                            </td>
+                            <td >{{ user.Prenom }} {{ user.nom }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Cette sortie ne compte aucun participant pour le moment.</p>
+            {% endif %}
+            <div class="buttons">
+                {% if  app.user == sortie.organisateur and sortie.etat.id == 1 and date(sortie.dateLimiteInscription) > date() %}
+                    <a class="button button_primary action" href="{{ path('app_sortie_publish', {id: sortie.id}) }}">
+                        Publier cette sortie
+                    </a>
+                {% endif %}
+                {% if app.user == sortie.organisateur and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
+                    <a class="button button_primary action" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
+                        Annuler cette sortie
+                    </a>
+                {% elseif sortie.etat.id == 6%}
+                    <button disabled class="button disabled action" title="Sortie annulée">
+                        Sortie annulée
+                    </button>
+                    <a>pour motif de : {{ sortie.annulationMotif }}</a>
+                {% elseif app.user in sortie.participants %}
+                    <a class="button button_primary action" href="{{ path('app_sortie_unregister', {id: sortie.id}) }}">
+                        Se désister
+                    </a>
+                {% elseif date(sortie.dateLimiteInscription) > date() and sortie.etat.id == 2 and sortie.nbInscriptionsMax > sortie.participants|length %}
+                    <a class="button button_primary action" href="{{ path('app_sortie_register', {id: sortie.id}) }}">
+                        Participer à cette sortie
+                    </a>
+                {% else %}
+                    <button disabled class="button disabled action" title="Inscription fermée">
+                        Inscription fermée
+                    </button>
+                {% endif %}
+            </div>
+        </section>
+    </div>
 
-              // Add OpenStreetMap tiles
-              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                  attribution: '&copy; OpenStreetMap contributors',
-                  maxZoom: 19,
-              }).addTo(map);
+    <script>
+        // Center the map on a given location [lat, lng], e.g., Paris
+        var map = L.map('map').setView([{{ sortie.lieu.latitude|json_encode }}, {{ sortie.lieu.longitude|json_encode   }}], 13);
 
-              // Optional: add a marker
-              var marker = L.marker([{{ sortie.lieu.latitude|json_encode }}, {{ sortie.lieu.longitude|json_encode   }}]).addTo(map)
-                  .bindPopup('Hello Paris!')
-                  .openPopup();
-          </script>
-      </ul>
-    <h2>Liste des participants inscrits</h2>
-    {% if sortie.participants|length > 0 %}
-      <table class="participants">
-          <thead>
-            <tr>
-                <th>Pseudo</th>
-                <th>Nom</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for user in sortie.participants %}
-                <tr>
-                    <td>
-                        <a href="{{ path('app_utilisateur', {id: user.id}) }}">
-                            {{ user.pseudo }}
-                        </a>
-                    </td>
-                    <td >{{ user.Prenom }} {{ user.nom }}</td>
-                </tr>
-            {% endfor %}
-          </tbody>
-      </table>
-        {% else %}
-        <p>Cette sortie ne compte aucun participant pour le moment.</p>
-    {% endif %}
-    <div class="buttons">
-        {% if  app.user == sortie.organisateur and sortie.etat.id == 1 and date(sortie.dateLimiteInscription) > date() %}
-            <a class="button button_primary action" href="{{ path('app_sortie_publish', {id: sortie.id}) }}">
-                publier cette sortie
-            </a>
-        {% endif %}
-      {% if app.user == sortie.organisateur and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
-          <a class="button button_primary action" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
-              Annuler cette sortie
-          </a>
-      {% elseif sortie.etat.id == 6%}
-          <button disabled class="button disabled action" title="Sortie annulée">
-              Sortie annulée
-          </button>
-          <a>pour motif de : {{ sortie.annulationMotif }}</a>
-      {% elseif app.user in sortie.participants %}
-        <a class="button button_primary action" href="{{ path('app_sortie_unregister', {id: sortie.id}) }}">
-            Se désister
-        </a>
-      {% elseif date(sortie.dateLimiteInscription) > date() and sortie.etat.id == 2 and sortie.nbInscriptionsMax > sortie.participants|length %}
-        <a class="button button_primary action" href="{{ path('app_sortie_register', {id: sortie.id}) }}">
-            Participer à cette sortie
-        </a>
-      {% else %}
-          <button disabled class="button disabled action" title="Inscription fermée">
-              Inscription fermée
-          </button>
-      {% endif %}
-</div>
-</div>
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            maxZoom: 19,
+        }).addTo(map);
+
+        // Optional: add a marker
+        var marker = L.marker([{{ sortie.lieu.latitude|json_encode }}, {{ sortie.lieu.longitude|json_encode   }}]).addTo(map)
+            .bindPopup('Hello Paris!')
+            .openPopup();
+    </script>
 {% endblock %}

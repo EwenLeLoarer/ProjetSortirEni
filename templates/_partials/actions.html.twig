@@ -1,9 +1,9 @@
 {% if app.user %}
     {% if sortie.organisateur.id == app.user.id %}
         {% if sortie.etat.libelle == 'Ouverte' %}
-            <form method="post" action="{{ path('app_sortie_cancel', {id: sortie.id}) }}" onsubmit="return confirm('Confirmer l\'annulation ?');">
-                <button class="sortie_link" type="submit">Annuler</button>
-            </form>
+            <a class="sortie_link" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
+            Annuler
+            </a>
         {% elseif sortie.etat.libelle == 'En création' %}
             <a class="sortie_link" href="{{ path('app_sortie_modify', {id: sortie.id}) }}">Modifier</a>
         {% endif %}

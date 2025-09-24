@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class AdminController extends AbstractController
 {
@@ -53,7 +54,7 @@ final class AdminController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $em->persist($user);
             $em->flush();
-            $this->addFlash('succes', "L'utilisateur a bien été rajouté");
+            $this->addFlash('success', "L'utilisateur a bien été rajouté");
             return $this->redirectToRoute('app_admin');
         }
 
@@ -96,7 +97,7 @@ final class AdminController extends AbstractController
                 fclose($handle);
 
                 $em->flush();
-                $this->addFlash('success', 'Utilisateur importé avec success');
+                $this->addFlash('success', 'Les utilisateurs ont bien été importés.');
                 return $this->redirectToRoute('app_admin');
             }
 
@@ -124,6 +125,7 @@ final class AdminController extends AbstractController
         $em->persist($user);
         $em->flush();
 
+        $this->addFlash('success', 'L\'utilisateur a bien été désactivé.');
         return $this->redirectToRoute('app_list_user');
     }
 
@@ -133,7 +135,7 @@ final class AdminController extends AbstractController
         $em->remove($user);
         $em->flush();
 
+        $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
         return $this->redirectToRoute('app_list_user');
     }
-
 }
