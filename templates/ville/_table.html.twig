@@ -1,0 +1,88 @@
+<table id="table_ville" class="all_events_table">
+    <thead>
+    <tr>
+        <th>Ville</th>
+        <th>Code postal</th>
+        <th class="last_column">Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for ville in villes %}
+        <tr>
+            <td>{{ ville.nom }}</td>
+            <td>{{ ville.codePostal }}</td>
+            <td class="form_buttons last_column">
+                <button type="button"
+                        class="button_ville"
+                        data-edit-toggle
+                        data-target="#edit-{{ ville.id }}">Modifier</button>
+                <form action="{{ path('app_delete_ville', { id: ville.id }) }}"
+                      method="post"
+                      data-ajax-submit="1"
+                      data-refresh-url="{{ path('app_ville') }}"
+                      data-refresh-selector="#table_ville tbody"
+                      style="display:inline"
+                      onsubmit="return confirm('Supprimer {{ ville.nom }} ?')">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete_ville_' ~ ville.id) }}">
+                    <button type="submit" class="button_ville">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+
+        {# Ligne d’édition (champs reliés au form externe) #}
+        <tr id="edit-{{ ville.id }}" class="row-edit" hidden>
+            <td>
+                {{ form_widget(editForms[ville.id].nom, {'attr': {
+                    form: 'form_ville-edit-' ~ ville.id
+                }}) }}
+            </td>
+            <td>
+                {{ form_widget(editForms[ville.id].codePostal, {'attr': {
+                    form: 'form_ville-edit-' ~ ville.id
+                }}) }}
+            </td>
+            <td class="form_buttons last_column">
+                {{ form_widget(editForms[ville.id]._token, {'attr': { form: 'form_ville-edit-' ~ ville.id }}) }}
+                <button type="submit" form="form_ville-edit-{{ ville.id }}" class="button_ville">Enregistrer</button>
+                <button type="button" class="button_ville" data-edit-toggle data-target="#edit-{{ ville.id }}">Annuler</button>
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="3">Aucune ville</td></tr>
+    {% endfor %}
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <td>{{ form_widget(form.nom, {'attr': { placeholder: 'Nom de la ville', form: 'form_ville-create' }}) }}</td>
+        <td>{{ form_widget(form.codePostal, {'attr': { placeholder: 'Code postal', form: 'form_ville-create' }}) }}</td>
+        <td class="form_buttons last_column">
+            {{ form_widget(form._token, {'attr': { form: 'form_ville-create' }}) }}
+            {{ form_widget(form.enregistrer, {
+                'label': 'Ajouter',
+                'attr': { class: 'button_ville', form: 'form_ville-create' }}) }}
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+{# Formulaire de création (externe) #}
+<form id="form_ville-create"
+      action="{{ path('app_create_ville') }}"
+      method="post"
+      data-ajax-submit="1"
+      data-refresh-url="{{ path('app_ville') }}"
+      data-refresh-selector="#table_ville"
+      data-clear-on-success="1"></form>
+
+{% for ville in villes %}
+    <form id="form_ville-edit-{{ ville.id }}"
+          action="{{ path('app_edit_ville', {id: ville.id}) }}"
+          method="post"
+          data-ajax-submit="1"
+          data-refresh-url="{{ path('app_ville') }}"
+          data-refresh-selector="#table_ville"
+          data-clear-on-success="1"
+          data-close-target="#edit-{{ ville.id }}"></form>
+{% endfor %}

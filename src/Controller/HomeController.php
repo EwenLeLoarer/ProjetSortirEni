@@ -40,7 +40,15 @@ final class HomeController extends AbstractController
                 'isMobile' => $isMobile,
             ]);
         }
-
+        if ($request->isXmlHttpRequest()) {
+            $html = $this->renderView('sortie/_table.html.twig', [
+                'sorties'    => $sorties,
+                'utilisateur' => $utilisateur,
+                'sites' => $sites,
+                'filters' => $filters
+            ]);
+            return new Response($html);
+        }
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'sorties' => $sorties,

@@ -1,0 +1,80 @@
+<table id="table_site" class="all_events_table">
+    <thead>
+    <tr>
+        <th>site</th>
+        <th class="last_column">Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for site in sites %}
+        <tr>
+            <td>{{ site.nom }}</td>
+            <td class="form_buttons last_column">
+                <button type="button"
+                        class="button_site"
+                        data-edit-toggle
+                        data-target="#edit-{{ site.id }}">Modifier</button>
+                <form action="{{ path('app_delete_site', { id: site.id }) }}"
+                      method="post"
+                      data-ajax-submit="1"
+                      data-refresh-url="{{ path('app_site') }}"
+                      data-refresh-selector="#table_site tbody"
+                      style="display:inline"
+                      onsubmit="return confirm('Supprimer {{ site.nom }} ?')">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete_site_' ~ site.id) }}">
+                    <button type="submit" class="button_site">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+
+        {# Ligne d’édition (champs reliés au form externe) #}
+        <tr id="edit-{{ site.id }}" class="row-edit" hidden>
+            <td>
+                {{ form_widget(editForms[site.id].nom, {'attr': {
+                    form: 'form_site-edit-' ~ site.id
+                }}) }}
+            </td>
+            <td class="form_buttons last_column">
+                {{ form_widget(editForms[site.id]._token, {'attr': { form: 'form_site-edit-' ~ site.id }}) }}
+                <button type="submit" form="form_site-edit-{{ site.id }}" class="button_site">Enregistrer</button>
+                <button type="button" class="button_site" data-edit-toggle data-target="#edit-{{ site.id }}">Annuler</button>
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="3">Aucun site</td></tr>
+    {% endfor %}
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <td>{{ form_widget(form.nom, {'attr': { placeholder: 'Nom de la site', form: 'form_site-create' }}) }}</td>
+        <td class="form_buttons last_column">
+            {{ form_widget(form._token, {'attr': { form: 'form_site-create' }}) }}
+            {{ form_widget(form.enregistrer, {
+                'label': 'Ajouter',
+                'attr': { class: 'button_site', form: 'form_site-create' }}) }}
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+{# Formulaire de création (externe) #}
+<form id="form_site-create"
+      action="{{ path('app_create_site') }}"
+      method="post"
+      data-ajax-submit="1"
+      data-refresh-url="{{ path('app_site') }}"
+      data-refresh-selector="#table_site"
+      data-clear-on-success="1"></form>
+
+{% for site in sites %}
+    <form id="form_site-edit-{{ site.id }}"
+          action="{{ path('app_edit_site', {id: site.id}) }}"
+          method="post"
+          data-ajax-submit="1"
+          data-refresh-url="{{ path('app_site') }}"
+          data-refresh-selector="#table_site"
+          data-clear-on-success="1"
+          data-close-target="#edit-{{ site.id }}"></form>
+{% endfor %}
