@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Site;
-use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -11,10 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class UtilisateurType extends AbstractType
 {
@@ -35,7 +33,13 @@ class UtilisateurType extends AbstractType
             ->add('password', PasswordType::Class, options:[
                 'label' => 'Mot de passe',
                 'required'=> false,
-                'mapped' => false
+                'mapped' => false,
+                'constraints' => [
+                    new Assert\PasswordStrength([
+                        'minScore' => 3,
+                        'message' => 'Le mot de passe n\'est pas suffisamment sécurisé.',
+                    ]),
+                ],
             ])
             ->add('passwordConfirmation', PasswordType::Class, options:[
                 'label' => 'Confirmation',
