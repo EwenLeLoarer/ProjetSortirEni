@@ -6,8 +6,10 @@ use App\Repository\SiteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: SiteRepository::class)]
+#[UniqueEntity(fields: ['nom'], message: 'Un site existe déjà pour cette ville.', errorPath: 'nom')]
 class Site
 {
     #[ORM\Id]
@@ -15,7 +17,7 @@ class Site
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $nom = null;
 
     /**

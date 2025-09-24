@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -17,18 +19,24 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'Le nom de la sortie doit contenir au moins 10 caractères.',
+    )]
     private ?string $nom = null;
 
     #[ORM\Column]
     private ?\DateTime $dateHeureDebut = null;
 
     #[ORM\Column]
+    #[Assert\GreaterThan(value:0, message:'La durée d\'une sortie doit être supérieure à 0.')]
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $dateLimiteInscription = null;
 
     #[ORM\Column]
+    #[Assert\GreaterThan(value:0, message:'La durée d\'une sortie doit être supérieure à 0.')]
     private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -59,6 +67,25 @@ class Sortie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $annulationMotif = null;
 
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, mixed $payload): void
+    {
+        if ($this->dateLimiteInscription > $this->dateHeureDebut) {
+            $context->buildViolation('La date limite d\'inscription doit être antérieure à la date de début.')
+                ->atPath('dateLimiteInscription')
+                ->addViolation();
+        }
+        if ($this->dateLimiteInscription < new \DateTimeImmutable()) {
+            $context->buildViolation('La date limite d\'inscription ne peut être antérieure à la date du jour.')
+                ->atPath('dateLimiteInscription')
+                ->addViolation();
+        }
+        if ($this->dateHeureDebut < new \DateTimeImmutable()) {
+            $context->buildViolation('La date de la sortie ne peut être antérieure à la date du jour.')
+                ->atPath('dateHeureDebut')
+                ->addViolation();
+        }
+    }
     public function __construct()
     {
         $this->participants = new ArrayCollection();
