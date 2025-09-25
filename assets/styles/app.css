@@ -1157,6 +1157,7 @@ tfoot td {
         gap: 0;
     }
 }
+
 @media(max-width: 635px){
     #form_sites, #form_villes{
         gap: 0;
@@ -1192,6 +1193,32 @@ tfoot td {
 
     .buttons{
         margin-top: 0;
+    }
+
+    .location_div{
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .location_div .mb-6{
+        margin-bottom: 8px;
+    }
+    .location_div a{
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .event_creation .buttons{
+        flex-direction: column;
+        margin: 0;
+    }
+    .event_creation .button, .event_creation div{
+        width: 100%;
+    }
+
+    .new_event{
+        margin: 0;
+        width: 100%;
     }
 }
 
@@ -1256,6 +1283,10 @@ tfoot td {
         }
         .profile{
             width: 100%;
+        }
+
+        .location_details .flex{
+            flex-wrap: wrap;
         }
     }
 
