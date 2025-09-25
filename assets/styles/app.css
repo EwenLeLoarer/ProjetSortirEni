@@ -574,12 +574,6 @@ tbody > tr:hover {
 .all_events_table tbody tr {
     height: 80px;
 }
-.mobile_table{
-    width: 100%;
-    td{
-        text-align: center
-    }
-}
 
 .all_events_tiles{
     display: none;
@@ -863,6 +857,36 @@ tfoot td {
 .users_container h1{
     border-radius: 8px;
     margin-bottom: 24px;
+}
+
+/*************************************** MOBILE ***********************************/
+.mobile_container h2{
+    font-weight: 400;
+    font-size: 16px;
+    background-color: var(--accent);
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 4px;
+}
+
+.mobile_table{
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid grey;
+}
+
+.mobile_table thead {
+    border-radius: 4px 4px 0 0;
+    border: none;
+}
+
+.mobile_table tbody {
+    border-radius: 0 0 4px 4px ;
 }
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 

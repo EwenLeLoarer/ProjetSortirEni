@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <table class="border-2 border-black mobile_table">
+    <div class="mobile_container">
+    <h2>Les sorties proposées par mon site</h2>
+    <table class=" mobile_table">
         <thead>
         <tr>
             <th>Nom de la sortie</th>
@@ -27,4 +29,5 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 {% endblock %}
