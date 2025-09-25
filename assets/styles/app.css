@@ -925,10 +925,19 @@ tfoot td {
         display: none;
     }
     .mobile{
-        display: flex;
+        display: inline;
     }
     body{
         padding: 0 16px;
+    }
+    .buttons{
+        margin: 0 auto;
+    }
+
+    /*HEADER*/
+
+    .header{
+        margin-bottom: 24px;
     }
     .header_nav{
         display: flex;
@@ -936,11 +945,25 @@ tfoot td {
         gap: 0;
     }
 
+    .header_title a{
+        height: 72px;
+    }
+
+    .header_title img {
+        height: 64px;
+    }
+
+    .event_container h1{
+        font-size: 16px;
+    }
+
+    /*LOGIN*/
+
     .login_form h1{
         text-align: center;
     }
 
-    .login_content{
+    .login_content, .event_container section{
         padding-left:8px;
         padding-right:8px;
     }
@@ -952,6 +975,9 @@ tfoot td {
     .login_button_div{
         margin: 8px 0 0 0;
     }
+
+    /*DETAILS SORTIE*/
+
     .event_details{
         flex-direction: column;
     }
@@ -959,12 +985,13 @@ tfoot td {
         width: 100%;
     }
 
-    .header_title a{
-        height: 72px;
+    .event_container{
+        gap:0;
     }
 
-    .header_title img {
-        height: 64px;
+    .event_container section{
+        width: 100%;
+        margin: 0 auto;
     }
 
     .login_form{
@@ -1034,6 +1061,14 @@ tfoot td {
 
     .event_details > * {
         flex-basis: 100%;
+    }
+
+    .event_container{
+        gap:0;
+    }
+
+    .event_container section{
+        margin: 0 auto;
     }
 
     table.participants{
