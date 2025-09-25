@@ -20,10 +20,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
+        $users = $em->getRepository(Utilisateur::class)->findAll();
+
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
+            'users' => $users
         ]);
     }
 
@@ -107,7 +110,7 @@ final class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/listUser', name: 'app_list_user')]
+    #[Route('/admin/list_user', name: 'app_list_user')]
     public function listUsers(EntityManagerInterface $em) : Response
     {
         $users = $em->getRepository(Utilisateur::class)->findAll();
@@ -117,7 +120,7 @@ final class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}/desativate', name: 'app_desactivate_user', requirements: ['id' => '\d+'])]
+    #[Route('/admin/{id}/desactivate', name: 'app_desactivate_user', requirements: ['id' => '\d+'])]
     public function desactivateUser(Utilisateur $user, EntityManagerInterface $em) : Response
     {
         $user->setIsActif(false);
@@ -136,6 +139,6 @@ final class AdminController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
-        return $this->redirectToRoute('app_list_user');
+        return $this->redirectToRoute('app_list_user', []);
     }
 }

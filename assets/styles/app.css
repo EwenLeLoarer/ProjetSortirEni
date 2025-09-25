@@ -620,12 +620,34 @@ body .container{
     margin-left: 24px;
 }
 
-.form_container, .event_container, .users-container{
+.form_container, .event_container {
     margin: 0 auto;
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
     border-radius: var(--radius);
     overflow: hidden;
+}
+.users_container {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    gap: 0;
+    width: 70%;
+    margin:auto;
+}
+.users_container h2 {
+    margin-bottom: 0;
+}
+.users_container .table_area {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    max-height: 400px;
+}
+.users_container td, .users_container th {
+    text-align: start;
+    padding: 0;
 }
 
 .form_container{
@@ -957,12 +979,6 @@ tfoot td {
     gap: 24px;
 }
 
-/* liste des utilisateurs */
-
-.users_container h2{
-    border-radius: var(--radius);
-    margin-bottom: 24px;
-}
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 
 .mobile{

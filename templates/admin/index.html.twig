@@ -3,9 +3,12 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<div class="main_container profile form_container">
-    <h2>Inscrire des utilisateurs</h2>
+<div class="main_container users_container profile">
+    <h2>Liste des utilisateurs</h2>
+    {{ include('admin/list_user.html.twig', { users: users }) }}
+
     <div class="registration_content">
+        <h3>Inscrire des utilisateurs</h3>
             <a class="button button_secondary" href="{{ path('app_import_user') }}">Importer des utilisateurs à partir d'un fichier</a>
             <a class="button button_secondary" href="{{ path('app_create_user') }}">Créer un utilisateur manuellement</a>
     </div>
