@@ -105,7 +105,10 @@ class SortieType extends AbstractType
             ->add('enregistrer', SubmitType::class, [
                 'attr' => ['class' => 'button button_primary'],
                 ])
-        ;
+            ->add('publier', SubmitType::class,
+                ['label' => 'Publier la sortie',
+                'attr' => ['class' => 'button button_primary']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
