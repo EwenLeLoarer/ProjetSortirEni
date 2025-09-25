@@ -22,6 +22,7 @@
     {% elseif sortie.etat.libelle == 'En création' %}
         {% if sortie.organisateur.id == app.user.id %}
             <a class="sortie_link" href="{{ path('app_sortie_modify', {id: sortie.id}) }}">Modifier</a>
+            <a class="sortie_link" href="{{ path('app_sortie_publish', {id:sortie.id}) }}">Publier</a>
         {% endif %}
     {% endif %}
 {% endif %}
