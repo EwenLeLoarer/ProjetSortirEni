@@ -21,7 +21,7 @@ class EtatFixtures extends Fixture
         $this->addReference('etat-ouvert', $etatOuvert);
 
         $etatFermé = new Etat();
-        $etatFermé->setLibelle('fermier');
+        $etatFermé->setLibelle('fermée');
         $manager->persist($etatFermé);
         $this->addReference('etat-fermé', $etatFermé);
 
@@ -31,7 +31,7 @@ class EtatFixtures extends Fixture
         $this->addReference('etat-en-cours', $etatEnCour);
 
         $etatPassé = new Etat();
-        $etatPassé->setLibelle('passé');
+        $etatPassé->setLibelle('Passée');
         $manager->persist($etatPassé);
         $this->addReference('etat-passé', $etatPassé);
 

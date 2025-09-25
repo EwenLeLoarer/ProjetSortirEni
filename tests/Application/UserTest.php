@@ -74,7 +74,7 @@ final class UserTest extends WebTestCase
         $link = $crawler->selectLink('Se déconnecter')->link();
         $client->click($link);
 
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/login');
     }
 
     public function testLogoutAdmin():void
@@ -93,7 +93,7 @@ final class UserTest extends WebTestCase
         $link = $crawler->selectLink('Se déconnecter')->link();
         $client->click($link);
 
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/login');
     }
 }
 ?>
