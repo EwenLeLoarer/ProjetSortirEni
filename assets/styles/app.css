@@ -1179,6 +1179,20 @@ tfoot td {
         box-shadow: none;
         padding: 0;
     }
+    .profile_attribute{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .profile form div div{
+        gap: 0;
+        align-items: flex-start;
+        margin-bottom: 16px;
+    }
+
+    .buttons{
+        margin-top: 0;
+    }
 }
 
 
@@ -1239,6 +1253,9 @@ tfoot td {
             background: none;
             box-shadow: none;
             padding: 0;
+        }
+        .profile{
+            width: 100%;
         }
     }
 
