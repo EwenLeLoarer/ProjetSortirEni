@@ -14,7 +14,7 @@
             <td>{{ ville.codePostal }}</td>
             <td class="form_buttons last_column">
                 <button type="button"
-                        class="button_ville"
+                        class="button_ville button_primary"
                         data-edit-toggle
                         data-target="#edit-{{ ville.id }}">Modifier</button>
                 <form action="{{ path('app_delete_ville', { id: ville.id }) }}"
@@ -25,7 +25,7 @@
                       style="display:inline"
                       onsubmit="return confirm('Supprimer {{ ville.nom }} ?')">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete_ville_' ~ ville.id) }}">
-                    <button type="submit" class="button_ville">Supprimer</button>
+                    <button type="submit" class="button_ville button_primary">Supprimer</button>
                 </form>
             </td>
         </tr>
@@ -44,8 +44,8 @@
             </td>
             <td class="form_buttons last_column">
                 {{ form_widget(editForms[ville.id]._token, {'attr': { form: 'form_ville-edit-' ~ ville.id }}) }}
-                <button type="submit" form="form_ville-edit-{{ ville.id }}" class="button_ville">Enregistrer</button>
-                <button type="button" class="button_ville" data-edit-toggle data-target="#edit-{{ ville.id }}">Annuler</button>
+                <button type="submit" form="form_ville-edit-{{ ville.id }}" class="button_ville button_primary">Enregistrer</button>
+                <button type="button" class="button_ville button_primary" data-edit-toggle data-target="#edit-{{ ville.id }}">Annuler</button>
             </td>
         </tr>
     {% else %}
@@ -61,7 +61,7 @@
             {{ form_widget(form._token, {'attr': { form: 'form_ville-create' }}) }}
             {{ form_widget(form.enregistrer, {
                 'label': 'Ajouter',
-                'attr': { class: 'button_ville', form: 'form_ville-create' }}) }}
+                'attr': { class: 'button_ville button_primary', form: 'form_ville-create' }}) }}
         </td>
     </tr>
     </tfoot>

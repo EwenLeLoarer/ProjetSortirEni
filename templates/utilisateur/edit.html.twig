@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 {% block body %}
     <div class="main_container profile form_container">
-        <h1>Mon profil</h1>
+        <h2>Mon profil</h2>
         {{ form_start(utilisateurForm) }}
         <div>
             {% if utilisateurForm.vars.value.photo != null %}
@@ -12,7 +12,7 @@
                 <img src="{{asset('images/placeholder_img.jpg')}}" alt="profil">
             {% endif %}
         </div>
-        <div>
+        <div class="grid">
             <div>
                 {{ form_label(utilisateurForm.pseudo) }}
                 {{ form_widget(utilisateurForm.pseudo) }}

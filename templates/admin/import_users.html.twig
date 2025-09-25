@@ -4,12 +4,12 @@
 
 {% block body %}
     <div class="main_container profile form_container">
-        <h1>Importer des utilisateurs</h1>
+        <h2>Importer des utilisateurs</h2>
     <div class="import_content">
-        <h2>Sélectionner un fichier au format CSV.</h2>
+        <h3>Sélectionner un fichier au format CSV.</h3>
         {{ form_start(form) }}
             {{ form_widget(form.csvFile) }}
-            <button class="button button_primary">Importer</button>
+            <div class="buttons"><button class="button button_primary">Importer</button></div>
         {{ form_end(form) }}
     </div>
     </div>

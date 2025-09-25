@@ -3,16 +3,26 @@
 {% block title %}Hello VilleController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="form_container" id="new_ville">
+        <h2>Créer une ville</h2>
+        <div class="new_location_content">
+            {{ form_start(form) }}
+            <label class="ville_label">
+                Nom
+                {{ form_widget(form.nom, {'attr': {'class': 'ville_input'}}) }}
+            </label>
+            <label class="ville_label">
+                Code postal
+                {{ form_widget(form.codePostal, {'attr': {'class': 'ville_input'}}) }}
+            </label>
+            <div class="buttons ville_buttons">
+                {{ form_row(form.enregistrer) }}
+            </div>
+            <div class="buttons ville_buttons">
+                <a href="{{ path('app_sortie') }}" class="button button_primary">Annuler</a>
+            </div>
 
-<div class="example-wrapper">
-    {{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    {{ form_row(form.codePostal) }}
-    {{ form_row(form.enregistrer) }}
-    {{ form_end(form) }}
-</div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

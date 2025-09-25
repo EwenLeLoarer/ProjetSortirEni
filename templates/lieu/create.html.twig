@@ -3,19 +3,34 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<div class="new_location form_container">
-    <h1>Créer un lieu</h1>
+<div class="form_container" id="new_location">
+    <h2>Créer un lieu</h2>
     <div class="new_location_content">
         {{ form_start(form) }}
-        {{ form_row(form.nom) }}
-        {{ form_row(form.rue) }}
-        <div class="town_div">
-            {{ form_row(form.ville) }}
-            <a href="{{ path('app_create_ville', { backToLieu: true }) }}" class="button button_secondary">
-                + Créer une nouvelle ville
+        <label class="ville_label">
+            Nom
+            {{ form_widget(form.nom, {'attr': {'class': 'ville_input'}}) }}
+        </label>
+        <label class="ville_label">
+            Rue
+            {{ form_widget(form.rue, {'attr': {'class': 'ville_input'}}) }}
+        </label>
+        <div class="location_div">
+            <label class="ville_label">
+                Ville
+                {{ form_widget(form.ville, {'attr': {'class': 'ville_input'}}) }}
+            </label>
+            <a href="{{ path('app_create_ville', { backToLieu: true }) }}" class="link_add_lieu" title="Créer une ville" aria-label="Créer une ville">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                </svg>
             </a>
         </div>
-        {{ form_row(form.enregistrer) }}
+        <div class="buttons lieu_buttons">
+            {{ form_row(form.enregistrer) }}
+            <a href="{{ path('app_sortie') }}" class="button button_primary">Annuler</a>
+        </div>
+
         {{ form_end(form) }}
     </div>
 </div>

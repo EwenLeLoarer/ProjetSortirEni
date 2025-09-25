@@ -4,12 +4,12 @@
 
 {% block body %}
     <div class="login_form form_container">
-        <h1>Confirmation d'envoi d'un mail de réinitialisation</h1>
+        <h2>Confirmation d'envoi d'un mail de réinitialisation</h2>
         <div class="login_info_container">
             <p>
                 Si un compte correspond à l'adresse que vous avez entrée, alors un mail vous sera transmis avec un lien vous permettant de réinitialiser votre mot de passe. Le lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
             </p>
-            <p>Si vous ne recevez pas le mail, nous vous invitons à vérifier vos courriels indésirables ou à <a class="link" href="{{ path('app_forgot_password_request') }}">Réessayer</a>.</p>
+            <p>Si vous ne recevez pas le mail, nous vous invitons à vérifier vos courriels indésirables ou à <a class="sortie_link" href="{{ path('app_forgot_password_request') }}">Réessayer</a>.</p>
         <div class="buttons">
             <a class="button button_primary" href="{{ path('app_login') }}">Se connecter</a>
         </div>

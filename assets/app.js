@@ -163,3 +163,34 @@ if (document.readyState === 'loading') {
     initAll();
 }
 window.addEventListener('pageshow', () => initAll());
+
+/************** Script Créer sortie détails lieu ***************/
+(function () {
+    function initLieu() {
+        const lieuSelect = document.getElementById('sortie_lieu');
+        if (!lieuSelect || lieuSelect.dataset.bound === '1') return; // évite le double-binding
+        lieuSelect.dataset.bound = '1';
+
+        function updateLieuDetails(lieuId) {
+            if (!lieuId) return;
+            fetch('/lieu/' + lieuId)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('sortie_rue').value        = data.rue || '';
+                    document.getElementById('sortie_codePostal').value = data.codePostal || '';
+                    document.getElementById('sortie_ville').value      = data.ville || '';
+                    document.getElementById('sortie_latitude').value   = data.latitude || '';
+                    document.getElementById('sortie_longitude').value  = data.longitude || '';
+                });
+        }
+
+        lieuSelect.addEventListener('change', e => updateLieuDetails(e.target.value));
+        if (lieuSelect.value) updateLieuDetails(lieuSelect.value); // pré-remplir
+    }
+
+    // Premier chargement
+    document.addEventListener('DOMContentLoaded', initLieu);
+    // Navigations Turbo / Turbolinks
+    document.addEventListener('turbo:load', initLieu);
+    document.addEventListener('turbolinks:load', initLieu);
+})();

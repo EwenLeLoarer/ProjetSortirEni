@@ -7,15 +7,21 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
     <div class="motDePasse_container form_container">
-    <h1>Réinitialiser le mot de passe</h1>
+    <h2>Réinitialiser le mot de passe</h2>
         <div class="motDePasse_content">
             {{ form_start(requestForm) }}
             <div class="motDePasse_info">
                 Veuillez renseigner votre adresse mail afin de réinitialiser votre mot de passe.
             </div>
-            {{ form_row(requestForm.email) }}
-            <button class="button button_primary">Réinitialiser le mot de passe</button>
-                {{ form_end(requestForm) }}
+            <label class="ville_label">
+                Email
+                {{ form_widget(requestForm.email, {'attr': {'class': 'ville_input'}}) }}
+            </label>
+            <div class="buttons">
+                <button class="button button_primary">Réinitialiser le mot de passe</button>
+            </div>
+
+            {{ form_end(requestForm) }}
         </div>
     </div>
 {% endblock %}

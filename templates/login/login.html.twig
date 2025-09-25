@@ -5,7 +5,7 @@
 {% block body %}
     <div class="login_form form_container">
         <form method="post">
-            <h1>Connexion</h1>
+            <h2>Connexion</h2>
             <div class="login_content">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -19,16 +19,22 @@
                         </div>
                     </div>
                 {% else %}
-                <label for="username">Mail</label>
-                <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-                <label for="password">Mot de passe</label>
-                <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-                <div class="checkbox mb-3">
-                    <input type="checkbox" name="_remember_me" id="_remember_me">
-                    <label for="_remember_me">Se souvenir de moi</label>
+                <label class="ville_label" for="username">
+                    Mail
+                    <input class="ville_input" type="text" value="{{ last_username }}" name="_username" id="username autocomplete="email" required autofocus>
+                </label>
+                <label class="ville_label" for="password">
+                    Mot de passe
+                    <input class="ville_input" type="password" name="_password" id="password"  autocomplete="current-password" required>
+                </label>
+                 <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+                <div class="login_remember">
+                    <label for="_remember_me">
+                        <input class="sorties_checkbox" type="checkbox" name="_remember_me" id="_remember_me">
+                        Se souvenir de moi
+                    </label>
+                    <a href="{{path('app_forgot_password_request')}}"class="link">Mot de passe oublié</a>
                 </div>
-                <a href="{{path('app_forgot_password_request')}}"class="link">Mot de passe oublié</a>
                 <div class="buttons">
                     <button class="button_primary" type="submit">
                         Connexion

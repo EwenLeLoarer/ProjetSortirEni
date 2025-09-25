@@ -3,89 +3,79 @@
 {% block body %}
 
     <div class="main_container main_container_index">
-        {% if app.user %}
-            <div class="name_and_date">
-                <p>Date du jour: {{ "now" | date("d/m/Y ") }}</p>
-                <p>Participant: {{ app.user.pseudo }}</p>
-            </div>
-        {% endif %}
-        <form method="get" id="filters" data-ajax-list
+        {% include '_partials/name-and-date.html.twig' %}
+
+        <form method="get" id="filters" class="sorties_filters" data-ajax-list
               data-target="#sorties_list"
               data-delay="200">
-            <h2 class="filtre_title">Filtrer les sorties</h2>
-            <div class="form_filters">
-                <label class="filtre_label">
+            <h2 class="sorties_title">Filtrer les sorties</h2>
+            <fieldset class="sorties_fieldset">
+                <label class="sorties_label">
                     Site:
-                    <select name="site" onchange="this.form.submit()">
-                        <option value="">Tous les sites</option>
+                    <select class="sorties_select" name="site" onchange="this.form.submit()">
+                        <option class="sorties_option" value="">Tous les sites</option>
                         {% for site in sites %}
-                            <option value="{{ site.id }}" {{ filters.site == site.id ? 'selected' : '' }}>
+                            <option class="sorties_option" value="{{ site.id }}" {{ filters.site == site.id ? 'selected' : '' }}>
                                 {{ site.nom }}
                             </option>
                         {% endfor %}
                     </select>
                 </label>
 
-                <label class="filtre_label">
+                <label class="sorties_label">
                     Filtrer:
-                    <input type="text" name="query" data-autosubmit="350" placeholder="search">
+                    <input class="sorties_input" type="text" name="query" data-autosubmit="350" placeholder="search">
                 </label>
-            </div>
+            </fieldset>
 
-            <div class="form_filters">
-                <label class="filtre_label">
+            <fieldset class="sorties_fieldset">
+                <label class="sorties_label">
                     Entre:
-                    <input type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
+                    <input class="sorties_input" type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
                 </label>
 
-                <label class="filtre_label">
+                <label class="sorties_label">
                     Et:
-                    <input type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
+                    <input class="sorties_input" type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
                 </label>
-            </div>
+            </fieldset>
 
-            <div class="form_filters">
-                {% if app.user %}
-                    <fieldset>
 
-                        <label class="filtre_label_right">
-                            <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
+                    <fieldset class="sorties_fieldset sorties_fieldset-checkbox">
+                        <label class="sorties_label-checkbox">
+                            <input class="sorties_checkbox" type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
                             Sorties passées
                         </label>
-                    </fieldset>
-
-                    <fieldset>
-                        <label class="filtre_label_right">
-                            <input type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
+                        {% if app.user %}
+                        <label class="sorties_label-checkbox">
+                            <input class="sorties_checkbox" type="checkbox" name="organisees" onchange="this.form.submit()" value="1" {{ filters.organisees ? 'checked' : '' }}>
                             Sorties que j'organise
                         </label>
 
-                        <label class="filtre_label_right">
-                            <input type="radio" name="prevues" onchange="this.form.submit()" value="1" {% if filters.prevues is defined and filters.prevues =='1' %}checked{% endif %}>
+                    </fieldset>
+
+                    <fieldset class="sorties_fieldset">
+                        <label class="sorties_label-radio">
+                            <input class="sorties_radio" type="radio" name="prevues" onchange="this.form.submit()" value="1" {% if filters.prevues is defined and filters.prevues =='1' %}checked{% endif %}>
                             Sorties auxquelles je participe
                         </label>
 
-                        <label class="filtre_label_right">
-                            <input type="radio" name="prevues" onchange="this.form.submit()" value="0" {% if filters.prevues is defined and filters.prevues == '0' %}checked{% endif %}>
+                        <label class="sorties_label-radio">
+                            <input class="sorties_radio" type="radio" name="prevues" onchange="this.form.submit()" value="0" {% if filters.prevues is defined and filters.prevues == '0' %}checked{% endif %}>
                             Sorties auxquelles je ne participe pas
                         </label>
 
-                        <label class="filtre_label_right">
-                            <input type="radio" name="prevues" onchange="this.form.submit()" value="" {% if filters.prevues is not defined or filters.prevues is same as('') %}checked{% endif %}>
+                        <label class="sorties_label-radio">
+                            <input class="sorties_radio" type="radio" name="prevues" onchange="this.form.submit()" value="" {% if filters.prevues is not defined or filters.prevues is same as('') %}checked{% endif %}>
                             Toutes les sorties
                         </label>
                     </fieldset>
                 {% else %}
-                    <label class="filtre_label_right">
-                        <input type="checkbox" name="passees" onchange="this.form.submit()" value="1" {{ filters.passees ? 'checked' : '' }}>
-                        Sorties passées
-                    </label>
+                    </fieldset>
                 {% endif %}
-            </div>
 
-            <div class="form_buttons">
-                <a href="/">Réinitialiser</a>
-                {% if app.user %}<a class="button_create" href="{{  path('app_sortie') }}">Créer une sortie</a>{% endif %}
+            <div class="sorties_buttons">
+                <a href="/" class="button_primary" >Réinitialiser</a>
             </div>
         </form>
         <div class="table_area" id="sorties_list">
@@ -115,8 +105,7 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <button class="button_primary">Action 1</button>
-                        <button class="button_secondary">Action 2</button>
+                        {% include '_partials/actions.html.twig' %}
                     </div>
                 </div>
             {% endfor %}
