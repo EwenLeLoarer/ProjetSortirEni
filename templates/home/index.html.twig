@@ -13,35 +13,36 @@
               data-target="#sorties_list"
               data-delay="200">
             <h2 class="filtre_title">Filtrer les sorties</h2>
-            <div class="form_filters">
-                <label class="filtre_label">
-                    Site:
-                    <select name="site" onchange="this.form.submit()">
-                        <option value="">Tous les sites</option>
-                        {% for site in sites %}
-                            <option value="{{ site.id }}" {{ filters.site == site.id ? 'selected' : '' }}>
-                                {{ site.nom }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </label>
+            <div class="main_filters">
+                <div class="form_filters">
+                    <label class="filtre_label">
+                        Site:
+                        <select name="site" onchange="this.form.submit()">
+                            <option value="">Tous les sites</option>
+                            {% for site in sites %}
+                                <option value="{{ site.id }}" {{ filters.site == site.id ? 'selected' : '' }}>
+                                    {{ site.nom }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </label>
 
-                <label class="filtre_label">
-                    Filtrer:
-                    <input type="text" name="query" data-autosubmit="350" placeholder="search">
-                </label>
-            </div>
+                    <label class="filtre_label">
+                        Filtrer:
+                        <input type="text" name="query" data-autosubmit="350" placeholder="search">
+                    </label>
+                </div>
+                <div class="form_filters">
+                    <label class="filtre_label">
+                        Entre:
+                        <input type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
+                    </label>
 
-            <div class="form_filters">
-                <label class="filtre_label">
-                    Entre:
-                    <input type="date" name="from" value="{{ filters.from }}" onchange="this.form.submit()">
-                </label>
-
-                <label class="filtre_label">
-                    Et:
-                    <input type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
-                </label>
+                    <label class="filtre_label">
+                        Et:
+                        <input type="date" name="to" value="{{ filters.to }}" onchange="this.form.submit()">
+                    </label>
+                </div>
             </div>
 
             <div class="form_filters">
@@ -88,10 +89,10 @@
                 {% if app.user %}<a class="button_create" href="{{  path('app_sortie') }}">Créer une sortie</a>{% endif %}
             </div>
         </form>
-        <div class="table_area" id="sorties_list">
+        <div class="table_area desktop_table" id="sorties_list">
             {% include 'sortie/_table.html.twig' %}
         </div>
-        <div class="all_events_tiles">
+        <div class="all_events_tiles mobile_tiles">
             {% for sortie in sorties %}
                 <div class="event_tile">
                     <h2>{{ sortie.nom }}</h2>
@@ -114,10 +115,11 @@
                             </a>
                         </div>
                     </div>
-                    <div class="buttons">
-                        <button class="button_primary">Action 1</button>
-                        <button class="button_secondary">Action 2</button>
-                    </div>
+                    {% if app.user %}
+                        <td>
+                            {%  include '_partials/actions.html.twig' %}
+                        </td>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

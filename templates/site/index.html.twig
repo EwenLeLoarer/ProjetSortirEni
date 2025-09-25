@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="ville_container">
+    <div class="site_container">
         {% if app.user and is_granted('ROLE_ADMIN') %}
             <form method="get" id="form_sites" data-ajax-list
                   data-target="#sites_list"
                   data-delay="200">
                 <h2 class="filtre_title">Filtrer les sites</h2>
-                <label class="filtre_label ville_label">
+                <label class="filtre_label site_label">
                     Le nom contient :
                     <input type="text" name="query" data-autosubmit="350">
                 </label>
