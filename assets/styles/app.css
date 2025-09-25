@@ -622,7 +622,6 @@ tbody > tr:hover {
 
 .login_content{
     padding: 24px;
-    margin: 30vh auto;
 }
 
 .login_form form{
@@ -635,11 +634,6 @@ tbody > tr:hover {
     flex-direction: column;
     gap: 16px;
 }
-
-
-/*.login_form h1{*/
-/*    text-align: center;*/
-/*}*/
 
 
 /*Réinitialisation de mdp*/
@@ -658,9 +652,7 @@ tbody > tr:hover {
 
 /***************** Page de création d'une sortie ***************************/
 
-/*.event_creation, .new_location_content, .deletion_content{*/
-/*    margin: 24px auto;*/
-/*}*/
+
 
 .location_div, .town_div{
     width: 100%;
