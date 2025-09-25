@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="ville_container">
+    <div class="ville_container town_container">
         {% if app.user and is_granted('ROLE_ADMIN') %}
             <form method="get" id="form_villes" data-ajax-list
                   data-target="#villes_list"
