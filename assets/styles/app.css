@@ -33,7 +33,7 @@ body {
     margin-top: 90px;
 }
 
-.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1, .new_town h1, .deletion_container h1, .users_container h1{
+.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1, .new_town h1, .deletion_container h1, .users_container h1 {
     font-weight: bold;
     font-size: 20px;
 }
@@ -69,6 +69,16 @@ body {
     margin-bottom: 24px;
 }
 
+.mobile_container h2{
+    font-weight: 400;
+    font-size: 16px;
+    background-color: var(--accent);
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 4px;
+}
 /********************************** Boutons ******************************************/
 .buttons{
     display: flex;
@@ -227,7 +237,7 @@ button.disabled:hover{
 }
 
 /* ===== Labels “pills” ===== */
-.filtre_label {
+.filtre_label, .site_label {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -244,7 +254,10 @@ button.disabled:hover{
 /* Les champs “contrôles” poussés à droite, largeur fluide */
 .filtre_label > select,
 .filtre_label > input[type="text"],
-.filtre_label > input[type="date"]{
+.filtre_label > input[type="date"],
+.site_label > select,
+.site_label > input[type="text"],
+.site_label > input[type="date"]{
     margin-left: auto;
     width: min(100%, 240px);
     min-height: 40px;
@@ -252,13 +265,15 @@ button.disabled:hover{
 }
 
 /* Si le label contient une checkbox ou un radio, aligne en ligne (pas à droite) */
-.filtre_label_right {
+.filtre_label_right,
+.site_label_right{
     padding-block: 8px;
     gap: 10px;
     display: flex;
     align-items: center;
 }
-.filtre_label_right:hover {
+.filtre_label_right:hover,
+.site_label_right:hover{
     cursor: pointer;
 }
 
@@ -343,7 +358,8 @@ select{
     min-width: 0;
 }
 
-#filters fieldset .filtre_label{
+#filters fieldset .filtre_label,
+#filters fieldset .site_label{
     border: 0;
     background: transparent;
     padding: 6px 4px;
@@ -411,6 +427,7 @@ label{
     transform: translateY(1px);
 }
 body .container{
+    /*margin: 0 auto;*/
     max-width: none;
 }
 
@@ -576,10 +593,20 @@ tbody > tr:hover {
 }
 .mobile_table{
     width: 100%;
-    td{
-        text-align: center
-    }
+    border-radius: 4px;
+    overflow: hidden;
+    border-collapse: separate; /* Important */
+    border-spacing: 0;
 }
+
+.mobile_table thead {
+    border-radius: 4px 4px 0 0;
+}
+
+.mobile_table tbody {
+    border-radius: 0 0 4px 4px ;
+}
+
 
 .all_events_tiles{
     display: none;
@@ -592,9 +619,11 @@ tbody > tr:hover {
 }
 
 .event_tile h2{
-    background-color: rgba(175, 162, 175, 0.15);
-    text-align: center;
+    background-color: var(--accent);
+    color: white;
+    font-weight: 500;
     padding: 4px 8px;
+    border-radius: 4px 4px 0 0;
 }
 
 .event_content{
@@ -704,6 +733,8 @@ tbody > tr:hover {
     display: flex;
     justify-content: center;
     gap: 24px;
+    /*Lignes commentées*/
+    width: 100%;
 }
 .ville_container .table_area {
     flex-grow: 0;
@@ -717,11 +748,11 @@ tbody > tr:hover {
 #table_ville, #table_site {
     padding: 0 20px;
  }
-#table_ville td, #table_site td {
+#table_ville td{
     max-width: 450px;
     min-width: 330px;
 }
-#table_ville .last_column, #table_site .last_column {
+#table_ville .last_column, #table_site .last_column{
     text-align: center;
     padding: 0 15px 0 0;
 }
@@ -758,12 +789,12 @@ tfoot td {
     height: 46px;
 }
 #table_ville tbody .last_column, #table_site tbody .last_column {
-    justify-content: space-between;
+    justify-content: center;
+    gap: 24px
 }
 #table_ville .row-edit>td, #table_site .row-edit>td {
     padding-left: 0;
 }
-
 
 .location_details{
     background-color: rgba(237, 228, 237, 0.18);
@@ -880,6 +911,12 @@ tfoot td {
 .users_container h1{
     border-radius: 8px;
     margin-bottom: 24px;
+}
+
+/*Gestion d'un site */
+
+#sites_list.table_area {
+    flex-grow: 1;
 }
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 
@@ -1080,13 +1117,24 @@ tfoot td {
         gap: 24px;
     }
 
-    .table_area{
+    .desktop_table{
         display: none;
     }
 
     .profile img{
         width: 160px;
         height: 160px;
+    }
+
+    .sortie_link{
+        background-color: var(--accent) ;
+        padding : 8px;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        margin: 0 auto;
+        display: flex;
+        width: fit-content;
     }
 
     }
@@ -1097,33 +1145,122 @@ tfoot td {
         gap: 0;
     }
 }
-@media(max-width: 1385px){
+
+@media(max-width: 920px){
     #filters{
-        background-color: yellow;
-        flex-grow: 1;        /* allow it to grow and fill space */
-        flex-basis: auto;    /* base size is automatic */
-        width: fit-content;  /* keeps width as fit-content initially */
+        width: 100%;
+    }
+    #filters .form_filters{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 24px;
+    }
+    .filtre_label{
+        width: 100%;
+    }
+    .filtre_label input, .filtre_label select{
+        flex-basis: 90%;
+    }
+
+    .all_events_tiles {
+        width: 100%;
+    }
+}
+@media(min-width: 920px) and (max-width: 1385px) {
+    #filters {
+        flex-grow: 1;
+        flex-basis: auto;
+        width: fit-content;
         min-width: 0;
     }
 
-    .main_container_index{
+    .main_container_index {
         flex-grow: 1;
     }
 
-    #filters .form_filters{
+    #filters .form_filters {
         all: unset;
         display: flex;
         flex-direction: row;
-        width: 100%
+        width: 100%;
+        gap: 24px;
     }
 
-    .filtre_label{
+    .filtre_label {
         width: 50%;
+        display: flex;
     }
 
-    .form_buttons{
-        margin: 0 auto;
-        width: fit-content;
+    .filtre_label input, .filtre_label select {
+        flex-basis: 85%;
+    }
+
+    .form_buttons {
+        /*margin: 0 auto;*/
+        /*width: fit-content;*/
         gap: 24px;
     }
 }
+    @media(max-width: 425px){
+        .mobile_tiles{
+            display: block;
+        }
+
+        .desktop_table{
+            display: none
+        }
+    }
+
+    @media(max-width: 1385px){
+
+        #form_villes{
+            width: 100%;
+        }
+
+        .town_container{
+            flex-wrap: wrap;
+        }
+
+        #form_villes{
+            background: none;
+            padding: 0;
+            gap: 0;
+            box-shadow: none;
+            border: none
+        }
+    }
+    @media(max-width: 1800px){
+        .all_towns_table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .all_towns_table button{
+            width: fit-content;
+        }
+
+        #table_ville .last_column, #table_ville .form_buttons{
+            gap: 24px;
+            width: auto;
+            margin: 0 auto;
+        }
+
+        #table_ville td{
+            min-width: 0;
+        }
+        #table_ville tbody .last_column {
+            justify-content: center;
+        }
+
+        @media(min-width: 1500px){
+            .site_container{
+                background-color: red;
+                width: 70%;
+                margin: 0 auto;
+            }
+        }
+
+    }
+
+

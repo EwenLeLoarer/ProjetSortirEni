@@ -1,29 +1,33 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <table class="border-2 border-black mobile_table">
-        <thead>
-        <tr>
-            <th>Nom de la sortie</th>
-            <th>Date de la sortie</th>
-            <th>Lieu</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for sortie in sorties %}
-            {% if utilisateur in sortie.participants %}
+
+    <div class="mobile_container">
+        <h2>Les sorties proposées par mon site</h2>
+        <table class="border-2 border-black mobile_table">
+            <thead>
             <tr>
-                <td>
-                    <a href="{{ path('app_sortie_show', {id: sortie.id}) }}">{{ sortie.nom }}</a>
-                    </td>
-                <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
-                <td>{{ sortie.lieu.nom }}</td>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Lieu</th>
             </tr>
-            {% endif %}
-        {% else %}
-            <tr>
-                <td colspan="8" class="text-center">Aucune donnée fournie</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+                {% if utilisateur in sortie.participants %}
+                <tr>
+                    <td>
+                        <a href="{{ path('app_sortie_show', {id: sortie.id}) }}">{{ sortie.nom }}</a>
+                        </td>
+                    <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+                    <td>{{ sortie.lieu.nom }}</td>
+                </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">Aucune donnée fournie</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -32,7 +32,7 @@ final class HomeController extends AbstractController
         $sorties = $sortiesRepository->search($filters, $user);
         $sites = $siteRepository->findAll();
 
-        if ($detect->isMobile() && !$detect->isTablet()) {
+        if ($isMobile) {
             return $this->render('mobile/index.html.twig', [
                 'sorties' => $sorties,
                 'utilisateur' => $utilisateur,

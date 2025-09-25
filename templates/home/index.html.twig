@@ -88,10 +88,11 @@
                 {% if app.user %}<a class="button_create" href="{{  path('app_sortie') }}">Créer une sortie</a>{% endif %}
             </div>
         </form>
-        <div class="table_area" id="sorties_list">
+
+        <div class="table_area desktop_table" id="sorties_list">
             {% include 'sortie/_table.html.twig' %}
         </div>
-        <div class="all_events_tiles">
+        <div class="all_events_tiles mobile_tiles">
             {% for sortie in sorties %}
                 <div class="event_tile">
                     <h2>{{ sortie.nom }}</h2>
@@ -114,10 +115,11 @@
                             </a>
                         </div>
                     </div>
-                    <div class="buttons">
-                        <button class="button_primary">Action 1</button>
-                        <button class="button_secondary">Action 2</button>
-                    </div>
+                    {% if app.user %}
+                        <td>
+                            {%  include '_partials/actions.html.twig' %}
+                        </td>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
