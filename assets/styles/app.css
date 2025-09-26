@@ -28,7 +28,6 @@ body {
     gap: 24px;
     margin-bottom: 40px;
 }
-
 .main_container_index {
     max-height: 800px;
     margin-top: 90px;
@@ -144,7 +143,6 @@ td{
 .button_primary{
     background-color: var(--accent);
     color: white;
-    margin: 0 auto;
 }
 
 .button_primary:hover{
@@ -195,8 +193,6 @@ button.disabled:hover{
     height: 32px;
     box-sizing: border-box;
 }
-
-/**************************** HEADER**************************************************/
 
 /********************************** Header *******************************************/
 .header {
@@ -262,7 +258,7 @@ button.disabled:hover{
 /************* Filtres *************/
 
 #filters {
-    max-height: 670px;
+    max-height: 650px;
     align-self: baseline;
 }
 
@@ -291,13 +287,11 @@ button.disabled:hover{
     color: var(--text);
     width: 320px;
 }
-.sorties_select,
-.sorties_input, .ville_input {
 
 /* Les champs “contrôles” poussés à droite, largeur fluide */
-.filtre_label > select,
-.filtre_label > input[type="text"],
-.filtre_label > input[type="date"],
+.sorties_label > select,
+.sorties_label > input[type="text"],
+.sorties_label > input[type="date"],
 .site_label > select,
 .site_label > input[type="text"],
 .site_label > input[type="date"]{
@@ -321,14 +315,11 @@ button.disabled:hover{
     accent-color: var(--accent);
     width: 1.1em; height: 1.1em;
 }
-.form_buttons {
-    padding: 0 16px 16px 16px;
-}
 /************** Tableau **************/
 .table_area {
     align-self: flex-start;
     flex-grow: 1;
-    max-height: 631px;
+    max-height: 650px;
     min-height: 0;
     overflow-y: auto;
     border: 1px solid var(--line);
@@ -465,6 +456,10 @@ button.disabled:hover{
 .ville_label {
     padding-left: 16px;
     margin: 16px;
+    justify-content: space-between;
+}
+.ville_input {
+    line-height: 30px;
 }
 #sites_list {
     max-width: 50%;
@@ -956,7 +951,9 @@ body .container{
 }
 #table_ville .last_column, #table_site .last_column {
     text-align: center;
-    padding: 0 15px 0 0;
+}
+#table_ville thead .last_column {
+    padding-left: 0;
 }
 tfoot {
     position: sticky;
@@ -1114,14 +1111,14 @@ tfoot td {
         padding: 12px;
     }
 
-    .filtre_label {
+    .sorties_label {
         flex-wrap: wrap;
         gap: 8px;
     }
 
-    .filtre_label > select,
-    .filtre_label > input[type="text"],
-    .filtre_label > input[type="date"] {
+    .sorties_label > select,
+    .sorties_label > input[type="text"],
+    .sorties_label > input[type="date"] {
         margin-left: 0;
         width: 100%;
     }
@@ -1331,7 +1328,7 @@ tfoot td {
         padding: 0;
     }
 
-    .filtre_label input{
+    .sorties_label input{
         flex-basis: 100%
     }
     #form_villes{
@@ -1387,72 +1384,72 @@ tfoot td {
 }
 
 
-    @media(max-width: 920px){
-        .header{
-            margin-bottom: 24px;
-        }
-        #filters{
-            width: 100%;
-        }
-        #filters .form_filters{
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 24px;
-        }
-        .filtre_label{
-            width: 100%;
-        }
-        .ville_label, .site_label{
-            width: 100%;
-        }
-        .filtre_label input, .filtre_label select{
-            flex-basis: 100%;
-        }
-
-        #form_villes{
-            width: fit-content;
-        }
-
-        .ville_label{
-            width: 50%;
-        }
-
-        .all_events_tiles {
-            width: 100%;
-        }
-        .sortie_link{
-            background-color: var(--accent) ;
-            padding : 8px;
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
-            margin: 0 auto;
-            display: flex;
-            width: fit-content;
-        }
-        .site_container{
-            flex-direction: column;
-        }
-
-        #sites_list.table_area{
-            width: 100%;
-        }
-
-        #form_sites{
-            border: none;
-            background: none;
-            box-shadow: none;
-            padding: 0;
-        }
-        .profile{
-            width: 100%;
-        }
-
-        .location_details .flex{
-            flex-wrap: wrap;
-        }
+@media(max-width: 920px){
+    .header{
+        margin-bottom: 24px;
     }
+    #filters{
+        width: 100%;
+    }
+    #filters .form_filters{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 24px;
+    }
+    .sorties_label{
+        width: 100%;
+    }
+    .ville_label, .site_label{
+        width: 100%;
+    }
+    .sorties_label input, .sorties_label select{
+        flex-basis: 100%;
+    }
+
+    #form_villes{
+        width: fit-content;
+    }
+
+    .ville_label{
+        width: 50%;
+    }
+
+    .all_events_tiles {
+        width: 100%;
+    }
+    .sortie_link{
+        background-color: var(--accent) ;
+        padding : 8px;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        margin: 0 auto;
+        display: flex;
+        width: fit-content;
+    }
+    .site_container{
+        flex-direction: column;
+    }
+
+    #sites_list.table_area{
+        width: 100%;
+    }
+
+    #form_sites{
+        border: none;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    .profile{
+        width: 100%;
+    }
+
+    .location_details .flex{
+        flex-wrap: wrap;
+    }
+}
 
 
 @media(min-width: 920px) and (max-width: 1385px) {
@@ -1518,15 +1515,8 @@ tfoot td {
         justify-content: center;
     }
 }
-    @media(min-width: 1500px){
-        .site_container{
-            width: 70%;
-            margin: 0 auto;
-        }
-    }
 
-
-@media(min-width: 921px) and (max-width: 1500px){
+@media(min-width: 921px) and (max-width: 1500px) {
     #filters {
         flex-grow: 1;
         flex-basis: auto;
@@ -1534,13 +1524,14 @@ tfoot td {
         min-width: 0;
     }
 
-    .form_filters{
+    .form_filters {
         flex-direction: row;
     }
 
-    .filtre_label{
+    .sorties_label {
         flex-basis: 50%
     }
+
     .main_container_index {
         flex-grow: 1;
     }
@@ -1559,12 +1550,12 @@ tfoot td {
         gap: 24px;
         justify-content: center
     }
-    .filtre_label {
+
+    .sorties_label {
         display: flex;
     }
 
-    .filtre_label input, .filtre_label select {
+    .sorties_label input, .sorties_label select {
         flex-basis: 85%;
     }
-
 }
