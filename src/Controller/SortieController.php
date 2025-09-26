@@ -64,7 +64,9 @@ final class SortieController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
-
+        elseif ($form->isSubmitted()) {
+            $this->addFlash('error', "La sortie n'a pas pu être créée.");
+        }
         return $this->render('sortie/index.html.twig', [
             'form' => $form
         ]);
@@ -197,7 +199,7 @@ final class SortieController extends AbstractController
         $userConnected = $this->getUser();
         $cancelEtat = $em->getRepository(Etat::Class)->find(6);
         if(!$userConnected){
-            throw $this->createAccessDeniedException('You must be logged in to cancel.');
+            throw $this->createAccessDeniedException('Vous devez être connecté pour annuler la sortie.');
         }
 
         if($sortie->getDateHeureDebut() < new \DateTime()){

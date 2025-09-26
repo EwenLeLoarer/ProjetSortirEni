@@ -66,6 +66,10 @@ final class SiteController extends AbstractController
             return $this->redirectToRoute('app_site');
         }
 
+        elseif ($form->isSubmitted()) {
+            $this->addFlash('error', "Le site n'a pas pu être créé.");
+        }
+
         return $this->render('site/create.html.twig', [
             'form' => $form->createView(),
         ]);
