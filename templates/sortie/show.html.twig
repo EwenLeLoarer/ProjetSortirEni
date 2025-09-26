@@ -71,7 +71,7 @@
                     <a class="button button_primary action" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
                         Annuler cette sortie
                     </a>
-                {% elseif sortie.etat.id == 6%}
+                {% elseif sortie.etat.id == 5 %}
                     <button disabled class="button disabled action" title="Sortie annulée pour motif de: {{ sortie.annulationMotif }}">
                         Sortie annulée
                     </button>
