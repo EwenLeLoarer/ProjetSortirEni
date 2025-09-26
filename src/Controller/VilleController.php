@@ -64,7 +64,7 @@ final class VilleController extends AbstractController
             if ($request->isXmlHttpRequest()) {
                 return new Response('',204);
             }
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_ville');
         }
 
         return $this->render('ville/create.html.twig', [
