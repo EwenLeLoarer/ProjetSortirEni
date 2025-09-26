@@ -36,7 +36,7 @@ class UtilisateurType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new Assert\PasswordStrength([
-                        'minScore' => 3,
+                        'minScore' => 1,
                         'message' => 'Le mot de passe n\'est pas suffisamment sécurisé.',
                     ]),
                 ],
