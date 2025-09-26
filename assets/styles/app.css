@@ -190,7 +190,7 @@ button.disabled:hover{
 }
 
 .action{
-    width: 200px;
+    width: fit-content;
     height: 32px;
     box-sizing: border-box;
 }
@@ -504,11 +504,6 @@ button.disabled:hover{
     text-align: center;
 }
 
-.action{
-    width: 200px;
-    height: 32px;
-    box-sizing: border-box;
-}
 
 /******************************* FiLTRES ****************************************************/
 
@@ -1238,6 +1233,10 @@ tfoot td {
     .table_area_participants{
         margin: 24px 0;
         width: 100%;
+    }
+
+    .profile .grid {
+        grid-template-columns: 1fr;
     }
 }
 @media (min-width: 462px) and (max-width: 540px){

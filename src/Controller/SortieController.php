@@ -199,7 +199,7 @@ final class SortieController extends AbstractController
         $userConnected = $this->getUser();
         $cancelEtat = $em->getRepository(Etat::Class)->find(6);
         if(!$userConnected){
-            throw $this->createAccessDeniedException('You must be logged in to cancel.');
+            throw $this->createAccessDeniedException('Vous devez être connecté pour annuler la sortie.');
         }
 
         if($sortie->getDateHeureDebut() < new \DateTime()){
