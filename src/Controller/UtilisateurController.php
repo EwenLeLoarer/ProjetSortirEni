@@ -45,6 +45,9 @@ final class UtilisateurController extends AbstractController
             $this->addFlash('success', "La mise à jour du profil a bien été prise en compte.");
             return $this->redirectToRoute('app_profil');
         }
+        elseif ($form->isSubmitted()) {
+            $this->addFlash('error', "Le profil n'a pas pu être mis à jour.");
+        }
 
         return $this->render('utilisateur/edit.html.twig', [
             'utilisateurForm' => $form,

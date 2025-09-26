@@ -64,7 +64,9 @@ final class SortieController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('app_sortie_show', ['id' => $sortie->getId()]);
         }
-
+        elseif ($form->isSubmitted()) {
+            $this->addFlash('error', "La sortie n'a pas pu être créée.");
+        }
         return $this->render('sortie/index.html.twig', [
             'form' => $form
         ]);

@@ -7,7 +7,6 @@
         <h2>Créer une sortie</h2>
         <div class="event_creation">
             {{ form_start(form, {attr: {'id': "creation_sortie"}}) }}
-            {{ form_errors(form) }}
             <label class="ville_label">
                 Nom de la sortie
                 {{ form_widget(form.nom, { 'attr': { 'class': 'ville_input'}}) }}

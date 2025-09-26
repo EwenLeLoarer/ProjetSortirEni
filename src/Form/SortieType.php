@@ -36,7 +36,7 @@ class SortieType extends AbstractType
                 'label' => 'Nombre de places',
             ])
             ->add('duree', options: [
-                'label' => 'Durée',
+                'label' => 'Durée de la sortie (en minutes)',
             ])
             ->add('infosSortie', options: [
                 'label' => 'Description et infos',
