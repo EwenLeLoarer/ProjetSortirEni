@@ -85,9 +85,6 @@ tr {
     position: relative;
 }
 
-tbody > tr > td{
-
-}
 tbody > tr:hover {
     color: purple;
 }
@@ -111,6 +108,95 @@ td{
     border-radius: var(--radius);
     margin-bottom: 24px;
 }
+
+.mobile_container h2{
+    font-weight: 400;
+    font-size: 16px;
+    background-color: var(--accent);
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 4px;
+}
+/********************************** Boutons ******************************************/
+.buttons{
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 24px auto;
+    width: fit-content;
+}
+
+.buttons button, .button{
+    border-radius: 4px;
+    text-align: center;
+    height: 32px;
+    padding: 0 16px;
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button_primary{
+    background-color: var(--accent);
+    color: white;
+    margin: 0 auto;
+}
+
+.button_primary:hover{
+    background-color: #2b002b;
+    color: white;
+}
+
+.button_secondary{
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    background-color: white;
+    font-weight: bold;
+}
+.button_secondary:hover{
+    border: 2px solid #4E014EFF;
+    color: #4E014EFF;
+}
+
+.return_button{
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px auto;
+}
+
+button.disabled{
+    background-color: #cfcecf;
+    width: fit-content;
+    margin: 24px auto;
+}
+
+button.disabled:hover{
+    cursor: not-allowed;
+}
+
+.button_icon{
+    height: 24px;
+}
+
+
+.event_tile .buttons{
+    text-align: center;
+}
+
+.action{
+    width: 200px;
+    height: 32px;
+    box-sizing: border-box;
+}
+
+/**************************** HEADER**************************************************/
 
 /********************************** Header *******************************************/
 .header {
@@ -198,7 +284,7 @@ td{
     gap: 12px;
     padding: 10px 12px;
     border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-radius: 12px;
     background: color-mix(in oklab, var(--panel) 85%, var(--bg));
     font-weight: 500;
     line-height: 1.2;
@@ -207,6 +293,14 @@ td{
 }
 .sorties_select,
 .sorties_input, .ville_input {
+
+/* Les champs “contrôles” poussés à droite, largeur fluide */
+.filtre_label > select,
+.filtre_label > input[type="text"],
+.filtre_label > input[type="date"],
+.site_label > select,
+.site_label > input[type="text"],
+.site_label > input[type="date"]{
     margin-left: auto;
     width: min(100%, 240px);
     min-height: 40px;
@@ -521,35 +615,19 @@ input:disabled:hover, select:disabled:hover{
     width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 16px;
 }
-/*.form_buttons > a, .button_ville, .button_site {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid var(--line);
-    background: white;
-    color: var(--muted);
-    text-decoration: none;
-    border-radius: var(--radius);
-    padding: 8px 12px;
-    font-weight: 600;
-    transition: background .15s, color .15s, border-color .15s;
-    width: 150px;
-    justify-content: center;
-}*/
-/*.form_buttons > a:hover, .button_ville:hover, .button_site:hover {
-    background: var(--bg);
-    color: var(--text);
-    border-color: color-mix(in oklab, var(--line) 60%, var(--text));
-}
-.form_buttons > a:active, .button_ville:active, .button_site:hover {
-    transform: translateY(1px);
-}*/
+
 body .container{
     max-width: none;
 }
 
+.icon_button{
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--accent);
+    padding: 4px;
+    border-radius: 8px;
+}
 /********************************* GESTION DU PROFIL ***************************************/
 .profile, .event_container{
     flex-direction: column;
@@ -689,12 +767,6 @@ body .container{
 .all_events_table tbody tr {
     height: 80px;
 }
-.mobile_table{
-    width: 100%;
-    td{
-        text-align: center
-    }
-}
 
 .all_events_tiles{
     display: none;
@@ -707,9 +779,11 @@ body .container{
 }
 
 .event_tile h2{
-    background-color: rgba(175, 162, 175, 0.15);
-    text-align: center;
+    background-color: var(--accent);
+    color: white;
+    font-weight: 500;
     padding: 4px 8px;
+    border-radius: 8px 8px 0 0;
 }
 
 .event_content{
@@ -877,7 +951,7 @@ body .container{
 #table_ville, #table_site {
     padding: 0 20px;
  }
-#table_ville td, #table_site td {
+#table_ville td {
     max-width: 450px;
 }
 #table_ville .last_column, #table_site .last_column {
@@ -915,6 +989,10 @@ tfoot td {
 }
 .button_ville, .button_site {
     padding: 2px 10px;
+}
+#table_ville tbody .last_column, #table_site tbody .last_column {
+    justify-content: center;
+    gap: 24px
 }
 #table_ville .row-edit>td, #table_site .row-edit>td {
     padding-left: 0;
@@ -981,6 +1059,42 @@ tfoot td {
     gap: 24px;
 }
 
+/* liste des utilisateurs */
+
+/*Gestion d'un site */
+
+#sites_list.table_area {
+    flex-grow: 1;
+}
+/*************************************** MOBILE ***********************************/
+.mobile_container h2{
+    font-weight: 400;
+    font-size: 16px;
+    background-color: var(--accent);
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 4px;
+}
+
+.mobile_table{
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid grey;
+}
+
+.mobile_table thead {
+    border-radius: 4px 4px 0 0;
+    border: none;
+}
+
+.mobile_table tbody {
+    border-radius: 0 0 4px 4px ;
+}
 /************************ ===== RESPONSIVE DESIGN ===== *********************************/
 
 .mobile{
@@ -1018,21 +1132,24 @@ tfoot td {
         display: none;
     }
     .mobile{
-        display: flex;
+        display: inline;
     }
     body{
         padding: 0 16px;
+    }
+    .buttons{
+        margin: 0 auto;
+    }
+
+    /*HEADER*/
+
+    .header{
+        margin-bottom: 24px;
     }
     .header_nav{
         display: flex;
         flex-direction: column;
         gap: 0;
-    }
-    .event_details{
-        flex-direction: column;
-    }
-    .event_details li{
-        width: 100%;
     }
 
     .header_title a{
@@ -1043,9 +1160,49 @@ tfoot td {
         height: 64px;
     }
 
+    .event_container h1{
+        font-size: 16px;
+    }
+
+    /*LOGIN*/
+
+    .login_form h1{
+        text-align: center;
+    }
+
+    .login_content, .event_container section{
+        padding-left:8px;
+        padding-right:8px;
+    }
+
+    .login_button, .login_button_div{
+        width: 100%;
+    }
+
+    .login_button_div{
+        margin: 8px 0 0 0;
+    }
+
+    /*DETAILS SORTIE*/
+
+    .event_details{
+        flex-direction: column;
+    }
+    .event_details li{
+        width: 100%;
+    }
+
+    .event_container{
+        gap:0;
+    }
+
+    .event_container section{
+        width: 100%;
+        margin: 0 auto;
+    }
+
     .login_form{
         width: 100%;
-        padding: 24px;
         margin: 40px auto;
     }
 
@@ -1057,6 +1214,20 @@ tfoot td {
         display: flex;
         flex-direction: column;
         gap: 24px;
+    }
+
+    .button_icon{
+        height: 20px;
+    }
+
+    #table_ville tbody .last_column{
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .button_ville, .button_site{
+        width: 32px;
+        height: 32px;
     }
 }
 @media (min-width: 462px) and (max-width: 540px){
@@ -1075,8 +1246,9 @@ tfoot td {
         width: 200px;
         height: 200px;
     }
+
 }
-@media (min-width:540px) and (max-width: 920px){
+@media (min-width:541px) and (max-width: 920px){
     .profile img{
         width: 240px;
         height: 240px;
@@ -1093,10 +1265,11 @@ tfoot td {
 
     .login_form{
         width: 100%;
-        padding: 24px;
-        margin: 160px auto;
+        margin: 40px auto;
     }
-
+.login_form_container{
+    width: 100%;
+}
     .event_details {
         height: 300px;
         overflow: scroll;
@@ -1105,6 +1278,14 @@ tfoot td {
 
     .event_details > * {
         flex-basis: 100%;
+    }
+
+    .event_container{
+        gap:0;
+    }
+
+    .event_container section{
+        margin: 0 auto;
     }
 
     table.participants{
@@ -1117,7 +1298,7 @@ tfoot td {
         gap: 24px;
     }
 
-    .table_area{
+    .desktop_table {
         display: none;
     }
 
@@ -1125,4 +1306,265 @@ tfoot td {
         width: 160px;
         height: 160px;
     }
+
+}
+
+/*Pour prendre en compte le menu admin*/
+@media(max-width:740px) {
+    .header_nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+@media(max-width: 635px){
+    #form_sites, #form_villes{
+        gap: 0;
+        width: 100%;
+    }
+
+    .site_label, .ville_label{
+        border: none;
+        box-shadow: none;
+        background: none;
+        padding: 0;
+    }
+
+    .filtre_label input{
+        flex-basis: 100%
+    }
+    #form_villes{
+        border: none;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    .profile_attribute{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .profile_attribute label{
+        width: 100%;
+    }
+    .profile form div div{
+        gap: 0;
+        align-items: flex-start;
+        margin-bottom: 16px;
+    }
+
+    .buttons{
+        margin-top: 0;
+    }
+
+    .location_div{
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .location_div .mb-6{
+        margin-bottom: 8px;
+    }
+    .location_div a{
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .event_creation .buttons{
+        flex-direction: column;
+        margin: 0;
+    }
+    .event_creation .button, .event_creation div{
+        width: 100%;
+    }
+
+    .new_event{
+        margin: 0;
+        width: 100%;
+    }
+}
+
+
+    @media(max-width: 920px){
+        .header{
+            margin-bottom: 24px;
+        }
+        #filters{
+            width: 100%;
+        }
+        #filters .form_filters{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 24px;
+        }
+        .filtre_label{
+            width: 100%;
+        }
+        .ville_label, .site_label{
+            width: 100%;
+        }
+        .filtre_label input, .filtre_label select{
+            flex-basis: 100%;
+        }
+
+        #form_villes{
+            width: fit-content;
+        }
+
+        .ville_label{
+            width: 50%;
+        }
+
+        .all_events_tiles {
+            width: 100%;
+        }
+        .sortie_link{
+            background-color: var(--accent) ;
+            padding : 8px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            margin: 0 auto;
+            display: flex;
+            width: fit-content;
+        }
+        .site_container{
+            flex-direction: column;
+        }
+
+        #sites_list.table_area{
+            width: 100%;
+        }
+
+        #form_sites{
+            border: none;
+            background: none;
+            box-shadow: none;
+            padding: 0;
+        }
+        .profile{
+            width: 100%;
+        }
+
+        .location_details .flex{
+            flex-wrap: wrap;
+        }
+    }
+
+
+@media(min-width: 920px) and (max-width: 1385px) {
+    .form_buttons {
+        width: 100%;
+        gap: 24px;
+    }
+    .button_site{
+        width: 120px;
+    }
+
+    #table_site tbody .last_column{
+        justify-content: center;
+    }
+
+}
+@media(max-width: 425px){
+    .mobile_tiles{
+        display: block;
+    }
+
+    .desktop_table{
+        display: none
+    }
+}
+
+@media(max-width: 1385px){
+
+    #form_villes{
+        width: 100%;
+    }
+
+    .ville_label{
+        width: 100%;
+    }
+
+    .town_container{
+        flex-wrap: wrap;
+    }
+
+}
+@media(max-width: 1800px) {
+    .all_towns_table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .all_towns_table button {
+        width: fit-content;
+    }
+
+    #table_ville .last_column, #table_ville .form_buttons {
+        gap: 24px;
+        width: auto;
+        margin: 0 auto;
+    }
+
+    #table_ville td {
+        min-width: 0;
+    }
+
+    #table_ville tbody .last_column {
+        justify-content: center;
+    }
+}
+    @media(min-width: 1500px){
+        .site_container{
+            width: 70%;
+            margin: 0 auto;
+        }
+    }
+
+
+@media(min-width: 921px) and (max-width: 1500px){
+    #filters {
+        flex-grow: 1;
+        flex-basis: auto;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .form_filters{
+        flex-direction: row;
+    }
+
+    .filtre_label{
+        flex-basis: 50%
+    }
+    .main_container_index {
+        flex-grow: 1;
+    }
+
+    #filters .form_filters {
+        all: unset;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 24px;
+    }
+
+    #filters .form_buttons {
+        margin: 0 auto;
+        display: flex;
+        gap: 24px;
+        justify-content: center
+    }
+    .filtre_label {
+        display: flex;
+    }
+
+    .filtre_label input, .filtre_label select {
+        flex-basis: 85%;
+    }
+
 }

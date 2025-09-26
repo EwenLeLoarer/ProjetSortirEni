@@ -8,10 +8,10 @@
         <section>
             <h3>Informations générales</h3>
             <ul class="event_details">
-                <li><Strong>Nom <span class="desktop">de la sortie :</span></Strong> {{ sortie.nom }}</li>
-                <li><Strong>Date et heure <span class="desktop"> de la sortie : </span></Strong> {{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d-m-Y H:i') : 'No date' }}</li>
-                <li><Strong><span class="desktop">Date limite d'inscription :</span><span class="mobile">Clôture</span></Strong> {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d-m-Y') : 'No date' }}</li>
-                <li><Strong>Durée :</Strong>
+                <li><Strong>Nom <span class="desktop">de la sortie </span>: </Strong> {{ sortie.nom }}</li>
+                <li><Strong>Date et heure <span class="desktop"> de la sortie </span> : </Strong> {{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d-m-Y H:i') : 'No date' }}</li>
+                <li><Strong><span class="desktop">Date limite d'inscription :</span><span class="mobile">Clôture :</span></Strong> {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d-m-Y') : 'No date' }}</li>
+                <li><Strong>Durée : </Strong>
                     {%set duree = sortie.duree%}
                     {% if duree > 60 %}
                         {% set hours = (duree // 60) %}
@@ -22,13 +22,13 @@
                     {% endif %}
                 </li>
                 <li><Strong>Nombre de places :</Strong> {{ sortie.nbInscriptionsMax }}</li>
-                <li><Strong>Description et infos:</Strong> {{ sortie.infosSortie }}</li>
-                <li><Strong>Ville <span class="desktop">organisatrice :</span></Strong> {{ sortie.site.nom }}</li>
-                <li><Strong>Lieu:</Strong> {{ sortie.lieu.nom }}</li>
-                <li><Strong>Rue:</Strong> {{ sortie.lieu.rue }}</li>
-                <li><Strong>Code postal :</Strong> {{ sortie.lieu.ville.codePostal }}</li>
-                <li><Strong>Latitude :</Strong> {{ sortie.lieu.latitude }}</li>
-                <li><Strong>Longitude :</Strong> {{ sortie.lieu.longitude }}</li>
+                <li><Strong>Description et infos : </Strong> {{ sortie.infosSortie }}</li>
+                <li><Strong>Ville <span class="desktop">organisatrice </span>: </Strong> {{ sortie.site.nom }}</li>
+                <li><Strong>Lieu : </Strong> {{ sortie.lieu.nom }}</li>
+                <li><Strong>Rue : </Strong> {{ sortie.lieu.rue }}</li>
+                <li><Strong>Code postal : </Strong> {{ sortie.lieu.ville.codePostal }}</li>
+                <li><Strong>Latitude : </Strong> {{ sortie.lieu.latitude }}</li>
+                <li><Strong>Longitude : </Strong> {{ sortie.lieu.longitude }}</li>
             </ul>
         </section>
 

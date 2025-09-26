@@ -23,13 +23,13 @@ class UtilisateurType extends AbstractType
             ->add('email', options:[
                 'label' => 'Email',
             ])
-           ->add('roles', ChoiceType::class, [
-               'choices'  => [
-                   'Admin' => 'ROLE_ADMIN',
-                   'User' => 'ROLE_USER',
-               ],
-               'multiple' => true,
-           ])
+//           ->add('roles', ChoiceType::class, [
+//               'choices'  => [
+//                   'Admin' => 'ROLE_ADMIN',
+//                   'User' => 'ROLE_USER',
+//               ],
+//               'multiple' => true,
+//           ])
             ->add('password', PasswordType::Class, options:[
                 'label' => 'Mot de passe',
                 'required'=> false,
@@ -59,9 +59,9 @@ class UtilisateurType extends AbstractType
             ->add('telephone', options: [
                 'label' => 'Téléphone',
             ])
-            ->add('isActif', options:[
-                'label' => 'Actif',
-            ])
+//            ->add('isActif', options:[
+//                'label' => 'Actif',
+//            ])
             ->add('site', EntityType::class, [
                 'class' => Site::class,
                 'choice_label' => 'nom',

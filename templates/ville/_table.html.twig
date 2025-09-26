@@ -14,9 +14,13 @@
             <td>{{ ville.codePostal }}</td>
             <td class="form_buttons last_column">
                 <button type="button"
-                        class="button_ville button_primary"
+                        class="button_ville button_primary desktop"
                         data-edit-toggle
                         data-target="#edit-{{ ville.id }}">Modifier</button>
+                <button type="button"
+                        class="button_site mobile icon_button"
+                        data-edit-toggle
+                        data-target="#edit-{{ ville.id }}"><img src="{{ asset('icons/edit.svg') }}" alt="édition" class="button_icon"></button>
                 <form action="{{ path('app_delete_ville', { id: ville.id }) }}"
                       method="post"
                       data-ajax-submit="1"
@@ -25,7 +29,8 @@
                       style="display:inline"
                       onsubmit="return confirm('Supprimer {{ ville.nom }} ?')">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete_ville_' ~ ville.id) }}">
-                    <button type="submit" class="button_ville button_primary">Supprimer</button>
+                    <button type="submit" class="button_ville button_primary desktop">Supprimer</button>
+                    <button type="submit" class="button_site mobile icon_button"><img src="{{ asset('icons/trash_purple.svg') }}" alt="suppression" class="button_icon"></button>
                 </form>
             </td>
         </tr>
@@ -59,9 +64,12 @@
         <td>{{ form_widget(form.codePostal, {'attr': { placeholder: 'Code postal', form: 'form_ville-create' }}) }}</td>
         <td class="form_buttons last_column">
             {{ form_widget(form._token, {'attr': { form: 'form_ville-create' }}) }}
-            {{ form_widget(form.enregistrer, {
-                'label': 'Ajouter',
-                'attr': { class: 'button_ville button_primary', form: 'form_ville-create' }}) }}
+            <button type="submit" class="button_site button_primary desktop" form="form_ville-create">
+                Ajouter
+            </button>
+            <button type="submit" class="button_site mobile icon_button" form="form_ville-create">
+                <img src="{{ asset('icons/plus.svg') }}" alt="édition" class="button_icon">
+            </button>
         </td>
     </tr>
     </tfoot>

@@ -1,7 +1,7 @@
-<table id="table_site" class="all_events_table">
+<table id="table_site" class="all_events_table sites_table">
     <thead>
     <tr>
-        <th>site</th>
+        <th>Site</th>
         <th class="last_column">Actions</th>
     </tr>
     </thead>
@@ -12,9 +12,13 @@
             <td>{{ site.nom }}</td>
             <td class="form_buttons last_column">
                 <button type="button"
-                        class="button_site button_primary"
+                        class="button_site button_primary desktop"
                         data-edit-toggle
                         data-target="#edit-{{ site.id }}">Modifier</button>
+                <button type="button"
+                        class="button_site mobile icon_button"
+                        data-edit-toggle
+                        data-target="#edit-{{ site.id }}"><img src="{{ asset('icons/edit.svg') }}" alt="édition" class="button_icon"></button>
                 <form action="{{ path('app_delete_site', { id: site.id }) }}"
                       method="post"
                       data-ajax-submit="1"
@@ -23,7 +27,8 @@
                       style="display:inline"
                       onsubmit="return confirm('Supprimer {{ site.nom }} ?')">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete_site_' ~ site.id) }}">
-                    <button type="submit" class="button_site button_primary">Supprimer</button>
+                    <button type="submit" class="button_site button_primary desktop">Supprimer</button>
+                    <button type="submit" class="button_site mobile icon_button"><img src="{{ asset('icons/trash_purple.svg') }}" alt="suppression" class="button_icon"></button>
                 </form>
             </td>
         </tr>
@@ -51,9 +56,12 @@
         <td>{{ form_widget(form.nom, {'attr': { placeholder: 'Nom du site', form: 'form_site-create' }}) }}</td>
         <td class="form_buttons last_column">
             {{ form_widget(form._token, {'attr': { form: 'form_site-create' }}) }}
-            {{ form_widget(form.enregistrer, {
-                'label': 'Ajouter',
-                'attr': { class: 'button_site button_primary', form: 'form_site-create' }}) }}
+            <button type="submit" class="button_site desktop button_primary" form="form_site-create">
+                Ajouter
+            </button>
+            <button type="submit" class="button_site mobile icon_button" form="form_site-create">
+                <img src="{{ asset('icons/plus.svg') }}" alt="édition" class="button_icon">
+            </button>
         </td>
     </tr>
     </tfoot>

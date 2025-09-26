@@ -58,6 +58,24 @@ class UtilisateurFixtures extends Fixture
         $manager->persist($userAdmin);
         $this->addReference('user-admin', $userAdmin);
 
+        $userWithoutSortie = new Utilisateur();
+        $userWithoutSortie->setEmail('userWithoutSortie@gmail.com');
+        $userWithoutSortie->setRoles(['ROLE_USER']);
+
+        // hash the password properly
+        $hashedPassword = $this->passwordHasher->hashPassword($userAdmin, 'password');
+        $userWithoutSortie->setPassword($hashedPassword);
+        $userWithoutSortie->setNom('Donaleto');
+        $userWithoutSortie->setPrenom('Jojo');
+        $userWithoutSortie->setTelephone('0303030303');
+        $userWithoutSortie->setSite($site);
+        $userWithoutSortie->setIsActif(true);
+        $userWithoutSortie->setPseudo('testUserWithoutSortie');
+        $userWithoutSortie->setPhoto('');
+        // persist the user
+        $manager->persist($userWithoutSortie);
+        $this->addReference('user-without-sortie', $userWithoutSortie);
+
         // flush changes
         $manager->flush();
     }
