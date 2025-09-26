@@ -5,9 +5,6 @@
     <div class="main_container profile form_container">
         <h2>Mon profil</h2>
         {{ form_start(utilisateurForm) }}
-        {{ form_errors(utilisateurForm) }}
-        {{ form_errors(utilisateurForm.password) }}
-        {{ form_errors(utilisateurForm.passwordConfirmation) }}
         <div>
             {% if utilisateurForm.vars.value.photo != null %}
                 <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}" alt="image">
@@ -19,6 +16,7 @@
             <label class="ville_label">
                 Pseudo
                 {{ form_widget(utilisateurForm.pseudo, {'attr': {'class': 'ville_input' }}) }}
+                {{ form_errors(utilisateurForm.pseudo) }}
             </label>
             <label class="ville_label">
                 Prenom
@@ -31,14 +29,17 @@
             <label class="ville_label">
                 Telephone
                 {{ form_widget(utilisateurForm.telephone, {'attr': {'class': 'ville_input' }}) }}
+                {{ form_errors(utilisateurForm.telephone) }}
             </label>
             <label class="ville_label">
                 Email
                 {{ form_widget(utilisateurForm.email, {'attr': {'class': 'ville_input' }}) }}
+                {{ form_errors(utilisateurForm.email) }}
             </label>
             <label class="ville_label">
                 Mot de passe
                 {{ form_widget(utilisateurForm.password, {'attr': {'class': 'ville_input' }}) }}
+                {{ form_errors(utilisateurForm.password) }}
             </label>
             <label class="ville_label">
                 Site

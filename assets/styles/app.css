@@ -106,6 +106,7 @@ td{
     padding: 16px;
     border-radius: var(--radius);
     margin-bottom: 24px;
+
 }
 
 .mobile_container h2{
@@ -650,7 +651,7 @@ body .container{
 }
 
  /*A vérifier : code en double */
-.user_info, .event_details, .deletion_content {
+.user_info {
     background-color: rgba(237, 228, 237, 0.18);
 }
 
@@ -1225,6 +1226,18 @@ tfoot td {
     .button_ville, .button_site{
         width: 32px;
         height: 32px;
+    }
+    #detail_sortie h2{
+        margin-bottom: 12px;
+    }
+
+    .sortie_location-container{
+        grid-template-columns: 1fr;
+    }
+
+    .table_area_participants{
+        margin: 24px 0;
+        width: 100%;
     }
 }
 @media (min-width: 462px) and (max-width: 540px){

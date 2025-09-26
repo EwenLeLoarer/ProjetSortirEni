@@ -129,7 +129,7 @@ final class AdminController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'L\'utilisateur a bien été désactivé.');
-        return $this->redirectToRoute('app_list_user');
+        return $this->redirectToRoute('app_admin');
     }
 
     #[Route('/admin/{id}/delete', name: 'app_delete_user', requirements: ['id' => '\d+'])]
@@ -139,6 +139,6 @@ final class AdminController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
-        return $this->redirectToRoute('app_list_user', []);
+        return $this->redirectToRoute('app_admin', []);
     }
 }

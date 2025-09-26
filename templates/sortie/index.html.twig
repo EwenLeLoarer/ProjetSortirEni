@@ -15,18 +15,22 @@
             <label class="ville_label">
                 Date et heure de la sortie
                 {{ form_widget(form.dateHeureDebut, { 'attr': { 'class': 'ville_input'}}) }}
+                {{ form_errors(form.dateHeureDebut) }}
             </label>
             <label class="ville_label">
                 Date de clotûre des inscriptions
                 {{ form_widget(form.dateLimiteInscription, { 'attr': { 'class': 'ville_input'}}) }}
+                {{ form_errors(form.dateLimiteInscription) }}
             </label>
             <label class="ville_label">
                 Nombre de places
                 {{ form_widget(form.nbInscriptionsMax, { 'attr': { 'class': 'ville_input'}}) }}
+                {{ form_errors(form.nbInscriptionsMax) }}
             </label>
             <label class="ville_label label_duree">
                 Durée de la sortie
                 {{ form_widget(form.duree, { 'attr': { 'class': 'ville_input'}}) }}
+                {{ form_errors(form.duree) }}
             </label>
             <label class="ville_label">
                 Description et infos
