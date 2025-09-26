@@ -5,6 +5,9 @@
     <div class="main_container profile form_container">
         <h2>Mon profil</h2>
         {{ form_start(utilisateurForm) }}
+        {{ form_errors(utilisateurForm) }}
+        {{ form_errors(utilisateurForm.password) }}
+        {{ form_errors(utilisateurForm.passwordConfirmation) }}
         <div>
             {% if utilisateurForm.vars.value.photo != null %}
                 <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateurForm.vars.value.photo ) }}" alt="image">
@@ -13,47 +16,47 @@
             {% endif %}
         </div>
         <div class="grid">
-            <div>
-                {{ form_label(utilisateurForm.pseudo) }}
-                {{ form_widget(utilisateurForm.pseudo) }}
-            </div>
-            <div>
-                {{ form_label(utilisateurForm.prenom) }}
-                {{ form_widget(utilisateurForm.prenom) }}
-            </div>
-            <div>
-                {{ form_label(utilisateurForm.nom) }}
-                {{ form_widget(utilisateurForm.nom) }}
-            </div>
-            <div>
-                {{ form_label(utilisateurForm.telephone) }}
-                {{ form_widget(utilisateurForm.telephone) }}
-            </div>
-            <div>
-                {{ form_label(utilisateurForm.email) }}
-                {{ form_widget(utilisateurForm.email) }}
-            </div>
-            <div>
-                {{ form_label(utilisateurForm.password) }}
-                {{ form_widget(utilisateurForm.password) }}
-            </div>
-            <div>
-                {{ form_label(utilisateurForm.passwordConfirmation) }}
-                {{ form_widget(utilisateurForm.passwordConfirmation) }}
-            </div>
-            <div>
-                {{ form_label(utilisateurForm.site) }}
-                {{ form_widget(utilisateurForm.site) }}
-            </div>
-            <div>
-                {{ form_label(utilisateurForm.photo) }}
-                {{ form_widget(utilisateurForm.photo) }}
-            </div>
+            <label class="ville_label">
+                Pseudo
+                {{ form_widget(utilisateurForm.pseudo, {'attr': {'class': 'ville_input' }}) }}
+            </label>
+            <label class="ville_label">
+                Prenom
+                {{ form_widget(utilisateurForm.prenom, {'attr': {'class': 'ville_input' }}) }}
+            </label>
+            <label class="ville_label">
+                Nom
+                {{ form_widget(utilisateurForm.nom, {'attr': {'class': 'ville_input' }}) }}
+            </label>
+            <label class="ville_label">
+                Telephone
+                {{ form_widget(utilisateurForm.telephone, {'attr': {'class': 'ville_input' }}) }}
+            </label>
+            <label class="ville_label">
+                Email
+                {{ form_widget(utilisateurForm.email, {'attr': {'class': 'ville_input' }}) }}
+            </label>
+            <label class="ville_label">
+                Mot de passe
+                {{ form_widget(utilisateurForm.password, {'attr': {'class': 'ville_input' }}) }}
+            </label>
+            <label class="ville_label">
+                Site
+                {{ form_widget(utilisateurForm.site, {'attr': {'class': 'ville_input' }}) }}
+            </label>
+            <label class="ville_label">
+                Confirmation du mot de passe
+                {{ form_widget(utilisateurForm.passwordConfirmation, {'attr': {'class': 'ville_input' }}) }}
+            </label>
+            <label class="ville_label">
+                Photo
+                {{ form_widget(utilisateurForm.photo, {'attr': {'class': 'ville_input' }}) }}
+            </label>
             {{ form_widget(utilisateurForm._token) }}
-        </div>
-        <div class="buttons">
-            <button class="button_primary" type="submit">Enregistrer</button>
-            <a href="{{ path('app_home') }}" class=" button button_secondary">Annuler</a>
+            <div class="buttons edit_buttons">
+                <button class="button_primary" type="submit">Enregistrer</button>
+                <a href="{{ path('app_home') }}" class=" button button_secondary">Annuler</a>
+            </div>
         </div>
         {{ form_end(utilisateurForm, {'render_rest': false})}}
     </div>

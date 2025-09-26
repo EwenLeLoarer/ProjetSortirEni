@@ -4,24 +4,51 @@
 
 {% block body %}
     <div class="new_event form_container">
-        <h1>Modifier la sortie</h1>
+        <h2>Modifier une sortie</h2>
         <div class="event_creation">
-            {{ form_start(form) }}
-            {{ form_row(form.nom) }}
-            {{ form_row(form.dateHeureDebut) }}
-            {{ form_row(form.dateLimiteInscription) }}
-            {{ form_row(form.nbInscriptionsMax) }}
-            {{ form_row(form.duree) }}
-            {{ form_row(form.infosSortie) }}
-            {{ form_row(form.site) }}
+            {{ form_start(form, {attr: {'id': "creation_sortie"}}) }}
+            <label class="ville_label">
+                Nom de la sortie
+                {{ form_widget(form.nom, { 'attr': { 'class': 'ville_input'}}) }}
+            </label>
+            <label class="ville_label">
+                Date et heure de la sortie
+                {{ form_widget(form.dateHeureDebut, { 'attr': { 'class': 'ville_input'}}) }}
+            </label>
+            <label class="ville_label">
+                Date de clotûre des inscriptions
+                {{ form_widget(form.dateLimiteInscription, { 'attr': { 'class': 'ville_input'}}) }}
+            </label>
+            <label class="ville_label">
+                Nombre de places
+                {{ form_widget(form.nbInscriptionsMax, { 'attr': { 'class': 'ville_input'}}) }}
+            </label>
+            <label class="ville_label label_duree">
+                Durée de la sortie
+                {{ form_widget(form.duree, { 'attr': { 'class': 'ville_input'}}) }}
+            </label>
+            <label class="ville_label">
+                Description et infos
+                {{ form_widget(form.infosSortie, { 'attr': { 'class': 'ville_input'}}) }}
+            </label>
+            <label class="ville_label">
+                Campus organisateur
+                {{ form_widget(form.site, { 'attr': { 'class': 'ville_input'}}) }}
+            </label>
             <div class="location_div">
-                {{ form_row(form.lieu) }}
-                <a href="{{ path('app_lieu', { backToSortie: true }) }}" class="button button_secondary" style="margin-left: 10px;">
-                    + Créer un nouveau lieu
+                <label class="ville_label label_lieu">
+                    Lieu
+                    {{ form_widget(form.lieu, { 'attr': { 'class': 'ville_input'}}) }}
+                </label>
+                <a href="{{ path('app_lieu', { backToSortie: true }) }}" class="link_add_lieu" title="Créer un lieu" aria-label="Créer un lieu">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
                 </a>
             </div>
-            <h2>Détails du lieu</h2>
+
             <div class="location_details">
+                <h3 class="details_title">Détails du lieu :</h3>
                 <div class="flex">
                     {{ form_row(form.rue) }}
                     {{ form_row(form.codePostal) }}
@@ -34,20 +61,12 @@
             </div>
             <div class="buttons">
                 {{ form_row(form.enregistrer) }}
-                {% if  app.user == sortie.organisateur and sortie.etat.id == 1 and date(sortie.dateLimiteInscription) > date() %}
-                    <a class="button button_primary action" href="{{ path('app_sortie_publish', {id: sortie.id}) }}">
-                        Publier la sortie
-                    </a>
-                {% endif %}
-                {% if app.user == sortie.organisateur and sortie.etat.id != 6 and date(sortie.dateHeureDebut) > date() %}
-                <a class="button button_primary action" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
-                    Annuler la sortie
-                </a>
-                {% endif %}
+                {{ form_row(form.publier) }}
                 <a class="button button_secondary" href="{{ path('app_home') }}">Annuler</a>
             </div>
             {{ form_widget(form._token) }}
             {{ form_end(form, {'render_rest': false}) }}
+
         </div>
     </div>
 {% endblock %}

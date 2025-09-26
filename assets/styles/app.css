@@ -318,6 +318,9 @@ td{
     margin: 24px auto;
     width: fit-content;
 }
+.edit_buttons {
+
+}
 .button_primary, .button_secondary{
     border: 2px solid var(--accent);
     color: var(--accent);
@@ -589,14 +592,12 @@ body .container{
     flex-direction: column;
 }
 
-.profile form div div{
-    display: flex;
-    gap: 40px;
-    margin-bottom: 8px;
-    align-items: center;
-}
 .profile label{
     width: 30%;
+}
+.profile .ville_label {
+    width: 100%;
+    margin: 0;
 }
 .profile input, .profile select{
     width: 100%;
@@ -657,7 +658,8 @@ body .container{
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 16px;
+    padding-bottom: 16px;
 }
 
 /******************************** Page d'accueil / affichage de toutes les sorties *******************************************/
