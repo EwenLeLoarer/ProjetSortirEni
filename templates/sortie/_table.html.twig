@@ -1,49 +1,49 @@
-<table class="all_events_table">
-    <thead>
-    <tr>
-        <th>Nom de la sortie</th>
-        <th>Date de la sortie</th>
-        <th>Clôture</th>
-        <th>Inscrits/places</th>
-        <th>Etat</th>
-        <th>Inscrit</th>
-        <th>Organisateur</th>
-        {% if app.user %}
-            <th>Actions</th>
-        {% endif %}
-    </tr>
-    </thead>
-    <tbody>
-    {% for sortie in sorties %}
-        <tr>
-            <td class="nom_sortie">{{ sortie.nom }}</td>
-            <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
-            <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
-            <td>{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</td>
-            <td>{{ sortie.etat.libelle }}</td>
-            <td>{% if app.user and sortie.isInscrit(app.user) %}
-                    x
-                {% endif %}
-            </td>
-            <td>
-                <a class="sortie_link" href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
-                    {{ sortie.organisateur.prenomEtInitiale }}
-                </a>
-            </td>
+<table class="table sorties-table">
+    <thead class="table_head sorties-table_head">
+        <tr class="table_head-row sorties-table_head-row">
+            <th class="table_head-cell sorties-table_head-cell">Nom de la sortie</th>
+            <th class="table_head-cell sorties-table_head-cell">Date de la sortie</th>
+            <th class="table_head-cell sorties-table_head-cell">Clôture</th>
+            <th class="table_head-cell sorties-table_head-cell">Inscrits/places</th>
+            <th class="table_head-cell sorties-table_head-cell">Etat</th>
+            <th class="table_head-cell sorties-table_head-cell">Inscrit</th>
+            <th class="table_head-cell sorties-table_head-cell">Organisateur</th>
             {% if app.user %}
-                <td>
-                    {%  include '_partials/actions.html.twig' %}
-                </td>
+                <th class="table_head-cell sorties-table_head-cell">Actions</th>
             {% endif %}
-            <td class="row_link">
-                <a class="cover-link" href="{{ path('app_sortie_show', {id: sortie.id}) }}" title="Afficher la sortie">
-                </a>
-            </td>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="8" class="text-center">Aucune sortie trouvée</td>
-        </tr>
-    {% endfor %}
+    </thead>
+    <tbody class="table_body sorties-table_body">
+        {% for sortie in sorties %}
+            <tr class="table_body-row sorties-table_body-row">
+                <td class="table_body-cell sorties-table_body-cell nom_sortie">{{ sortie.nom }}</td>
+                <td class="table_body-cell sorties-table_body-cell">{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+                <td class="table_body-cell sorties-table_body-cell">{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+                <td class="table_body-cell sorties-table_body-cell">{{ sortie.nbParticipants }}/{{ sortie.nbInscriptionsMax }}</td>
+                <td class="table_body-cell sorties-table_body-cell">{{ sortie.etat.libelle }}</td>
+                <td class="table_body-cell sorties-table_body-cell">{% if app.user and sortie.isInscrit(app.user) %}
+                        x
+                    {% endif %}
+                </td>
+                <td class="table_body-cell sorties-table_body-cell">
+                    <a class="table_link sortie_link" href="{{ path('app_utilisateur', {id: sortie.organisateur.id}) }}">
+                        {{ sortie.organisateur.prenomEtInitiale }}
+                    </a>
+                </td>
+                {% if app.user %}
+                    <td class="table_body-cell sorties-table_body-cell last-column sorties-table_last-column">
+                        {%  include '_partials/actions.html.twig' %}
+                    </td>
+                {% endif %}
+                <td class="table_row-link sorties-table_row-link">
+                    <a class="table_cover-link" href="{{ path('app_sortie_show', {id: sortie.id}) }}" title="Afficher la sortie">
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr class="table_body-row sorties-table_body-row">
+                <td class="table_body-cell sorties-table_body-cell" colspan="8">Aucune sortie trouvée</td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>

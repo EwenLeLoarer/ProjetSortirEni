@@ -3,14 +3,26 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <div class="new_town form_container">
-        <h1>Créer une ville</h1>
-        <div class="new_town_content">
+    <div class="form_container" id="new_ville">
+        <h2>Créer une ville</h2>
+        <div class="new_location_content">
             {{ form_start(form) }}
             {{ form_errors(form) }}
-            {{ form_row(form.nom) }}
-            {{ form_row(form.codePostal) }}
-            {{ form_row(form.enregistrer) }}
+            <label class="ville_label">
+                Nom
+                {{ form_widget(form.nom, {'attr': {'class': 'ville_input'}}) }}
+            </label>
+            <label class="ville_label">
+                Code postal
+                {{ form_widget(form.codePostal, {'attr': {'class': 'ville_input'}}) }}
+            </label>
+            <div class="buttons ville_buttons">
+                {{ form_row(form.enregistrer) }}
+            </div>
+            <div class="buttons ville_buttons">
+                <a href="{{ path('app_sortie') }}" class="button button_primary">Annuler</a>
+            </div>
+
             {{ form_end(form) }}
         </div>
     </div>

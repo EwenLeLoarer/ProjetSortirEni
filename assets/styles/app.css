@@ -8,6 +8,7 @@
     --bg: #f8fafc;
     --line: #e5e7eb;
     --shadow: 0 8px 30px rgba(2, 6, 23, .06);
+    --radius: 8px;
 }
 
 @media (prefers-color-scheme: dark){
@@ -27,22 +28,14 @@ body {
     gap: 24px;
     margin-bottom: 40px;
 }
-
 .main_container_index {
     max-height: 800px;
     margin-top: 90px;
 }
 
-.main_container h1, .login_form h1, .all_events_tiles h1, .new_event h1, .new_location h1, .new_town h1, .deletion_container h1, .users_container h1, .motDePasse_container h1{
-    font-weight: bold;
-    font-size: 20px;
+.mb-6 {
+    margin-bottom: 0;
 }
-.main_container h2, .event_tile h2, .import_content h2{
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 16px;
-}
-
 .link{
     color: var(--accent);
     text-decoration: underline;
@@ -52,20 +45,66 @@ body {
 .flex{
     display: flex;
     justify-content: flex-start;
-
+    padding-left: 10px;
+    padding-bottom: 10px;
 }
-
+body h2 {
+    display: block;
+    background-color: var(--accent);
+    color: white;
+    padding: 8px 24px;
+    font-size: 20px;
+    font-weight: bold;
+}
+body h3 {
+    display: block;
+    background-color: var(--accent);
+    color: white;
+    padding: 8px 24px;
+    font-weight: bold;
+}
 .flex > * {
     flex-basis: calc(100% / 3);
 }
+table {
+    width: 100%;
+}
+thead {
+    color: purple;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 3;
+    height: 80px;
+}
+tbody {
+    height: 100%;
+}
+tr {
+    position: relative;
+}
 
-
+tbody > tr:hover {
+    color: purple;
+}
+td, th{
+    height:80px;
+    text-align: center;
+    box-shadow: 0 1px 0 var(--line);
+}
+th {
+    position: sticky;
+}
+td{
+    padding: 8px;
+    position: relative;
+}
 .flash-message{
     display:flex;
     justify-content: space-between;
     align-items: center;
     padding: 16px;
-    border-radius: 8px;
+    border-radius: var(--radius);
     margin-bottom: 24px;
 }
 
@@ -104,7 +143,6 @@ body {
 .button_primary{
     background-color: var(--accent);
     color: white;
-    margin: 0 auto;
 }
 
 .button_primary:hover{
@@ -156,8 +194,7 @@ button.disabled:hover{
     box-sizing: border-box;
 }
 
-/**************************** HEADER**************************************************/
-
+/********************************** Header *******************************************/
 .header {
     height:100px;
     border-bottom: 2px purple double;
@@ -208,7 +245,7 @@ button.disabled:hover{
     color: purple;
 }
 
-/******************************* FiLTRES ****************************************************/
+/******************************* Name and date ***************************************/
 .name_and_date {
     position: absolute;
     right: 50px;
@@ -217,37 +254,27 @@ button.disabled:hover{
     margin-bottom: 20px;
 }
 
-#filters, #form_villes, #form_sites {
-    height: 100%;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    box-shadow: var(--shadow);
-    color: var(--text);
-    width: fit-content;
-}
-.filtre_title {
-    font-weight: bold;
-    font-size: 20px;
-    padding: 10px 0;
+/********************************* HOME PAGE *****************************************/
+/************* Filtres *************/
+
+#filters {
+    max-height: 650px;
+    align-self: baseline;
 }
 
-.main_filters{
+.sorties_fieldset {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-}
-#filters .form_filters{
-    display: grid;
+    justify-content: center;
+    min-width: 0;
     gap: 12px 16px;
-}
+    padding: 0 16px;
 
-/* ===== Labels “pills” ===== */
-.filtre_label, .site_label {
+}
+.sorties_fieldset-checkbox {
+    margin: 10px 0;
+}
+.sorties_label, .ville_label {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -262,9 +289,9 @@ button.disabled:hover{
 }
 
 /* Les champs “contrôles” poussés à droite, largeur fluide */
-.filtre_label > select,
-.filtre_label > input[type="text"],
-.filtre_label > input[type="date"],
+.sorties_label > select,
+.sorties_label > input[type="text"],
+.sorties_label > input[type="date"],
 .site_label > select,
 .site_label > input[type="text"],
 .site_label > input[type="date"]{
@@ -272,21 +299,234 @@ button.disabled:hover{
     width: min(100%, 240px);
     min-height: 40px;
     padding-left: 12px;
+    line-height: 30px;
 }
 
-/* Si le label contient une checkbox ou un radio, aligne en ligne (pas à droite) */
-.filtre_label_right,
-.site_label_right{
-    padding-block: 8px;
-    gap: 10px;
+.sorties_buttons {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
 }
-.filtre_label_right:hover,
-.site_label_right:hover{
+.sorties_buttons .button_primary {
+    padding: 2px 10px;
+}
+
+.sorties_checkbox, .sorties_radio {
+    accent-color: var(--accent);
+    width: 1.1em; height: 1.1em;
+}
+/************** Tableau **************/
+.table_area {
+    align-self: flex-start;
+    flex-grow: 1;
+    max-height: 650px;
+    min-height: 0;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    scrollbar-width: thin;
+    scrollbar-color: purple #f0f0f0;
+    padding: 0 16px;
+}
+.sorties-table {
+    max-height: 631px;
+}
+.sorties-table_last-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.table_row-link, .participants .table_row-link {
+    position: absolute;
+    box-shadow: none;
+    padding: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.table_row-link:hover {
+    box-shadow: inset 0 8px 30px rgba(2, 6, 23, .06);
     cursor: pointer;
 }
+.table_cover-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
 
+/****************************** CREATION SORTIE ***************************************/
+#creation_sortie {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: space-evenly;
+    width: auto;
+    gap: 0 20px;
+}
+#creation_sortie .ville_label, .new_location_content .ville_label {
+    width: 100%;
+    margin: 10px 0;
+}
+#creation_sortie .ville_input, .new_location_content .ville_input {
+    width: 300px;
+}
+.details_title {
+    padding: 10px;
+    background-color: var(--accent);
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+
+}
+.location_details{
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    overflow: hidden;
+    width: 100%;
+    margin-top: 16px;
+}
+.location_details label {
+    font-weight: bold;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin: 24px auto;
+    width: fit-content;
+}
+.edit_buttons {
+
+}
+.button_primary, .button_secondary{
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    background-color: white;
+    font-weight: bold;
+}
+.button_primary:hover, .button_secondary:hover{
+    color: white;
+    background-color: var(--accent);
+}
+
+/****************************** DETAILS SORTIE ***************************************/
+.sortie_location-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 20px;
+}
+
+#map{
+    height: 280px;
+    width: 75%;
+    margin: 24px auto;
+    border: 2px solid black;
+    border-radius: var(--radius);
+}
+.table_area_participants {
+    max-height: 250px;
+    width: 75%;
+    margin: 24px auto;
+}
+.participants th, .participants td {
+    height: 40px;
+    padding: 0;
+    width: 50%;
+}
+.participants thead {
+    height: 40px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 3;
+}
+
+/**************************** GESTION DES VILLES *************************************/
+#form_villes {
+    width: 450px;
+}
+.ville_label {
+    padding-left: 16px;
+    margin: 16px;
+    justify-content: space-between;
+}
+.ville_input {
+    line-height: 30px;
+}
+#sites_list {
+    max-width: 50%;
+}
+
+/********************************** Boutons ******************************************/
+
+
+.buttons button, .button{
+    text-align: center;
+    height: 32px;
+    padding: 0 16px;
+}
+
+.button, .form_buttons > a, .button_ville, .button_site{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.return_button{
+    width: 100px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px auto;
+}
+
+button.disabled{
+    background-color: #cfcecf;
+    width: fit-content;
+    margin: 24px auto;
+}
+
+button.disabled:hover{
+    cursor: not-allowed;
+}
+
+.event_tile .buttons{
+    text-align: center;
+}
+
+.action{
+    width: 200px;
+    height: 32px;
+    box-sizing: border-box;
+}
+
+/******************************* FiLTRES ****************************************************/
+
+#form_villes, #form_sites {
+    flex-shrink: 0;
+    height: 100%;
+}
+#filters, #form_villes, #form_sites {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: var(--shadow);
+    color: var(--text);
+    width: fit-content;
+    overflow: hidden;
+}
 /****************************** ===== Inputs ===== ****************************************/
 select,
 input[type="text"],
@@ -298,7 +538,7 @@ input[type="number"],
 textarea{
     border: 1px solid var(--line);
     background: var(--bg);
-    border-radius: 10px;
+    border-radius: var(--radius);
     padding: 10px 12px;
     font: inherit;
     color: var(--text);
@@ -352,31 +592,6 @@ select{
     padding-right: 2.5rem; /* place pour la flèche */
 }
 
-/* ===== Cases à cocher & radios ===== */
-#filters input[type="checkbox"],
-#filters input[type="radio"]{
-    accent-color: var(--accent);
-    width: 1.1em; height: 1.1em;
-}
-
-/* ===== Fieldset (bloc radios) ===== */
-#filters fieldset{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10px;
-    min-width: 0;
-}
-
-#filters fieldset .filtre_label{
-    border: 0;
-    background: transparent;
-    padding: 6px 4px;
-    gap: 10px;
-    font-weight: 500;
-}
-
-
 input:disabled, select:disabled{
     background: none;
     all: unset;
@@ -386,55 +601,17 @@ input:disabled:hover, select:disabled:hover{
     all: unset;
 }
 
-label{
-    font-weight: 500;
-}
-
 #sortie_annulation_annulationMotif, #sortie_infosSortie{
     padding: 12px;
     min-height: 80px;
 }
 
-/* ===== Lien “Réinitialiser” → bouton discret ===== */
-.row_link {
-    position: absolute;
-    padding: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-.row_link:hover {
-    box-shadow: inset 0 8px 30px rgba(2, 6, 23, .06)
-}
 .form_buttons {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
-.form_buttons > a, .button_ville, .button_site {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid var(--line);
-    background: white;
-    color: var(--muted);
-    text-decoration: none;
-    border-radius: 10px;
-    padding: 8px 12px;
-    font-weight: 600;
-    transition: background .15s, color .15s, border-color .15s;
-    width: 150px;
-    justify-content: center;
-}
-.form_buttons > a:hover, .button_ville:hover, .button_site:hover {
-    background: var(--bg);
-    color: var(--text);
-    border-color: color-mix(in oklab, var(--line) 60%, var(--text));
-}
-.form_buttons > a:active, .button_ville:active, .button_site:hover {
-    transform: translateY(1px);
-}
+
 body .container{
     max-width: none;
 }
@@ -460,10 +637,20 @@ body .container{
 .user_info, .event_details, .event_creation, .new_location_content, .deletion_content, .registration_content, .import_content, .new_town_content, .motDePasse_content, .login_content{
     /*background-color: rgba(175, 162, 175, 0.15);*/
     padding: 16px 24px;
-    border-radius: 4px;}
+    border-radius: var(--radius);
+}
+#new_location, #new_ville {
+    width: fit-content;
+}
+.new_location_content form, #new_ville form {
+    width: fit-content;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
 
  /*A vérifier : code en double */
-.user_info, .event_details, .deletion_content, .registration_content{
+.user_info, .event_details, .deletion_content {
     background-color: rgba(237, 228, 237, 0.18);
 }
 
@@ -478,14 +665,12 @@ body .container{
     flex-direction: column;
 }
 
-.profile form div div{
-    display: flex;
-    gap: 40px;
-    margin-bottom: 8px;
-    align-items: center;
-}
 .profile label{
     width: 30%;
+}
+.profile .ville_label {
+    width: 100%;
+    margin: 0;
 }
 .profile input, .profile select{
     width: 100%;
@@ -509,23 +694,47 @@ body .container{
     margin-left: 24px;
 }
 
-.form_container, .event_container, .users-container{
+.form_container, .event_container {
     margin: 0 auto;
-    border: 1px solid lightgray;
-    border-radius: 8px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
     overflow: hidden;
+}
+.users_container {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    gap: 0;
+    width: 70%;
+    margin:auto;
+}
+.users_container h2 {
+    margin-bottom: 0;
+}
+.users_container .table_area {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    max-height: 400px;
+}
+.users_container td, .users_container th {
+    text-align: start;
+    padding: 0;
 }
 
 .form_container{
     width: 70%
 }
 
-.form_container h1, .event_container h1, .users_container h1{
-    display: block;
-    background-color: var(--accent);
-    color: white;
-    padding: 8px 24px;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding-bottom: 16px;
 }
+
 /******************************** Page d'accueil / affichage de toutes les sorties *******************************************/
 
 .event_details {
@@ -539,64 +748,11 @@ body .container{
 .event_details > * {
     flex-basis: 50%;
 }
-
-td, th{
-    padding: 4px 8px;
-    text-align: center;
-}
-th {
-    border-bottom: 1px solid #e5e7eb;
-}
-td{
-    padding: 8px;
-}
-
-table.participants{
-    width: 100%;
-}
-thead {
-    color: purple;
-}
-tr {
-    position: relative;
-}
-
-tbody > tr > td{
-    position: relative;
-    border-top: 1px solid var(--line);
-}
-tbody > tr:hover {
-    color: purple;
-}
 .nom_sortie {
     font-weight: bold;
 }
-.cover-link {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-}
-.table_area {
-    align-self: flex-start;
-    flex-grow: 1;
-    max-height: 670px;
-    overflow-y: auto;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    scrollbar-width: thin;
-    scrollbar-color: purple #f0f0f0;
-}
-.all_events_table, .participants {
-    width: 100%;
-    height: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: var(--panel);
-}
-.all_events_table thead, .participants thead {
+
+.all_events_table thead {
     position: sticky;
     top: 0;
     background: white;
@@ -613,7 +769,7 @@ tbody > tr:hover {
 
 .event_tile, .login_form{
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
+    border-radius: var(--radius);
     padding-bottom: 24px;
 }
 
@@ -624,7 +780,6 @@ tbody > tr:hover {
     padding: 4px 8px;
     border-radius: 8px 8px 0 0;
 }
-
 
 .event_content{
     padding: 8px 24px;
@@ -643,16 +798,33 @@ tbody > tr:hover {
 
 
 /*************************** PAGE DE CONNEXION *********************************************/
+
 .login_form, .motDePasse_container{
-    width: 70%;
     margin: 15vh auto;
     padding-bottom: 0;
+}
+.login_form {
+    width: 40%;
+}
+.motDePasse_container {
+    width: fit-content
+}
+.motDePasse_content .ville_label {
+    width: 100%;
+    margin: 0;
+}
+.motDePasse_content .ville_input {
+    width: 70%;
 }
 
 .login_content{
     padding: 24px;
+    margin: auto;
+    gap: 20px;
 }
-
+.login_content .ville_label {
+    margin: 0;
+}
 .login_form form{
     display: flex;
     flex-direction: column;
@@ -663,7 +835,10 @@ tbody > tr:hover {
     flex-direction: column;
     gap: 16px;
 }
-
+.login_remember {
+    display: flex;
+    justify-content: space-between;
+}
 
 /*Réinitialisation de mdp*/
 
@@ -674,18 +849,16 @@ tbody > tr:hover {
 .login_info_container{
     width: 100%;
     padding: 16px;
-    border-radius: 4px;
+    border-radius: var(--radius);
 }
 
 
 /***************** Page de création d'une sortie ***************************/
 
 
-
-.location_div, .town_div{
+.location_div{
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 24px;
 }
@@ -704,13 +877,6 @@ tbody > tr:hover {
     height: 300px;
 }
 
-.location_div a, .town_div a{
-    line-height: 16px;
-    width: 300px;
-    height: 46px;
-}
-
-
 .sortie_link{
     color: var(--accent);
     text-decoration: underline;
@@ -721,31 +887,73 @@ tbody > tr:hover {
 .sortie_link:hover {
     color: blue;
 }
-.ville_container, .site_container {
+.ville_container {
     display: flex;
     justify-content: center;
     gap: 24px;
-    width: 100%;
+    width: 80vw;
+    margin: auto;
+    flex-wrap: wrap;
 }
 .ville_container .table_area {
-    flex-grow: 0;
-}
-.ville_input {
-    width: 100%;
+    flex-grow: 1;
 }
 .ville_label {
     width: 430px;
+}
+.label_duree {
+    align-self: baseline;
+}
+.label_lieu {
+    margin: 0;
+}
+.link_add_lieu {
+    display: inline-flex;              /* centre le contenu */
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    box-sizing: border-box;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    text-decoration: none;
+
+    font-size: 22px;                   /* 40px est trop grand pour 40x40 */
+    line-height: 1;
+    flex-shrink:0;
+}
+#link_add_lieu svg {
+    height: 30px;
+    width: 30px;
+    display: block;
+    border-radius: 50%;
+}
+#link_add_lieu:hover, #link_add_lieu:hover > svg {
+    color: white;
+    background-color: var(--accent);
+}
+.lieu_buttons, .ville_buttons {
+    width: 100%;
+    margin: auto;
+}
+#new_ville form > :nth-child(3) {
+    justify-content: end;
+}
+#new_ville form > :nth-child(4) {
+    justify-content: start;
 }
 #table_ville, #table_site {
     padding: 0 20px;
  }
 #table_ville td {
     max-width: 450px;
-    min-width: 330px;
 }
 #table_ville .last_column, #table_site .last_column {
     text-align: center;
-    padding: 0 15px 0 0;
+}
+#table_ville thead .last_column {
+    padding-left: 0;
 }
 tfoot {
     position: sticky;
@@ -760,7 +968,7 @@ tfoot .last_column, tbody .last_column {
     align-items: center;
 }
 tfoot td {
-    border-top: 1px solid var(--line);
+    box-shadow: 0 -1px 0 var(--line);
     height: 80px;
 }
 #table_ville td, #table_ville th, #table_site td, #table_site th {
@@ -776,8 +984,8 @@ tfoot td {
 #table_ville .form_buttons, #table_site .form_buttons {
     height: 80px;
 }
-.button_ville, .button_site:not(.icon_button) {
-    height: 46px;
+.button_ville, .button_site {
+    padding: 2px 10px;
 }
 #table_ville tbody .last_column, #table_site tbody .last_column {
     justify-content: center;
@@ -786,53 +994,13 @@ tfoot td {
 #table_ville .row-edit>td, #table_site .row-edit>td {
     padding-left: 0;
 }
-
-.location_details{
-    background-color: rgba(237, 228, 237, 0.18);
-    border: 2px solid white;
-    border-radius: 4px;
-    padding: 16px 24px;
-    margin-bottom: 24px;
-}
-
-.event_creation h2{
-    font-weight: 500;
-    margin-bottom: 4px;
-}
-
 /*************************** Détails d'une sortie ****************************************/
-#map{
-    height: 280px;
-    width: 75%;
-    margin: 0 auto 24px auto;
-    border: 2px solid black;
-    border-radius: 4px;
-}
 
 .leaflet-control-attribution, .leaflet-control{
     display: none;
     visibility: hidden;
 }
 
-.participants thead{
-    height: 48px;
-}
-
-.participants{
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-}
-
-.participants th{
-    border-radius: 8px 8px 0 0;
-}
-
-.event_container h2{
-    margin-bottom: 16px;
-    margin-top: 24px;
-    padding: 8px;
-    border-bottom: 2px solid var(--accent);
-}
 .event_container section{
     width: 70vw;
     margin: 0 auto 24px auto;
@@ -871,7 +1039,7 @@ tfoot td {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    padding: 40px 0;
+    padding: 0 0 40px 0;
 }
 .registration_content .button{
     width: 70%;
@@ -889,12 +1057,6 @@ tfoot td {
 }
 
 /* liste des utilisateurs */
-
-.users_container h1{
-    border-radius: 8px;
-    margin-bottom: 24px;
-}
-
 
 /*Gestion d'un site */
 
@@ -949,14 +1111,14 @@ tfoot td {
         padding: 12px;
     }
 
-    .filtre_label {
+    .sorties_label {
         flex-wrap: wrap;
         gap: 8px;
     }
 
-    .filtre_label > select,
-    .filtre_label > input[type="text"],
-    .filtre_label > input[type="date"] {
+    .sorties_label > select,
+    .sorties_label > input[type="text"],
+    .sorties_label > input[type="date"] {
         margin-left: 0;
         width: 100%;
     }
@@ -1039,10 +1201,6 @@ tfoot td {
     .login_form{
         width: 100%;
         margin: 40px auto;
-    }
-
-    table.participants{
-        width: 100%;
     }
 
     .profile img{
@@ -1170,7 +1328,7 @@ tfoot td {
         padding: 0;
     }
 
-    .filtre_label input{
+    .sorties_label input{
         flex-basis: 100%
     }
     #form_villes{
@@ -1226,72 +1384,72 @@ tfoot td {
 }
 
 
-    @media(max-width: 920px){
-        .header{
-            margin-bottom: 24px;
-        }
-        #filters{
-            width: 100%;
-        }
-        #filters .form_filters{
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 24px;
-        }
-        .filtre_label{
-            width: 100%;
-        }
-        .ville_label, .site_label{
-            width: 100%;
-        }
-        .filtre_label input, .filtre_label select{
-            flex-basis: 100%;
-        }
-
-        #form_villes{
-            width: fit-content;
-        }
-
-        .ville_label{
-            width: 50%;
-        }
-
-        .all_events_tiles {
-            width: 100%;
-        }
-        .sortie_link{
-            background-color: var(--accent) ;
-            padding : 8px;
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
-            margin: 0 auto;
-            display: flex;
-            width: fit-content;
-        }
-        .site_container{
-            flex-direction: column;
-        }
-
-        #sites_list.table_area{
-            width: 100%;
-        }
-
-        #form_sites{
-            border: none;
-            background: none;
-            box-shadow: none;
-            padding: 0;
-        }
-        .profile{
-            width: 100%;
-        }
-
-        .location_details .flex{
-            flex-wrap: wrap;
-        }
+@media(max-width: 920px){
+    .header{
+        margin-bottom: 24px;
     }
+    #filters{
+        width: 100%;
+    }
+    #filters .form_filters{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 24px;
+    }
+    .sorties_label{
+        width: 100%;
+    }
+    .ville_label, .site_label{
+        width: 100%;
+    }
+    .sorties_label input, .sorties_label select{
+        flex-basis: 100%;
+    }
+
+    #form_villes{
+        width: fit-content;
+    }
+
+    .ville_label{
+        width: 50%;
+    }
+
+    .all_events_tiles {
+        width: 100%;
+    }
+    .sortie_link{
+        background-color: var(--accent) ;
+        padding : 8px;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        margin: 0 auto;
+        display: flex;
+        width: fit-content;
+    }
+    .site_container{
+        flex-direction: column;
+    }
+
+    #sites_list.table_area{
+        width: 100%;
+    }
+
+    #form_sites{
+        border: none;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    .profile{
+        width: 100%;
+    }
+
+    .location_details .flex{
+        flex-wrap: wrap;
+    }
+}
 
 
 @media(min-width: 920px) and (max-width: 1385px) {
@@ -1357,15 +1515,8 @@ tfoot td {
         justify-content: center;
     }
 }
-    @media(min-width: 1500px){
-        .site_container{
-            width: 70%;
-            margin: 0 auto;
-        }
-    }
 
-
-@media(min-width: 921px) and (max-width: 1500px){
+@media(min-width: 921px) and (max-width: 1500px) {
     #filters {
         flex-grow: 1;
         flex-basis: auto;
@@ -1373,13 +1524,14 @@ tfoot td {
         min-width: 0;
     }
 
-    .form_filters{
+    .form_filters {
         flex-direction: row;
     }
 
-    .filtre_label{
+    .sorties_label {
         flex-basis: 50%
     }
+
     .main_container_index {
         flex-grow: 1;
     }
@@ -1398,12 +1550,12 @@ tfoot td {
         gap: 24px;
         justify-content: center
     }
-    .filtre_label {
+
+    .sorties_label {
         display: flex;
     }
 
-    .filtre_label input, .filtre_label select {
+    .sorties_label input, .sorties_label select {
         flex-basis: 85%;
     }
-
 }

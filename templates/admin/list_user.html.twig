@@ -1,13 +1,5 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}{% endblock %}
-
-{% block body %}
-    <div class="users_container">
-        <h1>Liste des utilisateurs</h1>
-
-
-    <table class="border-2 border-black all_events_table">
+<div class="table_area">
+    <table class="sorties-table">
         <thead>
             <tr>
                 <th>Email</th>
@@ -31,14 +23,16 @@
                     <td> {{ user.pseudo }}</td>
                     <td>
                         {%  if user.actif %}
-                            <a class="link" href="{{ path('app_desactivate_user', {id:user.id}) }}">Désactiver</a>
+                            <a class="sortie_link" href="{{ path('app_desactivate_user', {id:user.id}) }}">Désactiver</a>
                             {% else %}
                             <span>Utilisateur désactivé</span>
                         {%  endif %}</td>
-                    <td> <a class="link" href="{{ path('app_delete_user', {id:user.id}) }}">Supprimer</a></td>
+                    <td> <a class="sortie_link" href="{{ path('app_delete_user', {id:user.id}) }}">Supprimer</a></td>
+                    <td class="table_row-link">
+                        <a href="{{ path('app_utilisateur', {id:user.id}) }}" class="table_cover-link" aria-label="Voir l'utilisateur" title="Cliquer pour voir l'utilisateur"></a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    </div>
-{% endblock %}
+</div>

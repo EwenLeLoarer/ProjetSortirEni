@@ -4,14 +4,14 @@
 
 {% block body %}
     <div class="main_container profile form_container">
-        <h1>Inscrire un utilisateur</h1>
+        <h2>Inscrire un utilisateur</h2>
         {{ form_start(form) }}
         <div>
             {% if form.vars.value.photo != null %}
                 <img src="{{ asset(app_images_profil_directory ~ '/' ~ form.vars.value.photo ) }}" alt="image">
             {% endif %}
         </div>
-        <div>
+        <div class="grid">
             <div>
                 {{ form_label(form.pseudo) }}
                 {{ form_widget(form.pseudo) }}

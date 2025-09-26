@@ -28,7 +28,13 @@
                     <a class="nav_link{{ current_route == 'app_home' ? ' nav_link_active' : '' }}" href="{{ path('app_home') }}">Accueil</a>
                 </li>
                 {% if app.user %}
+                    <li class="nav_item">
+                        <a class="sortie_button-create" href="{{  path('app_sortie') }}">Créer une sortie</a>
+                    </li>
                     {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav_item desktop">
+                            <a class="nav_link" href="{{ path('app_admin') }}">Dashboard</a>
+                        </li>
                         <li class="nav_item desktop">
                             <a class="nav_link" href="{{ path('app_ville') }}">Villes</a>
                         </li>

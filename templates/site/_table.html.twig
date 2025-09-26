@@ -12,7 +12,7 @@
             <td>{{ site.nom }}</td>
             <td class="form_buttons last_column">
                 <button type="button"
-                        class="button_site desktop"
+                        class="button_site button_primary desktop"
                         data-edit-toggle
                         data-target="#edit-{{ site.id }}">Modifier</button>
                 <button type="button"
@@ -27,7 +27,7 @@
                       style="display:inline"
                       onsubmit="return confirm('Supprimer {{ site.nom }} ?')">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete_site_' ~ site.id) }}">
-                    <button type="submit" class="button_site desktop">Supprimer</button>
+                    <button type="submit" class="button_site button_primary desktop">Supprimer</button>
                     <button type="submit" class="button_site mobile icon_button"><img src="{{ asset('icons/trash_purple.svg') }}" alt="suppression" class="button_icon"></button>
                 </form>
             </td>
@@ -42,8 +42,8 @@
             </td>
             <td class="form_buttons last_column">
                 {{ form_widget(editForms[site.id]._token, {'attr': { form: 'form_site-edit-' ~ site.id }}) }}
-                <button type="submit" form="form_site-edit-{{ site.id }}" class="button_site">Enregistrer</button>
-                <button type="button" class="button_site" data-edit-toggle data-target="#edit-{{ site.id }}">Annuler</button>
+                <button type="submit" form="form_site-edit-{{ site.id }}" class="button_site button_primary">Enregistrer</button>
+                <button type="button" class="button_site button_primary" data-edit-toggle data-target="#edit-{{ site.id }}">Annuler</button>
             </td>
         </tr>
     {% else %}
@@ -56,13 +56,12 @@
         <td>{{ form_widget(form.nom, {'attr': { placeholder: 'Nom du site', form: 'form_site-create' }}) }}</td>
         <td class="form_buttons last_column">
             {{ form_widget(form._token, {'attr': { form: 'form_site-create' }}) }}
-            <button type="submit" class="button_site desktop" form="form_site-create">
+            <button type="submit" class="button_site desktop button_primary" form="form_site-create">
                 Ajouter
             </button>
             <button type="submit" class="button_site mobile icon_button" form="form_site-create">
                 <img src="{{ asset('icons/plus.svg') }}" alt="édition" class="button_icon">
             </button>
-
         </td>
     </tr>
     </tfoot>

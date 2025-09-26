@@ -3,9 +3,9 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-
+{% include '_partials/name-and-date.html.twig' %}
 <div class="main_container profile form_container">
-    <h1>{{ utilisateur.pseudo }}</h1>
+    <h2>{{ utilisateur.pseudo }}</h2>
     <div>
         {% if utilisateur.photo != null %}
             <img src="{{ asset(app_images_profil_directory ~ '/' ~ utilisateur.photo ) }}" alt="profil">

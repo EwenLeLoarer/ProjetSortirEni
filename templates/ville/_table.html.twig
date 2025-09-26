@@ -1,4 +1,4 @@
-<table id="table_ville" class="all_events_table all_towns_table">
+<table id="table_ville" class="all_events_table">
     <thead>
     <tr>
         <th>Ville</th>
@@ -14,7 +14,7 @@
             <td>{{ ville.codePostal }}</td>
             <td class="form_buttons last_column">
                 <button type="button"
-                        class="button_site desktop"
+                        class="button_ville button_primary desktop"
                         data-edit-toggle
                         data-target="#edit-{{ ville.id }}">Modifier</button>
                 <button type="button"
@@ -29,7 +29,7 @@
                       style="display:inline"
                       onsubmit="return confirm('Supprimer {{ ville.nom }} ?')">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete_ville_' ~ ville.id) }}">
-                    <button type="submit" class="button_site desktop">Supprimer</button>
+                    <button type="submit" class="button_ville button_primary desktop">Supprimer</button>
                     <button type="submit" class="button_site mobile icon_button"><img src="{{ asset('icons/trash_purple.svg') }}" alt="suppression" class="button_icon"></button>
                 </form>
             </td>
@@ -49,8 +49,8 @@
             </td>
             <td class="form_buttons last_column">
                 {{ form_widget(editForms[ville.id]._token, {'attr': { form: 'form_ville-edit-' ~ ville.id }}) }}
-                <button type="submit" form="form_ville-edit-{{ ville.id }}" class="button_site">Enregistrer</button>
-                <button type="button" class="button_site" data-edit-toggle data-target="#edit-{{ ville.id }}">Annuler</button>
+                <button type="submit" form="form_ville-edit-{{ ville.id }}" class="button_ville button_primary">Enregistrer</button>
+                <button type="button" class="button_ville button_primary" data-edit-toggle data-target="#edit-{{ ville.id }}">Annuler</button>
             </td>
         </tr>
     {% else %}
@@ -64,7 +64,7 @@
         <td>{{ form_widget(form.codePostal, {'attr': { placeholder: 'Code postal', form: 'form_ville-create' }}) }}</td>
         <td class="form_buttons last_column">
             {{ form_widget(form._token, {'attr': { form: 'form_ville-create' }}) }}
-            <button type="submit" class="button_site desktop" form="form_ville-create">
+            <button type="submit" class="button_site button_primary desktop" form="form_ville-create">
                 Ajouter
             </button>
             <button type="submit" class="button_site mobile icon_button" form="form_ville-create">

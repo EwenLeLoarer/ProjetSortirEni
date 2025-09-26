@@ -1,14 +1,9 @@
 {% if app.user %}
-    {% if sortie.organisateur.id == app.user.id %}
-        {% if sortie.etat.libelle == 'Ouverte' %}
-            <a class="sortie_link" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">
-            Annuler
-            </a>
-        {% elseif sortie.etat.libelle == 'En création' %}
-            <a class="sortie_link" href="{{ path('app_sortie_modify', {id: sortie.id}) }}">Modifier</a>
-        {% endif %}
-    {% else %}
-        {% if sortie.etat.libelle == 'Ouverte' %}
+    {% if sortie.etat.libelle == 'Ouverte' %}
+        {% set isOrganizer = (sortie.organisateur.id == app.user.id) %}
+        {% set isAdmin = is_granted('ROLE_ADMIN') %}
+
+        {% if not isOrganizer %}
             {% if sortie.isInscrit(app.user) %}
                 <form method="post" action="{{ path('app_sortie_unregister', {id: sortie.id}) }}">
                     <button class="sortie_link" type="submit">Se désister</button>
@@ -18,6 +13,16 @@
                     <button class="sortie_link" type="submit">S'inscrire</button>
                 </form>
             {% endif %}
+        {% endif %}
+
+        {% if isOrganizer or isAdmin %}
+            <a class="sortie_link" href="{{ path('app_sortie_cancel', {id: sortie.id}) }}">Annuler</a>
+        {% endif %}
+
+    {% elseif sortie.etat.libelle == 'En création' %}
+        {% if sortie.organisateur.id == app.user.id %}
+            <a class="sortie_link" href="{{ path('app_sortie_modify', {id: sortie.id}) }}">Modifier</a>
+            <a class="sortie_link" href="{{ path('app_sortie_publish', {id:sortie.id}) }}">Publier</a>
         {% endif %}
     {% endif %}
 {% endif %}

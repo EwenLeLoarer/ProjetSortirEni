@@ -34,12 +34,12 @@ class UtilisateurType extends AbstractType
                 'label' => 'Mot de passe',
                 'required'=> false,
                 'mapped' => false,
-                'constraints' => [
+                /*'constraints' => [
                     new Assert\PasswordStrength([
                         'minScore' => 1,
                         'message' => 'Le mot de passe n\'est pas suffisamment sécurisé.',
                     ]),
-                ],
+                ],*/
             ])
             ->add('passwordConfirmation', PasswordType::Class, options:[
                 'label' => 'Confirmation',
